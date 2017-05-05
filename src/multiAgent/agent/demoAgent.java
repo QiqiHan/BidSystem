@@ -10,7 +10,6 @@ import multiAgent.behavior.demoBehaviour;
 public class demoAgent extends Agent {
 
 
-
     protected void setup(){
         Behaviour demo = new demoBehaviour();
         addBehaviour(demo);
