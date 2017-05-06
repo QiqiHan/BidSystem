@@ -4,11 +4,7 @@ import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
 import jade.core.Agent;
-import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.domain.FIPAException;
-import multiAgent.behavior.selectListener;
+import multiAgent.behavior.listener.selectListener;
 import multiAgent.ontology.BidOntology;
 import multiAgent.util.DFUtil;
 

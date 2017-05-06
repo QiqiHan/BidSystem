@@ -4,7 +4,7 @@ import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
 import jade.core.Agent;
-import multiAgent.behavior.lanlordListener;
+import multiAgent.behavior.listener.lanlordListener;
 import multiAgent.ontology.BidOntology;
 import multiAgent.util.DFUtil;
 

@@ -1,19 +1,10 @@
 package multiAgent.agent;
 
-import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.*;
-import jade.content.onto.basic.Action;
-import jade.core.behaviours.*;
-import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.domain.FIPAException;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
 import jade.core.Agent;
-import multiAgent.behavior.consultListener;
+import multiAgent.behavior.listener.consultListener;
 import multiAgent.ontology.*;
 import multiAgent.util.DFUtil;
 

@@ -1,13 +1,11 @@
-package multiAgent.behavior;
+package multiAgent.behavior.logical;
 
-import jade.content.onto.basic.Action;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
-import jade.lang.acl.ACLMessage;
+import multiAgent.behavior.message.selectPropose;
 import multiAgent.ontology.Order;
 import multiAgent.ontology.Tender;
-import multiAgent.util.AMSUtil;
 import multiAgent.util.DFUtil;
 
 import java.util.List;
@@ -18,7 +16,6 @@ import java.util.List;
  * 并向这些房东发送招标书
  */
 public class selectAnalysis extends OneShotBehaviour {
-
 
     private Order order = null;
     private Agent myAgent = null;

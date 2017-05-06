@@ -1,4 +1,4 @@
-package multiAgent.behavior;
+package multiAgent.behavior.listener;
 
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
@@ -10,6 +10,7 @@ import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import multiAgent.behavior.message.consultQuery;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Order;
 

@@ -1,4 +1,4 @@
-package multiAgent.behavior;
+package multiAgent.behavior.listener;
 
 import jade.content.ContentElement;
 import jade.content.lang.Codec;

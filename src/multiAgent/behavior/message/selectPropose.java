@@ -1,4 +1,4 @@
-package multiAgent.behavior;
+package multiAgent.behavior.message;
 
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
@@ -9,32 +9,35 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
-import multiAgent.ontology.BidOntology;
-import multiAgent.ontology.Order;
-import multiAgent.util.DFUtil;
+import multiAgent.ontology.*;
+
+import java.util.List;
 
 /**
  * Created by H77 on 2017/5/6.
  */
-public class tenantRequest extends OneShotBehaviour {
+public class selectPropose extends OneShotBehaviour{
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
     private Agent myAgent = null;
-    private Order order = null;
+    private Tender tender = null;
+    private List<AID> aids = null;
 
-    public tenantRequest(Agent agent, Order order){
+    public selectPropose (Agent agent, Tender tender ,List<AID> aids){
         myAgent = agent;
-        this.order = order;
+        this.tender = tender;
+        this.aids = aids;
     }
     public void action() {
-        //随机查找一个协商Agent 发送请求
-        AID aid = DFUtil.searchServiceAgent(myAgent,"consult");
-        ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+        ACLMessage msg = new ACLMessage(ACLMessage.PROPOSE);
         Action act = new Action();
         act.setActor(myAgent.getAID());
-        act.setAction(order);
-        msg.addReceiver(aid);
+        act.setAction(tender);
+        if(aids.size() == 0) {  System.out.println("selectPropose 异常");  return;  }
+        for(AID aid : aids){
+            msg.addReceiver(aid);
+        }
         msg.setLanguage(codec.getName());
         msg.setOntology(ontology.getName());
         try {
@@ -46,4 +49,6 @@ public class tenantRequest extends OneShotBehaviour {
             e.printStackTrace();
         }
     }
+
+
 }
