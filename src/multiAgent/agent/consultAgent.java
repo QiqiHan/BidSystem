@@ -15,6 +15,7 @@ import jade.lang.acl.MessageTemplate;
 import jade.core.Agent;
 import multiAgent.behavior.consultListener;
 import multiAgent.ontology.*;
+import multiAgent.util.DFUtil;
 
 /**
  * Created by h77 on 2017/5/5.
@@ -28,18 +29,7 @@ public class consultAgent extends Agent {
     protected void setup() {
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
-        DFAgentDescription dfd = new DFAgentDescription();
-        dfd.setName(getAID());
-        ServiceDescription sd = new ServiceDescription();
-        sd.setType("Order");
-        sd.setName(getLocalName()+"Order");
-        dfd.addServices(sd);
-        try {
-            DFService.register(this,dfd);
-        } catch (FIPAException e) {
-            e.printStackTrace();
-        }
-
+        DFUtil.registerService(this,"consult");
         addBehaviour(new consultListener(this));
     }
 }

@@ -6,13 +6,8 @@ import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
 import jade.content.onto.OntologyException;
 import jade.content.onto.basic.Action;
-import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import multiAgent.ontology.BidOntology;
@@ -38,37 +33,23 @@ public class consultListener extends CyclicBehaviour {
         ACLMessage msg = agent.receive(mt);
         if (msg != null) {
             try {
-                ContentElement ce = agent.getContentManager().extractContent(msg);
-                Action act = (Action)ce;
-                if(act.getAction() instanceof Order){
-                    Order o = (Order) act.getAction();
-                    System.out.println("收到"+o.getCustomer()+"客户的订单");
-                    //下面是传递到select
-                    //先去df中搜索相应的select
-                    DFAgentDescription template = new DFAgentDescription();
-                    ServiceDescription sd = new ServiceDescription();
-                    sd.setType("select");
-                    template.addServices(sd);
-                    DFAgentDescription[] result = DFService.search(agent,template);
-                    AID aid = result[0].getName();
-                    //搜索结束，组装传输的action
-                    Action sendAct = new Action();
-                    sendAct.setActor(aid);
-                    sendAct.setAction(o);
-                    //action组装完成，组装aclmessage
-                    ACLMessage al  = new ACLMessage(ACLMessage.QUERY_REF);
-                    al .addReceiver(aid);
-                    al .setLanguage(codec.getName());
-                    al .setOntology(ontology.getName());
-                    agent.getContentManager().fillContent(al,sendAct);
-                    //发消息
-                    agent.send(al);
+                if(msg.getPerformative() == ACLMessage.REQUEST) {
+                    ContentElement ce = agent.getContentManager().extractContent(msg);
+                    Action act = (Action) ce;
+                    if (act.getAction() instanceof Order) {
+                        Order o = (Order) act.getAction();
+                        System.out.println("consultAgent收到" + o.getCustomer() + "客户的订单");
+                        //将数据传到筛选分析的Agent
+                        consultQuery query = new consultQuery(agent,o);
+                        agent.addBehaviour(query);
+                    }
                 }
+                /*
+                   可扩展其它Message种类
+                */
             } catch (Codec.CodecException e) {
                 e.printStackTrace();
             } catch (OntologyException e) {
-                e.printStackTrace();
-            } catch (FIPAException e) {
                 e.printStackTrace();
             }
         } else {

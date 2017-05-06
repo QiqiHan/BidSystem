@@ -23,6 +23,11 @@ public class BidOntology extends Ontology{
     private static final String Order_Price = "price";
     private static final String Order_SourceAid = "source";
 
+    private static final String Tender = "Tender";
+    private static final String Tender_Address = "address";
+    private static final String Tender_Price = "price";
+    private static final String Tender_SourceAid = "source";
+
     private static  Ontology theInstance = new BidOntology();
 
     public static Ontology getInstance(){
@@ -32,11 +37,20 @@ public class BidOntology extends Ontology{
         super(ONTOLOGY_NAME, BasicOntology.getInstance());
         try {
             add(new AgentActionSchema(Order),Order.class);
+            add(new AgentActionSchema(Tender),Tender.class);
+
             AgentActionSchema order = (AgentActionSchema)getSchema(Order);
             order.add(Order_Customer,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             order.add(Order_Address,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             order.add(Order_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             order.add(Order_SourceAid,(ConceptSchema)getSchema(BasicOntology.AID));
+
+            AgentActionSchema tender = (AgentActionSchema)getSchema(Tender);
+            tender.add(Tender_Address,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            tender.add(Tender_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            tender.add(Tender_SourceAid,(ConceptSchema)getSchema(BasicOntology.AID));
+
+
         } catch (OntologyException e) {
             e.printStackTrace();
         }
