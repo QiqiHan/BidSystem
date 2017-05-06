@@ -1,45 +1,40 @@
 package multiAgent.agent;
 
-import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
-import jade.content.onto.*;
-import jade.content.onto.basic.Action;
-import jade.core.behaviours.*;
+import jade.content.onto.Ontology;
+import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
-import jade.core.Agent;
-import multiAgent.behavior.consultListener;
-import multiAgent.ontology.*;
+import multiAgent.behavior.selectListener;
+import multiAgent.ontology.BidOntology;
+
 
 /**
- * Created by h77 on 2017/5/5.
- * 简单的协商Agent
+ * Created by zy on 17/5/6.
  */
-public class consultAgent extends Agent {
+public class selectAgent extends Agent {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
 
+    //setup方法，负责为agent各个属性赋值，并且注册到dfAgent上
     protected void setup() {
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
         ServiceDescription sd = new ServiceDescription();
-        sd.setType("Order");
-        sd.setName(getLocalName()+"Order");
+        sd.setType("select");
+        sd.setName(getLocalName()+"Select");
         dfd.addServices(sd);
+        addBehaviour(new selectListener(this));
         try {
             DFService.register(this,dfd);
         } catch (FIPAException e) {
             e.printStackTrace();
         }
-
-        addBehaviour(new consultListener(this));
     }
 }
