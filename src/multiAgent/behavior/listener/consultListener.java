@@ -21,28 +21,27 @@ public class consultListener extends CyclicBehaviour {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
-    private Agent agent;
 
     public consultListener(Agent agent){
-        this.agent = agent;
+        super(agent);
     }
 
     public void action() {
         MessageTemplate mt = MessageTemplate.and(
                 MessageTemplate.MatchLanguage(codec.getName()),
                 MessageTemplate.MatchOntology(ontology.getName()));
-        ACLMessage msg = agent.receive(mt);
+        ACLMessage msg = myAgent.receive(mt);
         if (msg != null) {
             try {
                 if(msg.getPerformative() == ACLMessage.REQUEST) {
-                    ContentElement ce = agent.getContentManager().extractContent(msg);
+                    ContentElement ce = myAgent.getContentManager().extractContent(msg);
                     Action act = (Action) ce;
                     if (act.getAction() instanceof Order) {
                         Order o = (Order) act.getAction();
                         System.out.println("consultAgent收到" + o.getCustomer() + "客户的订单");
                         //将数据传到筛选分析的Agent
-                        consultQuery query = new consultQuery(agent,o);
-                        agent.addBehaviour(query);
+                        consultQuery query = new consultQuery(myAgent,o);
+                        myAgent.addBehaviour(query);
                     }
                 }
                 /*
