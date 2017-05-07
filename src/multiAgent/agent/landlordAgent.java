@@ -4,7 +4,7 @@ import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
 import jade.core.Agent;
-import multiAgent.behavior.listener.lanlordListener;
+import multiAgent.behavior.listener.landlordListener;
 import multiAgent.ontology.BidOntology;
 import multiAgent.util.DFUtil;
 
@@ -20,7 +20,7 @@ public class landlordAgent extends Agent{
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
         DFUtil.registerService(this,"landlord");
-        addBehaviour(new lanlordListener(this));
+        addBehaviour(new landlordListener(this));
     }
 
 }

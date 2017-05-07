@@ -10,18 +10,19 @@ import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Tender;
 
 /**
  * Created by H77 on 2017/5/6.
  */
-public class lanlordListener extends CyclicBehaviour {
+public class landlordListener extends CyclicBehaviour {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
 
-    public lanlordListener(Agent agent){
+    public landlordListener(Agent agent){
         super(agent);
     }
 
@@ -40,16 +41,20 @@ public class lanlordListener extends CyclicBehaviour {
                    Action act = (Action) ce;
                    Tender tender = (Tender) act.getAction();
                    System.out.println("lanlordAgent收到信息地址"+tender.getAddress()+" 价格"+tender.getPrice());
-                   //暂时随机
+                   //暂时随机 且成功失败都反馈个Bid 好统计
                    ACLMessage reply = msg.createReply();
                    if(type == 0){
                        reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-                       reply.setContent("lanlordAgent接受竞标");
-                   }else if ( type == 1){
+                   }else if (type == 1) {
                        reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
-                       reply.setContent("lanlordAgent拒绝竞标");
                    }
-                  myAgent.send(reply);
+
+                 Bid bid = new Bid(tender.getSource(),"南京大酒店",100,myAgent.getAID());
+                 Action info = new Action();
+                 info.setActor(myAgent.getAID());
+                 info.setAction(bid);
+                 myAgent.getContentManager().fillContent(reply,info);
+                 myAgent.send(reply);
                 } catch (Codec.CodecException e) {
                     e.printStackTrace();
                 } catch (OntologyException e) {

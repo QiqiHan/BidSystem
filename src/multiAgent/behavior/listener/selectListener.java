@@ -11,9 +11,12 @@ import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import multiAgent.agent.selectAgent;
 import multiAgent.behavior.logical.selectAnalysis;
+import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Order;
+import multiAgent.ontology.OrderResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +28,11 @@ public class selectListener extends CyclicBehaviour {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
-    private List<AID> lanlordAIDS;
+    private List<AID> lanlordAids;
+    private selectAgent agent;
     public selectListener(Agent agent){
-            super(agent);
+         super(agent);
+         this.agent = (selectAgent) agent;
     }
 
     public void action() {
@@ -47,12 +52,31 @@ public class selectListener extends CyclicBehaviour {
                          * todo
                          * 下面是去查询并且筛选数据，然后生成招标书，并且发送给房东agent
                          */
-                        lanlordAIDS = new ArrayList<AID>();
+                        lanlordAids = new ArrayList<AID>();
                         myAgent.addBehaviour(new selectAnalysis(myAgent,o));
                     }
-                }else if( msg.getPerformative() == ACLMessage.ACCEPT_PROPOSAL || msg.getPerformative() == ACLMessage.REJECT_PROPOSAL){
-                      System.out.println(msg.getContent());
-                      System.out.println("selectAgent获取房客竞标情况，暂时结束");
+                }else if( msg.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
+                    ContentElement ce = myAgent.getContentManager().extractContent(msg);
+                    Action act = (Action) ce;
+                    Bid bid = (Bid) act.getAction();
+                    boolean isAll = agent.isAllReply(bid.getOrderId(),bid);
+                    if(isAll){
+                       OrderResponse order = agent.getAndRemove(bid.getOrderId());
+                        //以下代码为将OrderResponse返回给房客Agent
+                    }
+                    System.out.println(bid.getLandlordId().getName() +" 同意竞标");
+                    System.out.println("selectAgent获取房客竞标情况，暂时结束");
+                }else if(msg.getPerformative() == ACLMessage.REJECT_PROPOSAL){
+                    ContentElement ce = myAgent.getContentManager().extractContent(msg);
+                    Action act = (Action) ce;
+                    Bid bid = (Bid) act.getAction();
+                    boolean isAll = agent.isAllReply(bid.getOrderId(),null);
+                    if(isAll){
+                        OrderResponse order = agent.getAndRemove(bid.getOrderId());
+                        //以下代码为将OrderResponse返回给房客Agent
+                    }
+                    System.out.println(bid.getLandlordId().getName() +" 拒绝竞标");
+                    System.out.println("selectAgent获取房客竞标情况，暂时结束");
                 }
                 /*
                   可扩展其它Message种类

@@ -9,6 +9,7 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
+import multiAgent.agent.selectAgent;
 import multiAgent.ontology.*;
 
 import java.util.List;
@@ -22,9 +23,11 @@ public class selectPropose extends OneShotBehaviour{
     private Ontology ontology = BidOntology.getInstance();
     private Tender tender = null;
     private List<AID> aids = null;
+    private selectAgent agent;
 
     public selectPropose (Agent agent, Tender tender ,List<AID> aids){
         super(agent);
+        this.agent = (selectAgent) agent;
         this.tender = tender;
         this.aids = aids;
     }
@@ -37,6 +40,10 @@ public class selectPropose extends OneShotBehaviour{
         for(AID aid : aids){
             msg.addReceiver(aid);
         }
+        //在selectAgent中先缓存
+        OrderResponse response = new OrderResponse(aids.size(),tender.getSource());
+        agent.setOrderResponse(tender.getSource(),response);
+
         msg.setLanguage(codec.getName());
         msg.setOntology(ontology.getName());
         try {
