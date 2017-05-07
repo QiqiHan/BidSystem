@@ -20,12 +20,11 @@ public class selectPropose extends OneShotBehaviour{
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
-    private Agent myAgent = null;
     private Tender tender = null;
     private List<AID> aids = null;
 
     public selectPropose (Agent agent, Tender tender ,List<AID> aids){
-        myAgent = agent;
+        super(agent);
         this.tender = tender;
         this.aids = aids;
     }

@@ -20,11 +20,10 @@ public class consultQuery extends OneShotBehaviour {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
-    private Agent myAgent = null;
     private Order order = null;
 
     public consultQuery(Agent agent, Order order){
-        myAgent = agent;
+        super(agent);
         this.order = order;
     }
     public void action() {

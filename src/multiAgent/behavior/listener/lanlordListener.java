@@ -21,9 +21,8 @@ public class lanlordListener extends CyclicBehaviour {
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
 
-    private Agent myAgent = null;
     public lanlordListener(Agent agent){
-        myAgent = agent;
+        super(agent);
     }
 
     public void action() {

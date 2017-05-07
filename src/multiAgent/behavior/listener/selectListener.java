@@ -25,21 +25,20 @@ public class selectListener extends CyclicBehaviour {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
-    private Agent agent;
     private List<AID> lanlordAIDS;
     public selectListener(Agent agent){
-            this.agent = agent;
+            super(agent);
     }
 
     public void action() {
         MessageTemplate mt = MessageTemplate.and(
                 MessageTemplate.MatchLanguage(codec.getName()),
                 MessageTemplate.MatchOntology(ontology.getName()));
-        ACLMessage msg = agent.receive(mt);
+        ACLMessage msg = myAgent.receive(mt);
         if (msg != null) {
             try {
                 if(msg.getPerformative() == ACLMessage.QUERY_REF) {
-                    ContentElement ce = agent.getContentManager().extractContent(msg);
+                    ContentElement ce = myAgent.getContentManager().extractContent(msg);
                     Action act = (Action) ce;
                     if (act.getAction() instanceof Order) {
                         Order o = (Order) act.getAction();

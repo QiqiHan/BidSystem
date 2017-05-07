@@ -18,11 +18,10 @@ import java.util.List;
 public class selectAnalysis extends OneShotBehaviour {
 
     private Order order = null;
-    private Agent myAgent = null;
 
     public selectAnalysis(Agent agent,Order order){
+        super(agent);
         this.order = order;
-        myAgent = agent;
     }
     public void action() {
         Tender tender = new Tender(order.getAddress(),order.getPrice(),order.getSource());
