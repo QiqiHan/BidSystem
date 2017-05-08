@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<typeAliases>
+    <typeAlias alias="Room" type="dao.RoomDao"/>
+</typeAliases>
+
+<environments default="BidSystem">
+    <environment id="BidSystem">
+        <transactionManager type="JDBC"/>
+        <dataSource type="POOLED">
+            <property name="driver" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://127.0.0.1:3306/bidsystem" />
+            <property name="username" value="root"/>
+            <property name="password" value="admin"/>
+        </dataSource>
+    </environment>
+</environments>
+
+<mappers>
+    <mapper resource="dao/Room.xml"/>
+</mappers>
+</configuration>
