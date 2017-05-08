@@ -54,7 +54,7 @@ public class tenantListener extends CyclicBehaviour {
                 try {
                     ContentElement ce = myAgent.getContentManager().extractContent(msg);
                     Action act = (Action) ce;
-                    if(act.getAction() instanceof  negotiation){
+                    if(act.getAction() instanceof  Negotiation){
                         Negotiation negotiation = (Negotiation)act.getAction();
                         if(negotiation.getResult() == 1){
                             System.out.println("房源"+msg.getSender()+"接收降价");
