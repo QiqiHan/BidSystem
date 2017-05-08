@@ -12,13 +12,9 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import multiAgent.behavior.message.negotiation;
-import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Negotiation;
 import multiAgent.ontology.OrderResponse;
-
-import java.util.List;
-
 /**
  * Created by H77 on 2017/5/6.
  */
@@ -65,8 +61,8 @@ public class tenantListener extends CyclicBehaviour {
                             System.out.println("降低"+negotiation.getActualPrice());
                         }else if(negotiation.getResult() == 0){
                             System.out.println("房源"+msg.getSender()+"拒绝降价");
-                        }else{
-                            System.out.println("房源"+msg.getSender()+"未响应降价");
+                        }else {
+                            System.out.println("房源" + msg.getSender() + "未响应降价");
                         }
                     }
                 } catch (Codec.CodecException e) {
@@ -75,7 +71,7 @@ public class tenantListener extends CyclicBehaviour {
                     e.printStackTrace();
                 }
             }else{
-                //暂时放在这里
+                //用来测试的
                 String content = msg.getContent();
                 System.out.println("房客Agent："+content);
             }

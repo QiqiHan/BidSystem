@@ -13,6 +13,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import multiAgent.agent.selectAgent;
 import multiAgent.behavior.logical.selectAnalysis;
+import multiAgent.behavior.message.selectInform;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Order;
@@ -61,8 +62,9 @@ public class selectListener extends CyclicBehaviour {
                     Bid bid = (Bid) act.getAction();
                     boolean isAll = agent.isAllReply(bid.getOrderId(),bid);
                     if(isAll){
-                       OrderResponse order = agent.getAndRemove(bid.getOrderId());
+                        OrderResponse order = agent.getAndRemove(bid.getOrderId());
                         //以下代码为将OrderResponse返回给房客Agent
+                        myAgent.addBehaviour(new selectInform(myAgent,order));
                     }
                     System.out.println(bid.getLandlordId().getName() +" 同意竞标");
                     System.out.println("selectAgent获取房客竞标情况，暂时结束");
@@ -74,6 +76,7 @@ public class selectListener extends CyclicBehaviour {
                     if(isAll){
                         OrderResponse order = agent.getAndRemove(bid.getOrderId());
                         //以下代码为将OrderResponse返回给房客Agent
+                        myAgent.addBehaviour(new selectInform(myAgent,order));
                     }
                     System.out.println(bid.getLandlordId().getName() +" 拒绝竞标");
                     System.out.println("selectAgent获取房客竞标情况，暂时结束");

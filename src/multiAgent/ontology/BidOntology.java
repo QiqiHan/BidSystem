@@ -61,7 +61,7 @@ public class BidOntology extends Ontology{
         try {
             add(new AgentActionSchema(Order),Order.class);
             add(new AgentActionSchema(Tender),Tender.class);
-            add(new AgentActionSchema(Bid),Bid.class);
+            add(new ConceptSchema(Bid),Bid.class);
             add(new AgentActionSchema(OrderResponse),OrderResponse.class);
             add(new ConceptSchema(Room),Room.class);
             add(new AgentActionSchema(Negotiation),Negotiation.class);
@@ -77,7 +77,7 @@ public class BidOntology extends Ontology{
             tender.add(Tender_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             tender.add(Tender_SourceAid,(ConceptSchema)getSchema(BasicOntology.AID));
 
-            AgentActionSchema bid = (AgentActionSchema)getSchema(Bid);
+            ConceptSchema  bid = (ConceptSchema)getSchema(Bid);
             bid.add(Bid_Order,(ConceptSchema)getSchema(BasicOntology.AID));
             bid.add(Bid_Room,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             bid.add(Bid_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
@@ -86,7 +86,7 @@ public class BidOntology extends Ontology{
             AgentActionSchema orderResponse = (AgentActionSchema)getSchema(OrderResponse);
             orderResponse.add(OrderResponse_Order,(ConceptSchema)getSchema(BasicOntology.AID));
             orderResponse.add(OrderResponse_Num,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-            orderResponse.add(OrderResponse_Bids,bid,0, ObjectSchema.UNLIMITED);
+            orderResponse.add(OrderResponse_Bids,(ConceptSchema)getSchema(Bid),0, ObjectSchema.UNLIMITED);
 
             AgentActionSchema negotiation = (AgentActionSchema)getSchema(Negotiation);
             negotiation.add(Negotiation_UpPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
