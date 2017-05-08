@@ -3,7 +3,7 @@ package multiAgent.ontology;
 import jade.content.AgentAction;
 
 /**
- * Created by mac on 17/5/8.
+ * Created by zy on 17/5/8.
  */
 public class Negotiation implements AgentAction {
 

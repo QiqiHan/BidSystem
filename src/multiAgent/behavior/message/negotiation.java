@@ -9,15 +9,15 @@ import jade.content.onto.basic.Action;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.util.leap.List;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Negotiation;
 import multiAgent.ontology.OrderResponse;
 
-import java.util.List;
 
 /**
- * Created by mac on 17/5/8.
+ * Created by zy on 17/5/8.
  */
 public class negotiation  extends OneShotBehaviour {
 
@@ -32,8 +32,9 @@ public class negotiation  extends OneShotBehaviour {
 
     public void action() {
         try {
-            List<Bid> Bids = orderResponse.getBids();
-            for (Bid bid : Bids) {
+            List Bids = orderResponse.getBids();
+            for (int i = 0 ; i<Bids.size() ;i ++) {
+                Bid bid = (Bid)Bids.get(i);
                 ACLMessage message = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
                 message.addReceiver(bid.getLandlordId());
                 message.setLanguage(codec.getName());
