@@ -13,7 +13,6 @@ import jade.util.leap.List;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Negotiation;
-import multiAgent.ontology.OrderResponse;
 
 
 /**

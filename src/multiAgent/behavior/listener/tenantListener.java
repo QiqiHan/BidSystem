@@ -12,16 +12,17 @@ import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import jade.util.leap.ArrayList;
 import multiAgent.behavior.message.negotiation;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Negotiation;
 import multiAgent.ontology.OrderResponse;
+import jade.util.leap.List;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created by H77 on 2017/5/6.
@@ -33,7 +34,8 @@ public class tenantListener extends CyclicBehaviour {
     private int responseNum = 0;
     private int lowerPriceNum = 0;
     private int currentResponse = 0;
-    private List<Bid> bids = new ArrayList<Bid>();
+    private List bids = new ArrayList();
+    private Map<AID,Bid> mapped = new HashMap<AID,Bid>();
 
     public tenantListener(Agent agent){
         super(agent);
@@ -53,11 +55,17 @@ public class tenantListener extends CyclicBehaviour {
                     Action act = (Action) ce;
                     if(act.getAction() instanceof  OrderResponse){
                         OrderResponse orderResponse = (OrderResponse)act.getAction();
-                        responseNum = orderResponse.getResponseNum();
-                        for(int i = 0 ; i<orderResponse.getBids().size();i++){
-                            bids.add((Bid)orderResponse.getBids().get(i));
+                        //完成映射表
+                        if(orderResponse==null || orderResponse.getBids()==null){
+                            System.out.println("没有符合意向的房源");
+                        }else {
+                            for (int i = 0; i < orderResponse.getBids().size(); i++) {
+                                Bid bid = (Bid) orderResponse.getBids().get(i);
+                                mapped.put(bid.getLandlordId(), bid);
+                            }
+                            responseNum = orderResponse.getBids().size();
+                            myAgent.addBehaviour(new negotiation(myAgent, orderResponse.getBids()));
                         }
-                        myAgent.addBehaviour(new negotiation(myAgent,orderResponse.getBids()));
                     }
                 }catch (Codec.CodecException e){
                     e.printStackTrace();
@@ -78,6 +86,7 @@ public class tenantListener extends CyclicBehaviour {
                             System.out.println("房源"+msg.getSender().getName()+"接收降价");
                             System.out.println("降低"+negotiation.getActualPrice());
                             lowerPriceNum ++ ;
+                            bids.add(mapped.get(msg.getSender()));
                         }else if(negotiation.getResult() == 0){
                             System.out.println("房源"+msg.getSender().getName()+"拒绝降价");
                         }else {
@@ -95,7 +104,8 @@ public class tenantListener extends CyclicBehaviour {
                             lowerPriceNum = 0;
                             currentResponse = 0;
                             responseNum = lowerPriceNum;
-
+                            myAgent.addBehaviour(new negotiation(myAgent,bids));
+                            bids.clear();
                         }
                     }
 
