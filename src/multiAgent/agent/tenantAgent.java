@@ -28,7 +28,7 @@ public class tenantAgent extends Agent {
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
 
-        Order order = new Order("aaa","bb",1235,getAID());
+        Order order = new Order("小明","南大",120,getAID());
         /*
            这部分代码是向AMS Agent要全部的Agent的信息
          */
@@ -62,6 +62,7 @@ public class tenantAgent extends Agent {
         } catch (OntologyException e) {
             e.printStackTrace();
         }
+        System.out.println("tenant"+this.getName()+"发送订单请求");
         send(msg);
         addBehaviour(new tenantListener(this));
     }

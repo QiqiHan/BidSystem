@@ -41,7 +41,7 @@ public class selectAgent extends Agent {
         int replys = counts.get(id)+1;
         counts.put(id,replys);
         OrderResponse response = store.get(id);
-        if(bid != null) response.addBid(bid);
+        if(bid.getType() == 1) response.addBid(bid);
         if(replys == response.getResponseNum()){
             return true;
         }
