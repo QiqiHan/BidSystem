@@ -45,6 +45,11 @@ public class BidOntology extends Ontology{
     private static final String Room_Owner = "owner";
     private static final String Room_Type = "type";
 
+    private static final String Negotiation = "Negotiation";
+    private static final String Negotiation_UpPrice = "upPrice";
+    private static final String Negotiation_LowPrice = "lowPrice";
+    private static final String Negotiation_Result="result";
+    private static final String Negotiation_ActualPrice="actualPrice";
 
     private static  Ontology theInstance = new BidOntology();
 
@@ -59,6 +64,7 @@ public class BidOntology extends Ontology{
             add(new AgentActionSchema(Bid),Bid.class);
             add(new AgentActionSchema(OrderResponse),OrderResponse.class);
             add(new ConceptSchema(Room),Room.class);
+            add(new AgentActionSchema(Negotiation),Negotiation.class);
 
             AgentActionSchema order = (AgentActionSchema)getSchema(Order);
             order.add(Order_Customer,(PrimitiveSchema)getSchema(BasicOntology.STRING));
@@ -82,7 +88,11 @@ public class BidOntology extends Ontology{
             orderResponse.add(OrderResponse_Num,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             orderResponse.add(OrderResponse_Bids,bid,0, ObjectSchema.UNLIMITED);
 
-
+            AgentActionSchema negotiation = (AgentActionSchema)getSchema(Negotiation);
+            negotiation.add(Negotiation_UpPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            negotiation.add(Negotiation_LowPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            negotiation.add(Negotiation_Result,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            negotiation.add(Negotiation_ActualPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
         } catch (OntologyException e) {
             e.printStackTrace();
         }

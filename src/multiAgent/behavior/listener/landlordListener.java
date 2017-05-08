@@ -12,7 +12,10 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
+import multiAgent.ontology.Negotiation;
 import multiAgent.ontology.Tender;
+
+import java.util.Random;
 
 /**
  * Created by H77 on 2017/5/6.
@@ -55,6 +58,43 @@ public class landlordListener extends CyclicBehaviour {
                  info.setAction(bid);
                  myAgent.getContentManager().fillContent(reply,info);
                  myAgent.send(reply);
+                } catch (Codec.CodecException e) {
+                    e.printStackTrace();
+                } catch (OntologyException e) {
+                    e.printStackTrace();
+                }
+            }else if(msg.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
+                //监听客户端协商消息
+                try {
+                    ContentElement ce = myAgent.getContentManager().extractContent(msg);
+                    System.out.println("收到房客的协商消息");
+                    Action act = (Action) ce;
+                    if(act.getAction() instanceof Negotiation){
+                        Negotiation negotiation = (Negotiation)act.getAction();
+                        Random r=new Random();
+                        int a=r.nextInt(2);
+                        if(a<1){
+                            negotiation.setResult(0);
+                        }else{
+                            negotiation.setResult(1);
+                            negotiation.setActualPrice(5);
+                        }
+
+                        //回复给房客
+                        Action sendAct = new Action();
+                        sendAct.setActor(myAgent.getAID());
+                        sendAct.setAction(negotiation);
+
+                        ACLMessage message = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
+                        message.addReceiver(msg.getSender());
+                        message.setLanguage(codec.getName());
+                        message.setOntology(ontology.getName());
+
+                        myAgent.getContentManager().fillContent(message, sendAct);
+                        //发消息
+                        myAgent.send(message);
+
+                    }
                 } catch (Codec.CodecException e) {
                     e.printStackTrace();
                 } catch (OntologyException e) {
