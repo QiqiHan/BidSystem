@@ -9,6 +9,8 @@ import jade.content.schema.ConceptSchema;
 import jade.content.schema.ObjectSchema;
 import jade.content.schema.PrimitiveSchema;
 
+import java.util.BitSet;
+
 /**
  * Created by H77 on 2017/5/4.
  *
@@ -90,6 +92,11 @@ public class BidOntology extends Ontology{
             orderResponse.add(OrderResponse_Order,(ConceptSchema)getSchema(BasicOntology.AID));
             orderResponse.add(OrderResponse_Num,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             orderResponse.add(OrderResponse_Bids,(ConceptSchema)getSchema(Bid),0, ObjectSchema.UNLIMITED);
+
+            ConceptSchema room = (ConceptSchema)getSchema(Room);
+            room.add(Room_Name,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            room.add(Room_Owner,(ConceptSchema)getSchema(BasicOntology.AID));
+            room.add(Room_Type,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
 
             AgentActionSchema negotiation = (AgentActionSchema)getSchema(Negotiation);
             negotiation.add(Negotiation_UpPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
