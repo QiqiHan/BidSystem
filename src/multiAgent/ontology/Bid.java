@@ -1,12 +1,13 @@
 package multiAgent.ontology;
 
 import jade.content.AgentAction;
+import jade.content.Concept;
 import jade.core.AID;
 
 /**
  * Created by H77 on 2017/5/7.
  */
-public class Bid implements AgentAction {
+public class Bid implements Concept {
 
     private AID orderId;
     private String room;

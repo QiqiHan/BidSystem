@@ -12,6 +12,7 @@ import jade.lang.acl.ACLMessage;
 import multiAgent.agent.selectAgent;
 import multiAgent.ontology.*;
 
+import jade.util.leap.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class selectPropose extends OneShotBehaviour{
             msg.addReceiver(aid);
         }
         //在selectAgent中先缓存
-        OrderResponse response = new OrderResponse(aids.size(),tender.getSource());
+        OrderResponse response = new OrderResponse(aids.size(),tender.getSource(),new ArrayList());
         agent.setOrderResponse(tender.getSource(),response);
 
         msg.setLanguage(codec.getName());

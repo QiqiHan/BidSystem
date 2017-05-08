@@ -40,7 +40,7 @@ public class landlordListener extends CyclicBehaviour {
                    ce = myAgent.getContentManager().extractContent(msg);
                    Action act = (Action) ce;
                    Tender tender = (Tender) act.getAction();
-                   System.out.println("lanlordAgent收到信息地址"+tender.getAddress()+" 价格"+tender.getPrice());
+                   System.out.println("lanlord"+myAgent.getName()+"收到信息地址"+tender.getAddress()+" 价格"+tender.getPrice());
                    //暂时随机 且成功失败都反馈个Bid 好统计
                    ACLMessage reply = msg.createReply();
                    if(type == 0){
