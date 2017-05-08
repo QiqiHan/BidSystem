@@ -17,22 +17,21 @@ import multiAgent.ontology.OrderResponse;
 
 
 /**
- * Created by zy on 17/5/8.
+ * Created by  on 17/5/8.
  */
 public class negotiation  extends OneShotBehaviour {
 
-    private OrderResponse orderResponse;
+    private List Bids;
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
 
-    public negotiation(Agent agent,OrderResponse orderResponse){
+    public negotiation(Agent agent,List Bids){
         super(agent);
-        this.orderResponse = orderResponse;
+        this.Bids = Bids;
     }
 
     public void action() {
         try {
-            List Bids = orderResponse.getBids();
             for (int i = 0 ; i<Bids.size() ;i ++) {
                 Bid bid = (Bid)Bids.get(i);
                 ACLMessage message = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);

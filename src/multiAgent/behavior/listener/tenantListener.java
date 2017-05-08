@@ -7,14 +7,22 @@ import jade.content.onto.Ontology;
 import jade.content.onto.OntologyException;
 import jade.content.onto.UngroundedException;
 import jade.content.onto.basic.Action;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import multiAgent.behavior.message.negotiation;
+import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Negotiation;
 import multiAgent.ontology.OrderResponse;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by H77 on 2017/5/6.
  */
@@ -22,10 +30,15 @@ public class tenantListener extends CyclicBehaviour {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
+    private int responseNum = 0;
+    private int lowerPriceNum = 0;
+    private int currentResponse = 0;
+    private List<Bid> bids = new ArrayList<Bid>();
 
     public tenantListener(Agent agent){
         super(agent);
     }
+
     public void action() {
         MessageTemplate mt = MessageTemplate.and(
                 MessageTemplate.MatchLanguage(codec.getName()),
@@ -40,7 +53,11 @@ public class tenantListener extends CyclicBehaviour {
                     Action act = (Action) ce;
                     if(act.getAction() instanceof  OrderResponse){
                         OrderResponse orderResponse = (OrderResponse)act.getAction();
-                        myAgent.addBehaviour(new negotiation(myAgent,orderResponse));
+                        responseNum = orderResponse.getResponseNum();
+                        for(int i = 0 ; i<orderResponse.getBids().size();i++){
+                            bids.add((Bid)orderResponse.getBids().get(i));
+                        }
+                        myAgent.addBehaviour(new negotiation(myAgent,orderResponse.getBids()));
                     }
                 }catch (Codec.CodecException e){
                     e.printStackTrace();
@@ -51,6 +68,7 @@ public class tenantListener extends CyclicBehaviour {
                 }
             }else if(msg.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
                 //收到房源的回应
+                currentResponse++;
                 try {
                     ContentElement ce = myAgent.getContentManager().extractContent(msg);
                     Action act = (Action) ce;
@@ -59,12 +77,28 @@ public class tenantListener extends CyclicBehaviour {
                         if(negotiation.getResult() == 1){
                             System.out.println("房源"+msg.getSender()+"接收降价");
                             System.out.println("降低"+negotiation.getActualPrice());
+                            lowerPriceNum ++ ;
                         }else if(negotiation.getResult() == 0){
                             System.out.println("房源"+msg.getSender()+"拒绝降价");
                         }else {
                             System.out.println("房源" + msg.getSender() + "未响应降价");
                         }
                     }
+
+                    if(currentResponse == responseNum){
+                        //收到全部的回复
+                        if(lowerPriceNum == 0){
+                            //所有房源都不降价
+                            System.out.println("所有房源都不降价了");
+                            //返回现在的最好的房源
+                        }else{
+                            lowerPriceNum = 0;
+                            currentResponse = 0;
+                            responseNum = lowerPriceNum;
+
+                        }
+                    }
+
                 } catch (Codec.CodecException e) {
                     e.printStackTrace();
                 } catch (OntologyException e) {
