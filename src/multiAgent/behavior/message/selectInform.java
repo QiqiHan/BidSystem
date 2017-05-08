@@ -30,7 +30,6 @@ public class selectInform extends OneShotBehaviour {
 
     public void action() {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-
         msg.addReceiver(response.getOrderId());
         Action act = new Action();
         act.setActor(response.getOrderId());

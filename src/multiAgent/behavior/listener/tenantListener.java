@@ -34,7 +34,7 @@ public class tenantListener extends CyclicBehaviour {
         if(msg != null){
             if(msg.getPerformative() == ACLMessage.INFORM){
                 //得到返回的房东竞标集合，下一步是与房东之间的智能讨价还价过程
-                System.out.println("收到筛选结果");
+                System.out.println(myAgent.getName() +" 收到筛选结果");
                 try {
                     ContentElement ce = myAgent.getContentManager().extractContent(msg);
                     Action act = (Action) ce;
@@ -57,12 +57,12 @@ public class tenantListener extends CyclicBehaviour {
                     if(act.getAction() instanceof  Negotiation){
                         Negotiation negotiation = (Negotiation)act.getAction();
                         if(negotiation.getResult() == 1){
-                            System.out.println("房源"+msg.getSender()+"接收降价");
+                            System.out.println("房源"+msg.getSender().getName()+"接收降价");
                             System.out.println("降低"+negotiation.getActualPrice());
                         }else if(negotiation.getResult() == 0){
-                            System.out.println("房源"+msg.getSender()+"拒绝降价");
+                            System.out.println("房源"+msg.getSender().getName()+"拒绝降价");
                         }else {
-                            System.out.println("房源" + msg.getSender() + "未响应降价");
+                            System.out.println("房源" + msg.getSender().getName() + "未响应降价");
                         }
                     }
                 } catch (Codec.CodecException e) {
@@ -75,7 +75,9 @@ public class tenantListener extends CyclicBehaviour {
                 String content = msg.getContent();
                 System.out.println("房客Agent："+content);
             }
-
+            /*
+              可以扩展监听其它类型的Message
+             */
         }else{
             block();
         }

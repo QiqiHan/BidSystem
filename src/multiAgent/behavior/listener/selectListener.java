@@ -48,7 +48,7 @@ public class selectListener extends CyclicBehaviour {
                     Action act = (Action) ce;
                     if (act.getAction() instanceof Order) {
                         Order o = (Order) act.getAction();
-                        System.out.println("selectAgent收到筛选条件信息" + o.getAddress());
+                        System.out.println("select"+myAgent.getName()+"收到筛选条件信息" + o.getAddress());
                         /**
                          * todo
                          * 下面是去查询并且筛选数据，然后生成招标书，并且发送给房东agent
@@ -56,30 +56,21 @@ public class selectListener extends CyclicBehaviour {
                         lanlordAids = new ArrayList<AID>();
                         myAgent.addBehaviour(new selectAnalysis(myAgent,o));
                     }
-                }else if( msg.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
+                }else if( msg.getPerformative() == ACLMessage.PROPOSE){
                     ContentElement ce = myAgent.getContentManager().extractContent(msg);
                     Action act = (Action) ce;
                     Bid bid = (Bid) act.getAction();
+                    if(bid.getType() == 1) {
+                        System.out.println(bid.getLandlordId().getName() + " 同意竞标");
+                    }else{
+                        System.out.println(bid.getLandlordId().getName() +" 拒绝竞标");
+                    }
                     boolean isAll = agent.isAllReply(bid.getOrderId(),bid);
                     if(isAll){
                         OrderResponse order = agent.getAndRemove(bid.getOrderId());
                         //以下代码为将OrderResponse返回给房客Agent
                         myAgent.addBehaviour(new selectInform(myAgent,order));
                     }
-                    System.out.println(bid.getLandlordId().getName() +" 同意竞标");
-                    System.out.println("selectAgent获取房客竞标情况，暂时结束");
-                }else if(msg.getPerformative() == ACLMessage.REJECT_PROPOSAL){
-                    ContentElement ce = myAgent.getContentManager().extractContent(msg);
-                    Action act = (Action) ce;
-                    Bid bid = (Bid) act.getAction();
-                    boolean isAll = agent.isAllReply(bid.getOrderId(),null);
-                    if(isAll){
-                        OrderResponse order = agent.getAndRemove(bid.getOrderId());
-                        //以下代码为将OrderResponse返回给房客Agent
-                        myAgent.addBehaviour(new selectInform(myAgent,order));
-                    }
-                    System.out.println(bid.getLandlordId().getName() +" 拒绝竞标");
-                    System.out.println("selectAgent获取房客竞标情况，暂时结束");
                 }
                 /*
                   可扩展其它Message种类

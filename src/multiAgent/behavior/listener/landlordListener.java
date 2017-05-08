@@ -10,6 +10,8 @@ import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import multiAgent.behavior.logical.landlordDealTender;
+import multiAgent.behavior.message.landlordPropose;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Negotiation;
@@ -37,37 +39,24 @@ public class landlordListener extends CyclicBehaviour {
 
         if(msg != null){
             if(msg.getPerformative() == ACLMessage.PROPOSE){
-                   int type = (int)(Math.random()*2);
                 ContentElement ce = null;
                 try {
-                   ce = myAgent.getContentManager().extractContent(msg);
-                   Action act = (Action) ce;
-                   Tender tender = (Tender) act.getAction();
-                   System.out.println("lanlord"+myAgent.getName()+"收到信息地址"+tender.getAddress()+" 价格"+tender.getPrice());
-                   //暂时随机 且成功失败都反馈个Bid 好统计
-                   ACLMessage reply = msg.createReply();
-                   if(type == 0){
-                       reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-                   }else if (type == 1) {
-                       reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
-                   }
-
-                 Bid bid = new Bid(tender.getSource(),"南京大酒店",100,myAgent.getAID());
-                 Action info = new Action();
-                 info.setActor(myAgent.getAID());
-                 info.setAction(bid);
-                 myAgent.getContentManager().fillContent(reply,info);
-                 myAgent.send(reply);
+                    ce = myAgent.getContentManager().extractContent(msg);
+                    Action act = (Action) ce;
+                    Tender tender = (Tender) act.getAction();
+                    System.out.println("lanlord" + myAgent.getName() + "收到信息地址" + tender.getAddress() + " 价格" + tender.getPrice());
+                    myAgent.addBehaviour(new landlordDealTender(myAgent,tender,msg.getSender()));
                 } catch (Codec.CodecException e) {
                     e.printStackTrace();
                 } catch (OntologyException e) {
                     e.printStackTrace();
                 }
+
             }else if(msg.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
                 //监听客户端协商消息
                 try {
                     ContentElement ce = myAgent.getContentManager().extractContent(msg);
-                    System.out.println("收到房客的协商消息");
+                    System.out.println(myAgent.getName()+" 收到房客的协商消息");
                     Action act = (Action) ce;
                     if(act.getAction() instanceof Negotiation){
                         Negotiation negotiation = (Negotiation)act.getAction();

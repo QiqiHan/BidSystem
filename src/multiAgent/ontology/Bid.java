@@ -13,12 +13,14 @@ public class Bid implements Concept {
     private String room;
     private int price;
     private AID landlordId;
+    private int type; // 0 拒绝竞标  1 竞标
 
-    public Bid(AID orderId, String room, int price, AID landlordId) {
+    public Bid(AID orderId, String room, int price, AID landlordId , int type) {
         this.orderId = orderId;
         this.room = room;
         this.price = price;
         this.landlordId = landlordId;
+        this.type = type;
     }
     public Bid(){}
     public AID getOrderId() {
@@ -45,4 +47,6 @@ public class Bid implements Concept {
     public void setLandlordId(AID landlordId) {
         this.landlordId = landlordId;
     }
+    public int getType() { return type; }
+    public void setType(int type) { this.type = type;}
 }
