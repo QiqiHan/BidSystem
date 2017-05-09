@@ -20,5 +20,6 @@
 
 <mappers>
     <mapper resource="dao/Room.xml"/>
+    <mapper resource="dao/Hotel.xml"/>
 </mappers>
 </configuration>
