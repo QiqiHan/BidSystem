@@ -45,9 +45,9 @@ public class BidOntology extends Ontology{
     private static final String OrderResponse_Bids = "bids";
 
     private static final String Room = "Room";
-    private static final String Room_Name = "name";
     private static final String Room_Owner = "owner";
     private static final String Room_Type = "type";
+    private static final String Room_Price = "price";
 
     private static final String Negotiation = "Negotiation";
     private static final String Negotiation_UpPrice = "upPrice";
@@ -94,9 +94,9 @@ public class BidOntology extends Ontology{
             orderResponse.add(OrderResponse_Bids,(ConceptSchema)getSchema(Bid),0, ObjectSchema.UNLIMITED);
 
             ConceptSchema room = (ConceptSchema)getSchema(Room);
-            room.add(Room_Name,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             room.add(Room_Owner,(ConceptSchema)getSchema(BasicOntology.AID));
-            room.add(Room_Type,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            room.add(Room_Type,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            room.add(Room_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
 
             AgentActionSchema negotiation = (AgentActionSchema)getSchema(Negotiation);
             negotiation.add(Negotiation_UpPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));

@@ -8,24 +8,16 @@ import jade.core.AID;
  *
  */
 public class Room implements Concept{
-    private String name;
+    private String type;
     private AID owner;
-    private RoomType type;
+    private int price;
 
-    public Room(String name,AID owner,RoomType type){
-        this.name = name;
-        this.owner = owner;
+    public Room(String type,AID owner,int price){
         this.type = type;
+        this.owner = owner;
+        this.price = price;
     }
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public AID getOwner() {
         return owner;
@@ -35,11 +27,20 @@ public class Room implements Concept{
         this.owner = owner;
     }
 
-    public RoomType getType() {
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getType() {
         return type;
     }
 
-    public void setType(RoomType type) {
+    public void setType(String type) {
         this.type = type;
     }
 }
