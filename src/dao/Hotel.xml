@@ -4,6 +4,6 @@
 
 <mapper namespace="dao.RoomDao">
     <select id="getHotel" parameterType="int" resultType="dao.HotelDao">
-        select * from room where id = #{id}
+        select * from hotel where id = #{id}
     </select>
 </mapper>

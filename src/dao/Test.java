@@ -48,6 +48,7 @@ public class Test {
 
         RoomDao room = session.selectOne(statement, 1);
         System.out.println(room);
-
+        HotelDao hotelDao = session.selectOne("getHotel",240002);
+        System.out.println(hotelDao.getName());
     }
 }
