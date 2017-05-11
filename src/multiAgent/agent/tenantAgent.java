@@ -15,6 +15,8 @@ import multiAgent.behavior.listener.tenantListener;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Order;
 
+import java.util.Date;
+
 /**
  * Created by h77 on 2017/5/5.
  * 简单的房客Agent
@@ -28,7 +30,9 @@ public class tenantAgent extends Agent {
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
 
-        Order order = new Order("小明","南大",120,getAID());
+        Date dStart = new Date(2017,5,9);
+        Date dEnd = new Date(2017,5,12);
+        Order order = new Order("小明","南京市南大","豪华套件",1,dStart,dEnd,120,getAID());
         /*
            这部分代码是向AMS Agent要全部的Agent的信息
          */
@@ -48,6 +52,7 @@ public class tenantAgent extends Agent {
             System.out.println( "Problem searching AMS: " + e );
             e.printStackTrace();
         }
+
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
         try {
             Action act = new Action();
