@@ -23,6 +23,10 @@ public class BidOntology extends Ontology{
     private static final String Order = "Order";
     private static final String Order_Customer = "customer";
     private static final String Order_Address = "address";
+    private static final String Order_RoomType = "roomType";
+    private static final String Order_RoomNum = "roomNum";
+    private static final String Order_Start = "start";
+    private static final String Order_End = "end";
     private static final String Order_Price = "price";
     private static final String Order_SourceAid = "source";
 
@@ -73,6 +77,10 @@ public class BidOntology extends Ontology{
             AgentActionSchema order = (AgentActionSchema)getSchema(Order);
             order.add(Order_Customer,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             order.add(Order_Address,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            order.add(Order_RoomType,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            order.add(Order_RoomNum,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            order.add(Order_Start,(PrimitiveSchema)getSchema(BasicOntology.DATE));
+            order.add(Order_End,(PrimitiveSchema)getSchema(BasicOntology.DATE));
             order.add(Order_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             order.add(Order_SourceAid,(ConceptSchema)getSchema(BasicOntology.AID));
 
