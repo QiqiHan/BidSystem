@@ -1,5 +1,6 @@
 package dao;
 
+import multiAgent.ontology.Room;
 import multiAgent.util.DBTools;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Created by zcy on 2017/5/8.
@@ -35,7 +37,11 @@ public class Test {
         SqlSession session = DBTools.getSession();
         String statement = "getRoom";//映射sql的标识字符串
         //执行查询返回一个唯一user对象的sql
-        RoomDao room = session.selectOne(statement, 1);
-        System.out.println(room.getType());
+//        RoomDao room = session.selectOne(statement, 315880);
+//        System.out.println(room);
+        List<RoomDao> rooms = session.selectList(statement, 315880);
+        for(RoomDao rd:rooms){
+            System.out.println(rd.getHotelId()+" "+rd.getType()+" "+rd.getPrice());
+        }
     }
 }

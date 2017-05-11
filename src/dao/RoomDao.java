@@ -5,19 +5,19 @@ package dao;
  *
  */
 public class RoomDao {
-    private int aid;
+    private int hotelId;
     private String type;
     private int price;
 
     public RoomDao() {
     }
 
-    public int getAid() {
-        return aid;
+    public int getHotelId() {
+        return hotelId;
     }
 
-    public void setAid(int aid) {
-        this.aid = aid;
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 
     public String getType() {
