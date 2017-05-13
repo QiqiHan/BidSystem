@@ -54,7 +54,7 @@ public class selectListener extends CyclicBehaviour {
                          * 下面是去查询并且筛选数据，然后生成招标书，并且发送给房东agent
                          */
                         lanlordAids = new ArrayList<AID>();
-                        myAgent.addBehaviour(new selectAnalysis(myAgent,o));
+                        myAgent.addBehaviour(new selectAnalysis(agent,o));
                     }
                 }else if( msg.getPerformative() == ACLMessage.PROPOSE){
                     ContentElement ce = myAgent.getContentManager().extractContent(msg);

@@ -15,12 +15,25 @@ public class landlordAgent extends Agent{
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
+    //landlordAgent 生命周期
+    private boolean isDone = false;
 
     protected void setup() {
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
         DFUtil.registerService(this,"landlord");
+        System.out.println("创建 landlordAgent");
         addBehaviour(new landlordListener(this));
+    }
+
+    protected boolean done(){
+        return isDone;
+    }
+    public boolean isDone() {
+        return isDone;
+    }
+    public void setDone(boolean done) {
+        isDone = done;
     }
 
 }
