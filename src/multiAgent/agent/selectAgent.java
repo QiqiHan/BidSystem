@@ -3,9 +3,20 @@ package multiAgent.agent;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
+import jade.content.onto.basic.Action;
 import jade.core.AID;
 import jade.core.Agent;
 
+import jade.core.ContainerID;
+import jade.domain.FIPANames;
+import jade.domain.JADEAgentManagement.CreateAgent;
+import jade.domain.JADEAgentManagement.JADEManagementOntology;
+import jade.lang.acl.ACLMessage;
+import jade.proto.AchieveREInitiator;
+import jade.wrapper.AgentContainer;
+import jade.wrapper.AgentController;
+import jade.wrapper.StaleProxyException;
 import multiAgent.behavior.listener.selectListener;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
@@ -30,6 +41,7 @@ public class selectAgent extends Agent {
     protected void setup() {
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
+        System.out.println("创建 selectAgent");
         DFUtil.registerService(this,"select");
         addBehaviour(new selectListener(this));
     }
@@ -53,4 +65,23 @@ public class selectAgent extends Agent {
         counts.remove(id);
         return order;
     }
+    public List<AID> createAgent(){
+        AgentContainer c = getContainerController();
+        List<AID> aids = new ArrayList<AID>();
+        try {
+            for(int i =  4 ; i< 8 ; i++) {
+                String name = "f"+i;
+                AgentController agent = c.createNewAgent(name, "multiAgent.agent.landlordAgent", null);
+                AID id = new AID(name,false);
+                aids.add(id);
+                agent.start();
+                System.out.println("Manager Agent创建Agent" +agent.getName());
+            }
+        } catch (StaleProxyException e) {
+            e.printStackTrace();
+        }
+        return aids;
+    }
+
+
 }

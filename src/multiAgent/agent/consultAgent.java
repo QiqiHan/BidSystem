@@ -21,6 +21,7 @@ public class consultAgent extends Agent {
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
         DFUtil.registerService(this,"consult");
+        System.out.println("创建 consultAgent");
         addBehaviour(new consultListener(this));
     }
 }
