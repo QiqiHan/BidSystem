@@ -32,7 +32,7 @@ public class tenantAgent extends Agent {
 
         Date dStart = new Date(2017,5,9);
         Date dEnd = new Date(2017,5,12);
-        Order order = new Order("小明","南京市南大","豪华套件",1,dStart,dEnd,120,getAID());
+        Order order = new Order("小明","南京市南大","豪华套间",1,dStart,dEnd,120,getAID());
         /*
            这部分代码是向AMS Agent要全部的Agent的信息
          */
