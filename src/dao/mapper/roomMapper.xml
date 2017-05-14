@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.roomMapper" >
+  <resultMap id="BaseResultMap" type="DO.room" >
+    <constructor >
+      <idArg column="roomId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="landlordId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="roomType" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="validStartTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="validEndTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="facilities" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="area" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    roomId, landlordId, roomType, price, validStartTime, validEndTime, facilities, area
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from room
+    where roomId = #{roomid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from room
+    where roomId = #{roomid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="DO.room" >
+    insert into room (roomId, landlordId, roomType, 
+      price, validStartTime, validEndTime, 
+      facilities, area)
+    values (#{roomid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER}, #{roomtype,jdbcType=VARCHAR}, 
+      #{price,jdbcType=INTEGER}, #{validstarttime,jdbcType=TIMESTAMP}, #{validendtime,jdbcType=TIMESTAMP}, 
+      #{facilities,jdbcType=VARCHAR}, #{area,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="DO.room" >
+    insert into room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomid != null" >
+        roomId,
+      </if>
+      <if test="landlordid != null" >
+        landlordId,
+      </if>
+      <if test="roomtype != null" >
+        roomType,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="validstarttime != null" >
+        validStartTime,
+      </if>
+      <if test="validendtime != null" >
+        validEndTime,
+      </if>
+      <if test="facilities != null" >
+        facilities,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomid != null" >
+        #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="landlordid != null" >
+        #{landlordid,jdbcType=INTEGER},
+      </if>
+      <if test="roomtype != null" >
+        #{roomtype,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="validstarttime != null" >
+        #{validstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validendtime != null" >
+        #{validendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="facilities != null" >
+        #{facilities,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="DO.room" >
+    update room
+    <set >
+      <if test="landlordid != null" >
+        landlordId = #{landlordid,jdbcType=INTEGER},
+      </if>
+      <if test="roomtype != null" >
+        roomType = #{roomtype,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="validstarttime != null" >
+        validStartTime = #{validstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validendtime != null" >
+        validEndTime = #{validendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="facilities != null" >
+        facilities = #{facilities,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where roomId = #{roomid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="DO.room" >
+    update room
+    set landlordId = #{landlordid,jdbcType=INTEGER},
+      roomType = #{roomtype,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      validStartTime = #{validstarttime,jdbcType=TIMESTAMP},
+      validEndTime = #{validendtime,jdbcType=TIMESTAMP},
+      facilities = #{facilities,jdbcType=VARCHAR},
+      area = #{area,jdbcType=DECIMAL}
+    where roomId = #{roomid,jdbcType=INTEGER}
+  </update>
+</mapper>

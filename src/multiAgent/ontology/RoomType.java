@@ -5,9 +5,26 @@ package multiAgent.ontology;
  *
  */
 public enum RoomType {
-    Standard,
-    Superior,
-    Deluxe,
-    Business,
-    Special
+
+    Standard("Standard"),
+    Superior("Superior"),
+    Deluxe("Deluxe"),
+    Business("Business"),
+    Special("Special");
+
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private RoomType(String description){
+        this.description = description;
+    }
+
+
 }

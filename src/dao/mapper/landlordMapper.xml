@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.landlordMapper" >
+  <resultMap id="BaseResultMap" type="DO.landlord" >
+    <constructor >
+      <idArg column="landlordId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="landlordName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="landlordType" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="feature" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="startPrice" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="area" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="detailAddress" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="comment" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column=" LONG" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column=" lat" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="concat" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="introduction" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    landlordId, landlordName, landlordType, feature, startPrice, city, area, detailAddress, 
+    comment, " LONG", " lat", concat, introduction
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from landlord
+    where landlordId = #{landlordid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from landlord
+    where landlordId = #{landlordid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="DO.landlord" >
+    insert into landlord (landlordId, landlordName, landlordType, 
+      feature, startPrice, city, 
+      area, detailAddress, comment, 
+      " LONG", " lat", concat, 
+      introduction)
+    values (#{landlordid,jdbcType=INTEGER}, #{landlordname,jdbcType=VARCHAR}, #{landlordtype,jdbcType=VARCHAR}, 
+      #{feature,jdbcType=VARCHAR}, #{startprice,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{detailaddress,jdbcType=VARCHAR}, #{comment,jdbcType=INTEGER}, 
+      #{long,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, #{concat,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="DO.landlord" >
+    insert into landlord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="landlordid != null" >
+        landlordId,
+      </if>
+      <if test="landlordname != null" >
+        landlordName,
+      </if>
+      <if test="landlordtype != null" >
+        landlordType,
+      </if>
+      <if test="feature != null" >
+        feature,
+      </if>
+      <if test="startprice != null" >
+        startPrice,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="detailaddress != null" >
+        detailAddress,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="long != null" >
+        " LONG",
+      </if>
+      <if test="lat != null" >
+        " lat",
+      </if>
+      <if test="concat != null" >
+        concat,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="landlordid != null" >
+        #{landlordid,jdbcType=INTEGER},
+      </if>
+      <if test="landlordname != null" >
+        #{landlordname,jdbcType=VARCHAR},
+      </if>
+      <if test="landlordtype != null" >
+        #{landlordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="feature != null" >
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="startprice != null" >
+        #{startprice,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="detailaddress != null" >
+        #{detailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=INTEGER},
+      </if>
+      <if test="long != null" >
+        #{long,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null" >
+        #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="concat != null" >
+        #{concat,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="DO.landlord" >
+    update landlord
+    <set >
+      <if test="landlordname != null" >
+        landlordName = #{landlordname,jdbcType=VARCHAR},
+      </if>
+      <if test="landlordtype != null" >
+        landlordType = #{landlordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="feature != null" >
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="startprice != null" >
+        startPrice = #{startprice,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="detailaddress != null" >
+        detailAddress = #{detailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=INTEGER},
+      </if>
+      <if test="long != null" >
+        " LONG" = #{long,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null" >
+        " lat" = #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="concat != null" >
+        concat = #{concat,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where landlordId = #{landlordid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="DO.landlord" >
+    update landlord
+    set landlordName = #{landlordname,jdbcType=VARCHAR},
+      landlordType = #{landlordtype,jdbcType=VARCHAR},
+      feature = #{feature,jdbcType=VARCHAR},
+      startPrice = #{startprice,jdbcType=INTEGER},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      detailAddress = #{detailaddress,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=INTEGER},
+      " LONG" = #{long,jdbcType=DECIMAL},
+      " lat" = #{lat,jdbcType=DECIMAL},
+      concat = #{concat,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR}
+    where landlordId = #{landlordid,jdbcType=INTEGER}
+  </update>
+</mapper>
