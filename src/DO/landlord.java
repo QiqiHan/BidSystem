@@ -21,7 +21,7 @@ public class landlord {
 
     private Integer comment;
 
-    private BigDecimal long;
+    private BigDecimal longitude;
 
     private BigDecimal lat;
 
@@ -29,7 +29,7 @@ public class landlord {
 
     private String introduction;
 
-    public landlord(Integer landlordid, String landlordname, String landlordtype, String feature, Integer startprice, String city, String area, String detailaddress, Integer comment, BigDecimal long, BigDecimal lat, String concat, String introduction) {
+    public landlord(Integer landlordid, String landlordname, String landlordtype, String feature, Integer startprice, String city, String area, String detailaddress, Integer comment, BigDecimal longitude, BigDecimal lat, String concat, String introduction) {
         this.landlordid = landlordid;
         this.landlordname = landlordname;
         this.landlordtype = landlordtype;
@@ -39,7 +39,7 @@ public class landlord {
         this.area = area;
         this.detailaddress = detailaddress;
         this.comment = comment;
-        this.long = long;
+        this.longitude = longitude;
         this.lat = lat;
         this.concat = concat;
         this.introduction = introduction;
@@ -121,12 +121,12 @@ public class landlord {
         this.comment = comment;
     }
 
-    public BigDecimal getLong() {
-        return long;
+    public BigDecimal getLongitude() {
+        return longitude;
     }
 
-    public void setLong(BigDecimal long) {
-        this.long = long;
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
     }
 
     public BigDecimal getLat() {

@@ -12,7 +12,7 @@
       <arg column="area" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="detailAddress" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="comment" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column=" LONG" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="longitude" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column=" lat" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="concat" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="introduction" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -20,7 +20,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     landlordId, landlordName, landlordType, feature, startPrice, city, area, detailAddress, 
-    comment, " LONG", " lat", concat, introduction
+    comment, longitude, " lat", concat, introduction
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -36,12 +36,12 @@
     insert into landlord (landlordId, landlordName, landlordType, 
       feature, startPrice, city, 
       area, detailAddress, comment, 
-      " LONG", " lat", concat, 
+      longitude, " lat", concat, 
       introduction)
     values (#{landlordid,jdbcType=INTEGER}, #{landlordname,jdbcType=VARCHAR}, #{landlordtype,jdbcType=VARCHAR}, 
       #{feature,jdbcType=VARCHAR}, #{startprice,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, 
       #{area,jdbcType=VARCHAR}, #{detailaddress,jdbcType=VARCHAR}, #{comment,jdbcType=INTEGER}, 
-      #{long,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, #{concat,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, #{concat,jdbcType=VARCHAR}, 
       #{introduction,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="DO.landlord" >
@@ -74,8 +74,8 @@
       <if test="comment != null" >
         comment,
       </if>
-      <if test="long != null" >
-        " LONG",
+      <if test="longitude != null" >
+        longitude,
       </if>
       <if test="lat != null" >
         " lat",
@@ -115,8 +115,8 @@
       <if test="comment != null" >
         #{comment,jdbcType=INTEGER},
       </if>
-      <if test="long != null" >
-        #{long,jdbcType=DECIMAL},
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DECIMAL},
       </if>
       <if test="lat != null" >
         #{lat,jdbcType=DECIMAL},
@@ -156,8 +156,8 @@
       <if test="comment != null" >
         comment = #{comment,jdbcType=INTEGER},
       </if>
-      <if test="long != null" >
-        " LONG" = #{long,jdbcType=DECIMAL},
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=DECIMAL},
       </if>
       <if test="lat != null" >
         " lat" = #{lat,jdbcType=DECIMAL},
@@ -181,7 +181,7 @@
       area = #{area,jdbcType=VARCHAR},
       detailAddress = #{detailaddress,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=INTEGER},
-      " LONG" = #{long,jdbcType=DECIMAL},
+      longitude = #{longitude,jdbcType=DECIMAL},
       " lat" = #{lat,jdbcType=DECIMAL},
       concat = #{concat,jdbcType=VARCHAR},
       introduction = #{introduction,jdbcType=VARCHAR}
