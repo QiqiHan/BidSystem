@@ -9,6 +9,7 @@ import jade.core.AID;
  */
 public class Bid implements Concept {
 
+    //市场价，是否再同意降价,床的大小，房间大小
     private AID orderId;
     private String room;
     private int price;

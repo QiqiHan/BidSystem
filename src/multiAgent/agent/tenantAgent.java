@@ -24,6 +24,7 @@ import service.CondVar;
  */
 public class tenantAgent extends Agent {
 
+
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
 

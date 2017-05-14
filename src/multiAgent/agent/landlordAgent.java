@@ -13,6 +13,7 @@ import multiAgent.util.DFUtil;
  */
 public class landlordAgent extends Agent{
 
+    //营销策略
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
     //landlordAgent 生命周期

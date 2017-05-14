@@ -23,7 +23,7 @@ public class agentApi {
     public void init(){
         Runtime rt = Runtime.instance();
         rt.setCloseVM(true);
-        Profile pMain = new ProfileImpl("192.168.1.107",1099,null);
+        Profile pMain = new ProfileImpl("127.0.0.1",1099,null);
         AgentContainer container = rt.createMainContainer(pMain);
         containers.put("main",container);
         System.out.println("启动agents");

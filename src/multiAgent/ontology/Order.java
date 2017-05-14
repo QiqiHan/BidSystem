@@ -9,6 +9,10 @@ import java.util.Date;
  * Created by H77 on 2017/5/5.
  */
 public class Order implements AgentAction {
+    //价格（给个范围），地点，时间，房间类型，房间数量，下单时间
+    //设施：wifi，park，24小时热水，独立卫生间，提供早餐，接送机服务
+    //类型：经济型，豪华型，公寓型
+    //周边：机场，景点，超市
     private String customer;
     private String address;
     private String roomType;
