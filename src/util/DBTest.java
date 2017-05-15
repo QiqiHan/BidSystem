@@ -1,4 +1,4 @@
-package multiAgent.util;
+package util;
 
 import DO.bid;
 import dao.bidMapper;

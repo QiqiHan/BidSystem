@@ -1,20 +1,17 @@
 package multiAgent.AIDecision;
 
+import util.CSVUtils;
 import smile.classification.RandomForest;
 import smile.data.Attribute;
-import smile.data.AttributeDataset;
 import smile.data.NumericAttribute;
-import smile.data.parser.DelimitedTextParser;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 
 /**
  * Created by H77 on 2017/5/10.
  */
-public class test {
+public class RandomForestTest {
 
     public static void main(String[] args){
         File f = new File("D:/jade/train.csv");

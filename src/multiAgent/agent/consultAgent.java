@@ -6,7 +6,7 @@ import jade.content.onto.*;
 import jade.core.Agent;
 import multiAgent.behavior.listener.consultListener;
 import multiAgent.ontology.*;
-import multiAgent.util.DFUtil;
+import multiAgent.agentHelper.DFUtil;
 
 /**
  * Created by h77 on 2017/5/5.

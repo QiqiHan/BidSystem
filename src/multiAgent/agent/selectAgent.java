@@ -3,17 +3,9 @@ package multiAgent.agent;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
-import jade.content.onto.OntologyException;
-import jade.content.onto.basic.Action;
 import jade.core.AID;
 import jade.core.Agent;
 
-import jade.core.ContainerID;
-import jade.domain.FIPANames;
-import jade.domain.JADEAgentManagement.CreateAgent;
-import jade.domain.JADEAgentManagement.JADEManagementOntology;
-import jade.lang.acl.ACLMessage;
-import jade.proto.AchieveREInitiator;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
@@ -21,7 +13,7 @@ import multiAgent.behavior.listener.selectListener;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.OrderResponse;
-import multiAgent.util.DFUtil;
+import multiAgent.agentHelper.DFUtil;
 
 import java.util.*;
 

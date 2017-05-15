@@ -3,20 +3,11 @@ package multiAgent.agent;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
-import jade.content.onto.OntologyException;
-import jade.content.onto.basic.Action;
-import jade.core.AID;
 import jade.core.Agent;
-import jade.domain.AMSService;
-import jade.domain.FIPAAgentManagement.AMSAgentDescription;
-import jade.domain.FIPAAgentManagement.SearchConstraints;
-import jade.lang.acl.ACLMessage;
 import multiAgent.behavior.listener.tenantApiListener;
 import multiAgent.behavior.listener.tenantListener;
-import multiAgent.behavior.message.tenantRequest;
 import multiAgent.ontology.BidOntology;
-import multiAgent.ontology.Order;
-import service.CondVar;
+import util.CondVar;
 
 /**
  * Created by h77 on 2017/5/5.

@@ -2,9 +2,6 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<typeAliases>
-    <typeAlias alias="Room" type="dao.RoomDao"/>
-</typeAliases>
 
 <environments default="BidSystem">
     <environment id="BidSystem">
@@ -19,8 +16,6 @@
 </environments>
 
 <mappers>
-    <mapper resource="dao/Room.xml"/>
-    <mapper resource="dao/Hotel.xml"/>
     <mapper resource="dao/mapper/bidMapper.xml"/>
     <mapper resource="dao/mapper/landlordMapper.xml"/>
     <mapper resource="dao/mapper/orderRecordMapper.xml"/>
