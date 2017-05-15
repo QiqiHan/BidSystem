@@ -1,4 +1,4 @@
-package multiAgent.util;
+package multiAgent.agentHelper;
 
 import jade.core.*;
 import jade.domain.DFService;

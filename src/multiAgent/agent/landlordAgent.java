@@ -6,7 +6,7 @@ import jade.content.onto.Ontology;
 import jade.core.Agent;
 import multiAgent.behavior.listener.landlordListener;
 import multiAgent.ontology.BidOntology;
-import multiAgent.util.DFUtil;
+import multiAgent.agentHelper.DFUtil;
 
 /**
  * Created by H77 on 2017/5/6.

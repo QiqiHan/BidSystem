@@ -1,6 +1,5 @@
-package multiAgent.util;
+package util;
 
-import dao.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

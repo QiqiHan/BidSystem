@@ -11,7 +11,7 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Order;
-import multiAgent.util.DFUtil;
+import multiAgent.agentHelper.DFUtil;
 
 /**
  * Created by H77 on 2017/5/6.

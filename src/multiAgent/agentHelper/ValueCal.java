@@ -1,4 +1,4 @@
-package multiAgent.util;
+package multiAgent.agentHelper;
 
 import multiAgent.ontology.Bid;
 

@@ -1,4 +1,4 @@
-package service;
+package util;
 
 /**
  * Created by H77 on 2017/5/13.
@@ -11,7 +11,6 @@ public  class CondVar {
             wait();
         }
     }
-
     public synchronized void signal() {
         value = true;
         notifyAll();

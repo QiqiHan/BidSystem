@@ -3,13 +3,12 @@ import jade.core.*;
 import jade.core.Runtime;
 import jade.wrapper.*;
 import jade.wrapper.AgentContainer;
-import multiAgent.agent.tenantAgent;
 import multiAgent.ontology.Order;
+import util.CondVar;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by H77 on 2017/5/13.
