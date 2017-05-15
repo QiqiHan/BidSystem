@@ -9,10 +9,12 @@ import java.util.Date;
  * Created by H77 on 2017/5/5.
  */
 public class Order implements AgentAction {
+
     //价格（给个范围），地点，时间，房间类型，房间数量，下单时间
     //设施：wifi，park，24小时热水，独立卫生间，提供早餐，接送机服务
     //类型：经济型，豪华型，公寓型
     //周边：机场，景点，超市
+    private String id;
     private String customer;
     private String address;
     private String roomType;
@@ -21,20 +23,29 @@ public class Order implements AgentAction {
     private Date end;
     private int price;
     private AID source;
-    public Order(String customer, String address, String type,int num,Date s,Date e,int price, AID source) {
+
+    public Order(String id, String customer, String address, String roomType, int roomNum, Date start, Date end, int price, AID source) {
+        this.id = id;
         this.customer = customer;
         this.address = address;
-        this.roomType = type;
-        this.roomNum = num;
-        this.start = s;
-        this.end = e;
+        this.roomType = roomType;
+        this.roomNum = roomNum;
+        this.start = start;
+        this.end = end;
         this.price = price;
         this.source = source;
     }
+
     public Order(){
 
     }
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getRoomType() {
         return roomType;
     }

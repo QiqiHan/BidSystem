@@ -16,7 +16,6 @@ public class tenantApiListener extends CyclicBehaviour {
         super(agent);
         this.agent = (tenantAgent) agent;
     }
-
     public void action() {
         Object obj = agent.getO2AObject();
         if(obj != null) {

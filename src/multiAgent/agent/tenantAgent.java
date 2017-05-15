@@ -6,8 +6,14 @@ import jade.content.onto.Ontology;
 import jade.core.Agent;
 import multiAgent.behavior.listener.tenantApiListener;
 import multiAgent.behavior.listener.tenantListener;
+import multiAgent.behavior.logical.tenantBackOrderResult;
+import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
+import service.common.agentHandler;
 import util.CondVar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by h77 on 2017/5/5.
@@ -18,7 +24,6 @@ public class tenantAgent extends Agent {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
-
 
     protected void setup() {
         getContentManager().registerLanguage(codec);
@@ -33,6 +38,7 @@ public class tenantAgent extends Agent {
         System.out.println("创建 tenantAgent");
         addBehaviour(new tenantListener(this));
         addBehaviour(new tenantApiListener(this));
+        addBehaviour(new tenantBackOrderResult(null,null));
     }
 
 //    public boolean done(){
@@ -41,6 +47,7 @@ public class tenantAgent extends Agent {
 //    }
 
     public void takeDown(){
+        System.out.println("tenantAgent 被销毁");
         setEnabledO2ACommunication(false,0);
     }
 

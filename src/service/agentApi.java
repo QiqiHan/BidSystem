@@ -62,7 +62,7 @@ public class agentApi {
         AgentController tenantAgent = agents.get("f2");
         Date dStart = new Date(2017,5,9);
         Date dEnd = new Date(2017,5,12);
-        Order order = new Order("小明","南京市南大","豪华套件",1,dStart,dEnd,120,new AID("f2",false));
+        Order order = new Order("1","小明","南京市南大","豪华套件",1,dStart,dEnd,120,new AID("f2",false));
         try {
             tenantAgent.putO2AObject(order,false);
         } catch (StaleProxyException e) {
