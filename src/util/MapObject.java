@@ -1,4 +1,4 @@
-package multiAgent.util;
+package util;
 
 /**
  * Created by zy on 17/5/15.

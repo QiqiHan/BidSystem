@@ -1,4 +1,4 @@
-package multiAgent.util;
+package util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -9,6 +9,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import util.MapObject;
 
 import java.io.IOException;
 import java.net.URLDecoder;
