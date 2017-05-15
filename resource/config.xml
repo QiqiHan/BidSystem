@@ -13,7 +13,7 @@
             <property name="driver" value="com.mysql.jdbc.Driver"/>
             <property name="url" value="jdbc:mysql://127.0.0.1:3306/bidsystem" />
             <property name="username" value="root"/>
-            <property name="password" value="admin"/>
+            <property name="password" value="qsd19001008"/>
         </dataSource>
     </environment>
 </environments>
@@ -21,5 +21,11 @@
 <mappers>
     <mapper resource="dao/Room.xml"/>
     <mapper resource="dao/Hotel.xml"/>
+    <mapper resource="dao/mapper/bidMapper.xml"/>
+    <mapper resource="dao/mapper/landlordMapper.xml"/>
+    <mapper resource="dao/mapper/orderRecordMapper.xml"/>
+    <mapper resource="dao/mapper/roomMapper.xml"/>
+    <mapper resource="dao/mapper/tenderMapper.xml"/>
+    <mapper resource="dao/mapper/userMapper.xml"/>
 </mappers>
 </configuration>
