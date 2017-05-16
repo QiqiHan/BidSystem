@@ -5,6 +5,7 @@
     <constructor >
       <idArg column="landlordId" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="landlordName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="landlordType" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="feature" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="startPrice" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -20,8 +21,8 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    landlordId, landlordName, landlordType, feature, startPrice, city, area, detailAddress, 
-    comment, longitude, " lat", concat, introduction, characteristic
+    landlordId, landlordName, password, landlordType, feature, startPrice, city, area, 
+    detailAddress, comment, longitude, " lat", concat, introduction, characteristic
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -34,16 +35,18 @@
     where landlordId = #{landlordid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="DO.landlord" >
-    insert into landlord (landlordId, landlordName, landlordType, 
-      feature, startPrice, city, 
-      area, detailAddress, comment, 
-      longitude, " lat", concat, 
-      introduction, characteristic)
-    values (#{landlordid,jdbcType=INTEGER}, #{landlordname,jdbcType=VARCHAR}, #{landlordtype,jdbcType=VARCHAR}, 
-      #{feature,jdbcType=VARCHAR}, #{startprice,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{detailaddress,jdbcType=VARCHAR}, #{comment,jdbcType=INTEGER}, 
-      #{longitude,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, #{concat,jdbcType=VARCHAR}, 
-      #{introduction,jdbcType=VARCHAR}, #{characteristic,jdbcType=VARCHAR})
+    insert into landlord (landlordId, landlordName, password, 
+      landlordType, feature, startPrice, 
+      city, area, detailAddress, 
+      comment, longitude, " lat", 
+      concat, introduction, characteristic
+      )
+    values (#{landlordid,jdbcType=INTEGER}, #{landlordname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{landlordtype,jdbcType=VARCHAR}, #{feature,jdbcType=VARCHAR}, #{startprice,jdbcType=INTEGER}, 
+      #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{detailaddress,jdbcType=VARCHAR}, 
+      #{comment,jdbcType=INTEGER}, #{longitude,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, 
+      #{concat,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{characteristic,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="DO.landlord" >
     insert into landlord
@@ -53,6 +56,9 @@
       </if>
       <if test="landlordname != null" >
         landlordName,
+      </if>
+      <if test="password != null" >
+        password,
       </if>
       <if test="landlordtype != null" >
         landlordType,
@@ -98,6 +104,9 @@
       <if test="landlordname != null" >
         #{landlordname,jdbcType=VARCHAR},
       </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
       <if test="landlordtype != null" >
         #{landlordtype,jdbcType=VARCHAR},
       </if>
@@ -142,6 +151,9 @@
       <if test="landlordname != null" >
         landlordName = #{landlordname,jdbcType=VARCHAR},
       </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
       <if test="landlordtype != null" >
         landlordType = #{landlordtype,jdbcType=VARCHAR},
       </if>
@@ -184,6 +196,7 @@
   <update id="updateByPrimaryKey" parameterType="DO.landlord" >
     update landlord
     set landlordName = #{landlordname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
       landlordType = #{landlordtype,jdbcType=VARCHAR},
       feature = #{feature,jdbcType=VARCHAR},
       startPrice = #{startprice,jdbcType=INTEGER},

@@ -20,7 +20,9 @@ public class room {
 
     private BigDecimal area;
 
-    public room(Integer roomid, Integer landlordid, String roomtype, Integer price, Date validstarttime, Date validendtime, String facilities, BigDecimal area) {
+    private Integer restnum;
+
+    public room(Integer roomid, Integer landlordid, String roomtype, Integer price, Date validstarttime, Date validendtime, String facilities, BigDecimal area, Integer restnum) {
         this.roomid = roomid;
         this.landlordid = landlordid;
         this.roomtype = roomtype;
@@ -29,6 +31,7 @@ public class room {
         this.validendtime = validendtime;
         this.facilities = facilities;
         this.area = area;
+        this.restnum = restnum;
     }
 
     public room() {
@@ -97,5 +100,13 @@ public class room {
 
     public void setArea(BigDecimal area) {
         this.area = area;
+    }
+
+    public Integer getRestnum() {
+        return restnum;
+    }
+
+    public void setRestnum(Integer restnum) {
+        this.restnum = restnum;
     }
 }

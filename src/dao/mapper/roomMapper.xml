@@ -11,10 +11,12 @@
       <arg column="validEndTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="facilities" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="area" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="restNum" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    roomId, landlordId, roomType, price, validStartTime, validEndTime, facilities, area
+    roomId, landlordId, roomType, price, validStartTime, validEndTime, facilities, area, 
+    restNum
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,10 +31,12 @@
   <insert id="insert" parameterType="DO.room" >
     insert into room (roomId, landlordId, roomType, 
       price, validStartTime, validEndTime, 
-      facilities, area)
+      facilities, area, restNum
+      )
     values (#{roomid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER}, #{roomtype,jdbcType=VARCHAR}, 
       #{price,jdbcType=INTEGER}, #{validstarttime,jdbcType=TIMESTAMP}, #{validendtime,jdbcType=TIMESTAMP}, 
-      #{facilities,jdbcType=VARCHAR}, #{area,jdbcType=DECIMAL})
+      #{facilities,jdbcType=VARCHAR}, #{area,jdbcType=DECIMAL}, #{restnum,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="DO.room" >
     insert into room
@@ -61,6 +65,9 @@
       <if test="area != null" >
         area,
       </if>
+      <if test="restnum != null" >
+        restNum,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="roomid != null" >
@@ -86,6 +93,9 @@
       </if>
       <if test="area != null" >
         #{area,jdbcType=DECIMAL},
+      </if>
+      <if test="restnum != null" >
+        #{restnum,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -113,6 +123,9 @@
       <if test="area != null" >
         area = #{area,jdbcType=DECIMAL},
       </if>
+      <if test="restnum != null" >
+        restNum = #{restnum,jdbcType=INTEGER},
+      </if>
     </set>
     where roomId = #{roomid,jdbcType=INTEGER}
   </update>
@@ -124,7 +137,8 @@
       validStartTime = #{validstarttime,jdbcType=TIMESTAMP},
       validEndTime = #{validendtime,jdbcType=TIMESTAMP},
       facilities = #{facilities,jdbcType=VARCHAR},
-      area = #{area,jdbcType=DECIMAL}
+      area = #{area,jdbcType=DECIMAL},
+      restNum = #{restnum,jdbcType=INTEGER}
     where roomId = #{roomid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -7,6 +7,8 @@ public class landlord {
 
     private String landlordname;
 
+    private String password;
+
     private String landlordtype;
 
     private String feature;
@@ -31,9 +33,10 @@ public class landlord {
 
     private String characteristic;
 
-    public landlord(Integer landlordid, String landlordname, String landlordtype, String feature, Integer startprice, String city, String area, String detailaddress, Integer comment, BigDecimal longitude, BigDecimal lat, String concat, String introduction, String characteristic) {
+    public landlord(Integer landlordid, String landlordname, String password, String landlordtype, String feature, Integer startprice, String city, String area, String detailaddress, Integer comment, BigDecimal longitude, BigDecimal lat, String concat, String introduction, String characteristic) {
         this.landlordid = landlordid;
         this.landlordname = landlordname;
+        this.password = password;
         this.landlordtype = landlordtype;
         this.feature = feature;
         this.startprice = startprice;
@@ -66,6 +69,14 @@ public class landlord {
 
     public void setLandlordname(String landlordname) {
         this.landlordname = landlordname == null ? null : landlordname.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
     public String getLandlordtype() {
