@@ -2,9 +2,9 @@ package multiAgent.ontology;
 
 import jade.content.AgentAction;
 import jade.core.AID;
+import jade.util.leap.List;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by H77 on 2017/5/5.
@@ -18,7 +18,6 @@ public class Order implements AgentAction {
     //周边：机场，景点，超市
     private String id;
     private String customer;
-    private int customerId;
     private String address;
     private String hotelType;
     private String roomType;
@@ -28,12 +27,11 @@ public class Order implements AgentAction {
     private Date createTime;
     private int minPrice;
     private int maxPrice;
-    private List<String> facilities;
+    private List facilities;
     private AID source;
 
     public Order(String id,
                  String customer,
-                 int customerId,
                  String address,
                  String hotelType,
                  String roomType,
@@ -43,12 +41,11 @@ public class Order implements AgentAction {
                  Date create,
                  int minPrice,
                  int maxPrice,
-                 List<String> facilities,
+                 List facilities,
                  AID source)
     {
         this.id = id;
         this.customer = customer;
-        this.customerId = customerId;
         this.address = address;
         this.hotelType = hotelType;
         this.roomType = roomType;
@@ -152,11 +149,11 @@ public class Order implements AgentAction {
         this.hotelType = hotelType;
     }
 
-    public List<String> getFacilities() {
+    public List getFacilities() {
         return facilities;
     }
 
-    public void setFacilities(List<String> facilities) {
+    public void setFacilities(List facilities) {
         this.facilities = facilities;
     }
 
@@ -168,11 +165,4 @@ public class Order implements AgentAction {
         this.createTime = createTime;
     }
 
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
 }

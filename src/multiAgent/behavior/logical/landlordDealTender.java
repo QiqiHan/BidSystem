@@ -44,19 +44,21 @@ public class landlordDealTender extends OneShotBehaviour{
         int type = (int)(Math.random()*2);
         Bid bid;
         if(type == 1) {
-            bid = new Bid(tender.getSource(),
-                    new Room(1,1, RoomType.Business+"",null,200,new Date(2017,5,2),new Date(2017,5,9),null,new BigDecimal(200),2),
+            bid = new Bid(tender.getOrderId(),
+                    new Room(1,1, RoomType.Business+"",null,200,new Date(2017,5,2),new Date(2017,5,9),"200",2),
                     100,
                     null,
                     null,
+                    tender.getSource(),
                     myAgent.getAID() ,
                     type);
         }else{
-            bid = new Bid(tender.getSource(),
-                    new Room(1,1, RoomType.Business+"",null,200,new Date(2017,5,2),new Date(2017,5,9),null,new BigDecimal(200),2),
+            bid = new Bid(tender.getOrderId(),
+                    new Room(1,1, RoomType.Business+"",null,200,new Date(2017,5,2),new Date(2017,5,9),"200",2),
                     0,
                     null,
                     null,
+                    tender.getSource(),
                     myAgent.getAID() ,
                     type);
         }

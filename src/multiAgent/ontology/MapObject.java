@@ -1,9 +1,11 @@
 package multiAgent.ontology;
 
+import jade.content.Concept;
+
 /**
  * Created by zy on 17/5/15.
  */
-public class MapObject {
+public class MapObject implements Concept{
 
     private String name;//地点名称
 

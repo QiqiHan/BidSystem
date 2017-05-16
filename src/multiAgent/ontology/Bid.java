@@ -12,38 +12,47 @@ import java.util.List;
  */
 public class Bid implements Concept {
 
+
     //市场价，是否再同意降价,床的大小，房间大小
-    private AID orderId;
     private String id; //就是orderId,现在暂时用的AID
     private Room room;
     private int price;
-    private List<String> facilities;
-    private List<String> aroundsites;
+    private List facilities;
+    private List aroundsites;
+    private AID tenantId;
     private AID landlordId;
     private int type; // 0 拒绝竞标  1 竞标
 
-    public Bid(AID orderId,
+    public Bid(String id,
                Room room,
                int price,
-               List<String> facilities,
-               List<String> aroundsites,
+               List facilities,
+               List aroundsites,
                AID landlordId ,
+               AID tenantId ,
                int type)
     {
-        this.orderId = orderId;
+        this.id = id;
         this.room = room;
         this.price = price;
         this.facilities =facilities;
         this.aroundsites = aroundsites;
         this.landlordId = landlordId;
+        this.tenantId = tenantId;
         this.type = type;
     }
     public Bid(){}
-    public AID getOrderId() {
-        return orderId;
+    public String getId() {
+        return id;
     }
-    public void setOrderId(AID orderId) {
-        this.orderId = orderId;
+    public void setId(String id) {
+        this.id = id;
+    }
+    public AID getTenantId() {
+        return tenantId;
+    }
+    public void setTenantId(AID tenantId) {
+        this.tenantId = tenantId;
     }
     public Room getRoom() {
         return room;
@@ -65,20 +74,17 @@ public class Bid implements Concept {
     }
     public int getType() { return type; }
     public void setType(int type) { this.type = type;}
-
-    public List<String> getFacilities() {
+    public List getFacilities() {
         return facilities;
     }
-
-    public void setFacilities(List<String> facilities) {
+    public void setFacilities(List facilities) {
         this.facilities = facilities;
     }
-
-    public List<String> getAroundsites() {
+    public List getAroundsites() {
         return aroundsites;
     }
-
-    public void setAroundsites(List<String> aroundsites) {
+    public void setAroundsites(List aroundsites) {
         this.aroundsites = aroundsites;
     }
+
 }

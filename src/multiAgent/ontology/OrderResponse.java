@@ -9,13 +9,15 @@ import jade.util.leap.List;
  */
 public class OrderResponse implements AgentAction {
 
+    private String orderId;
     private int responseNum;
-    private AID orderId;
+    private AID source;
     private List bids;
 
-    public OrderResponse(int responseNum, AID orderId,List bids) {
-        this.responseNum = responseNum;
+    public OrderResponse(String orderId, int responseNum, AID source, List bids) {
         this.orderId = orderId;
+        this.responseNum = responseNum;
+        this.source = source;
         this.bids = bids;
     }
     public OrderResponse(){
@@ -26,10 +28,10 @@ public class OrderResponse implements AgentAction {
     public void setResponseNum(int responseNum) {
         this.responseNum = responseNum;
     }
-    public AID getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
-    public void setOrderId(AID orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
     public List getBids() {

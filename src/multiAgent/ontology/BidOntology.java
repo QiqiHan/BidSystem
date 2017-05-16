@@ -21,13 +21,18 @@ public class BidOntology extends Ontology{
     private static final String ONTOLOGY_NAME ="Room-order-ontology";
 
     private static final String Order = "Order";
+    private static final String Order_Id = "id";
     private static final String Order_Customer = "customer";
     private static final String Order_Address = "address";
+    private static final String Order_HotelType = "hotelType";
     private static final String Order_RoomType = "roomType";
     private static final String Order_RoomNum = "roomNum";
-    private static final String Order_Start = "start";
-    private static final String Order_End = "end";
-    private static final String Order_Price = "price";
+    private static final String Order_Start = "startTime";
+    private static final String Order_End = "endTime";
+    private static final String Order_Create = "createTime";
+    private static final String Order_MinPrice = "minPrice";
+    private static final String Order_MaxPrice = "maxPrice";
+    private static final String Order_Facilities = "facilities";
     private static final String Order_SourceAid = "source";
 
     private static final String Tender = "Tender";
@@ -36,9 +41,12 @@ public class BidOntology extends Ontology{
     private static final String Tender_SourceAid = "source";
 
     private static final String Bid = "Bid";
-    private static final String Bid_Order = "orderId";
+    private static final String Bid_Order = "id";
     private static final String Bid_Room = "room";
     private static final String Bid_Price = "price";
+    private static final String Bid_Facilities = "facilities";
+    private static final String Bid_Aroundsites = "aroundsites";
+    private static final String Bid_Tenant = "tenantId";
     private static final String Bid_Landlord = "landlordId";
     private static final String Bid_Type = "type";
 
@@ -46,12 +54,19 @@ public class BidOntology extends Ontology{
     private static final String OrderResponse = "OrderResponse";
     private static final String OrderResponse_Order = "orderId";
     private static final String OrderResponse_Num = "responseNum";
+    private static final String OrderResponse_Source = "source";
     private static final String OrderResponse_Bids = "bids";
 
     private static final String Room = "Room";
-    private static final String Room_Owner = "owner";
+    private static final String Room_RoomId = "roomId";
+    private static final String Room_LandlordId = "landlordId";
     private static final String Room_Type = "type";
     private static final String Room_Price = "price";
+    private static final String Room_ValidStartTime= "validStartTime";
+    private static final String Room_ValidEndTime = "validEndTime";
+    private static final String Room_Area = "area";
+    private static final String Room_RestNum = "restNum";
+    private static final String Room_Owner = "owner";
 
     private static final String Negotiation = "Negotiation";
     private static final String Negotiation_UpPrice = "upPrice";
@@ -68,6 +83,11 @@ public class BidOntology extends Ontology{
     private static final String MapObject_Overall_rating="overall_rating";
     private static final String MapObject_Tag="tag";
 
+    private static final String MapObjects = "MapObjects";
+    private static final String MapObjects_KeyWords = "keyWords";
+    private static final String MapObjects_Objects = "objects";
+
+
 
     private static  Ontology theInstance = new BidOntology();
 
@@ -82,6 +102,8 @@ public class BidOntology extends Ontology{
             add(new ConceptSchema(Bid),Bid.class);
             add(new AgentActionSchema(OrderResponse),OrderResponse.class);
             add(new ConceptSchema(Room),Room.class);
+            add(new ConceptSchema(MapObject),MapObject.class);
+            add(new ConceptSchema(MapObjects),MapObjects.class);
             add(new AgentActionSchema(Negotiation),Negotiation.class);
 
             AgentActionSchema order = (AgentActionSchema)getSchema(Order);
@@ -91,36 +113,24 @@ public class BidOntology extends Ontology{
             order.add(Order_RoomNum,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             order.add(Order_Start,(PrimitiveSchema)getSchema(BasicOntology.DATE));
             order.add(Order_End,(PrimitiveSchema)getSchema(BasicOntology.DATE));
-            order.add(Order_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             order.add(Order_SourceAid,(ConceptSchema)getSchema(BasicOntology.AID));
+
+            ConceptSchema room = (ConceptSchema)getSchema(Room);
+            room.add(Room_RoomId,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            room.add(Room_LandlordId,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            room.add(Room_Type,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            room.add(Room_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            room.add(Room_ValidStartTime,(PrimitiveSchema)getSchema(BasicOntology.DATE));
+            room.add(Room_ValidEndTime,(PrimitiveSchema)getSchema(BasicOntology.DATE));
+            room.add(Room_Area,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            room.add(Room_RestNum,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            room.add(Room_Owner,(ConceptSchema)getSchema(BasicOntology.AID));
 
             AgentActionSchema tender = (AgentActionSchema)getSchema(Tender);
             tender.add(Tender_Address,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             tender.add(Tender_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             tender.add(Tender_SourceAid,(ConceptSchema)getSchema(BasicOntology.AID));
 
-            ConceptSchema  bid = (ConceptSchema)getSchema(Bid);
-            bid.add(Bid_Order,(ConceptSchema)getSchema(BasicOntology.AID));
-            bid.add(Bid_Room,(PrimitiveSchema)getSchema(BasicOntology.STRING));
-            bid.add(Bid_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-            bid.add(Bid_Landlord,(ConceptSchema)getSchema(BasicOntology.AID));
-            bid.add(Bid_Type,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-
-            AgentActionSchema orderResponse = (AgentActionSchema)getSchema(OrderResponse);
-            orderResponse.add(OrderResponse_Order,(ConceptSchema)getSchema(BasicOntology.AID));
-            orderResponse.add(OrderResponse_Num,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-            orderResponse.add(OrderResponse_Bids,(ConceptSchema)getSchema(Bid),0, ObjectSchema.UNLIMITED);
-
-            ConceptSchema room = (ConceptSchema)getSchema(Room);
-            room.add(Room_Owner,(ConceptSchema)getSchema(BasicOntology.AID));
-            room.add(Room_Type,(PrimitiveSchema)getSchema(BasicOntology.STRING));
-            room.add(Room_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-
-            AgentActionSchema negotiation = (AgentActionSchema)getSchema(Negotiation);
-            negotiation.add(Negotiation_UpPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-            negotiation.add(Negotiation_LowPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-            negotiation.add(Negotiation_Result,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-            negotiation.add(Negotiation_ActualPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
 
             ConceptSchema  mapObject = (ConceptSchema)getSchema(MapObject);
             mapObject.add(MapObject_Name,(PrimitiveSchema)getSchema(BasicOntology.STRING));
@@ -130,6 +140,34 @@ public class BidOntology extends Ontology{
             mapObject.add(MapObject_Lng,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             mapObject.add(MapObject_Overall_rating,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             mapObject.add(MapObject_Tag,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+
+            ConceptSchema mapObjects = (ConceptSchema)getSchema(MapObjects);
+            mapObjects.add(MapObjects_KeyWords,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            mapObjects.add(MapObjects_Objects,(ConceptSchema)getSchema(MapObject),0, ObjectSchema.UNLIMITED);
+
+            ConceptSchema bid = (ConceptSchema)getSchema(Bid);
+            bid.add(Bid_Order,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            bid.add(Bid_Room,(ConceptSchema)getSchema(Room));
+            bid.add(Bid_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            bid.add(Bid_Facilities,(PrimitiveSchema)getSchema(BasicOntology.STRING),0,ObjectSchema.UNLIMITED);
+            bid.add(Bid_Aroundsites,(ConceptSchema)getSchema(MapObjects),0,ObjectSchema.UNLIMITED);
+            bid.add(Bid_Landlord,(ConceptSchema)getSchema(BasicOntology.AID));
+            bid.add(Bid_Tenant,(ConceptSchema)getSchema(BasicOntology.AID));
+            bid.add(Bid_Type,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+
+            AgentActionSchema orderResponse = (AgentActionSchema)getSchema(OrderResponse);
+            orderResponse.add(OrderResponse_Order,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            orderResponse.add(OrderResponse_Num,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            orderResponse.add(OrderResponse_Source,(ConceptSchema)getSchema(BasicOntology.AID));
+            orderResponse.add(OrderResponse_Bids,(ConceptSchema)getSchema(Bid),0, ObjectSchema.UNLIMITED);
+
+
+            AgentActionSchema negotiation = (AgentActionSchema)getSchema(Negotiation);
+            negotiation.add(Negotiation_UpPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            negotiation.add(Negotiation_LowPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            negotiation.add(Negotiation_Result,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            negotiation.add(Negotiation_ActualPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+
 
         } catch (OntologyException e) {
             e.printStackTrace();

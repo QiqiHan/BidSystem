@@ -2,20 +2,17 @@ package multiAgent.ontology;
 
 import jade.content.AgentAction;
 import jade.core.AID;
+import jade.util.leap.List;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by H77 on 2017/5/6.
  *
  */
 public class Tender implements AgentAction {
-    private Integer tenderId;
 
     private String orderId;
-
-    private Integer userId;
 
     private Integer price;
 
@@ -31,17 +28,16 @@ public class Tender implements AgentAction {
 
     private Date createDat;
 
-    private List<String> facilities;
+    private List facilities;
 
     private String hotelType;
 
-    private String aroundsite;
+    private List aroundsite;
 
     private AID source;
 
-    public Tender(Integer tenderId,
+    public Tender(
                   String orderId,
-                  Integer userId,
                   Integer price,
                   String address,
                   Date startTime,
@@ -49,14 +45,12 @@ public class Tender implements AgentAction {
                   String roomType,
                   Integer roomNum,
                   Date createDat,
-                  List<String> facilities,
+                  List facilities,
                   String hotelType,
-                  String aroundsite,
+                  List aroundsite,
                   AID source)
     {
-        this.tenderId = tenderId;
         this.orderId = orderId;
-        this.userId = userId;
         this.price = price;
         this.address = address;
         this.startTime = startTime;
@@ -72,16 +66,17 @@ public class Tender implements AgentAction {
     public Tender(){
 
     }
+
     public String getAddress() {
         return address;
     }
     public void setAddress(String address) {
         this.address = address;
     }
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
     public AID getSource() {
@@ -91,28 +86,12 @@ public class Tender implements AgentAction {
         this.source = source;
     }
 
-    public Integer getTenderId() {
-        return tenderId;
-    }
-
-    public void setTenderId(Integer tenderId) {
-        this.tenderId = tenderId;
-    }
-
     public String getOrderId() {
         return orderId;
     }
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public Date getStartTime() {
@@ -155,14 +134,6 @@ public class Tender implements AgentAction {
         this.createDat = createDat;
     }
 
-    public List<String> getFacilities() {
-        return facilities;
-    }
-
-    public void setFacilities(List<String> facilities) {
-        this.facilities = facilities;
-    }
-
     public String getHotelType() {
         return hotelType;
     }
@@ -171,11 +142,20 @@ public class Tender implements AgentAction {
         this.hotelType = hotelType;
     }
 
-    public String getAroundsite() {
+    public List getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(List facilities) {
+        this.facilities = facilities;
+    }
+
+    public List getAroundsite() {
         return aroundsite;
     }
 
-    public void setAroundsite(String aroundsite) {
+    public void setAroundsite(List aroundsite) {
         this.aroundsite = aroundsite;
     }
+
 }

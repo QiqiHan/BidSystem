@@ -27,7 +27,7 @@ public class tenantBackOrderResult extends OneShotBehaviour {
     public void action() {
         //这部分代码是将agent的处理结果返回给外部程序。
         Bid bid = new Bid();
-        bid.setRoom(new Room(1,1, RoomType.Business+"",null,200,new Date(2017,5,2),new Date(2017,5,9),null,new BigDecimal(200),2));
+        bid.setRoom(new Room(1,1, RoomType.Business+"",null,200,new Date(2017,5,2),new Date(2017,5,9),"200",2));
         bid.setPrice(120);
         List<Bid> bids = new ArrayList<Bid>();
         bids.add(bid);

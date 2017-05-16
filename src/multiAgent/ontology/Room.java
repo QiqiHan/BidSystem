@@ -5,7 +5,6 @@ import jade.core.AID;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by zcy on 2017/5/8.
@@ -18,13 +17,12 @@ public class Room implements Concept{
     private int price;
     private Date validStartTime;
     private Date validEndTime;
-    private List<String> facilities;
-    private BigDecimal area;
+    private String area;
     private Integer restNum;
     private AID owner;
 
 
-    public Room(Integer roomId, Integer landlordId, String type, AID owner, int price, Date validStartTime, Date validEndTime, List<String> facilities, BigDecimal area, Integer restNum){
+    public Room(Integer roomId, Integer landlordId, String type, AID owner, int price, Date validStartTime, Date validEndTime, String area, Integer restNum){
         this.roomId = roomId;
         this.landlordId = landlordId;
         this.type = type;
@@ -32,7 +30,6 @@ public class Room implements Concept{
         this.price = price;
         this.validStartTime = validStartTime;
         this.validEndTime = validEndTime;
-        this.facilities = facilities;
         this.area = area;
         this.restNum = restNum;
     }
@@ -95,19 +92,11 @@ public class Room implements Concept{
         this.validEndTime = validEndTime;
     }
 
-    public List<String> getFacilities() {
-        return facilities;
-    }
-
-    public void setFacilities(List<String> facilities) {
-        this.facilities = facilities;
-    }
-
-    public BigDecimal getArea() {
+    public String getArea() {
         return area;
     }
 
-    public void setArea(BigDecimal area) {
+    public void setArea(String area) {
         this.area = area;
     }
 
