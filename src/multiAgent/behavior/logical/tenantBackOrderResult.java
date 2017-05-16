@@ -3,9 +3,13 @@ package multiAgent.behavior.logical;
 import jade.core.behaviours.OneShotBehaviour;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.Order;
+import multiAgent.ontology.Room;
+import multiAgent.ontology.RoomType;
 import service.common.agentHandler;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,7 +27,7 @@ public class tenantBackOrderResult extends OneShotBehaviour {
     public void action() {
         //这部分代码是将agent的处理结果返回给外部程序。
         Bid bid = new Bid();
-        bid.setRoom("____订单信息____：布丁酒店");
+        bid.setRoom(new Room(1,1, RoomType.Business+"",null,200,new Date(2017,5,2),new Date(2017,5,9),null,new BigDecimal(200),2));
         bid.setPrice(120);
         List<Bid> bids = new ArrayList<Bid>();
         bids.add(bid);
