@@ -13,6 +13,10 @@ import service.managerService;
  * Created by H77 on 2017/5/15.
  */
 public class managerServiceImpl implements managerService {
+
+    private static managerService manager = new managerServiceImpl();
+    private managerServiceImpl(){};
+    public static managerService getInstance(){return manager;}
     public void initSystem() {
         Runtime rt = Runtime.instance();
         rt.setCloseVM(true);

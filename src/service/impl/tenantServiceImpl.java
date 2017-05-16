@@ -22,6 +22,10 @@ import java.util.List;
  */
 public class tenantServiceImpl implements tenantService {
 
+    private static tenantService tenantImpl = new tenantServiceImpl();
+    private tenantServiceImpl(){
+    }
+    public static tenantService getInstance(){return tenantImpl;}
     public boolean createTenant(user user) {
         SqlSession sqlSession = DBTools.getSession();
         userMapper mapper = sqlSession.getMapper(dao.userMapper.class);

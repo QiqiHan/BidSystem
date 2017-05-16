@@ -12,7 +12,10 @@ import util.DBTools;
  * Created by sam on 2017/5/16.
  */
 public class landlordServiceImpl implements landlordService {
-
+    
+    private static landlordService land = new landlordServiceImpl();
+    private landlordServiceImpl(){};
+    public static landlordService getInstance(){ return land;}
 
     public boolean createLandlord(landlord lord) {
         SqlSession sqlSession = DBTools.getSession();
