@@ -31,7 +31,21 @@ public class Order implements AgentAction {
     private List<String> facilities;
     private AID source;
 
-    public Order(String id, String customer, int customerId, String address, String hotelType, String roomType, int roomNum, Date start, Date end, Date create, int minPrice, int maxPrice, List<String> facilities, AID source) {
+    public Order(String id,
+                 String customer,
+                 int customerId,
+                 String address,
+                 String hotelType,
+                 String roomType,
+                 int roomNum,
+                 Date start,
+                 Date end,
+                 Date create,
+                 int minPrice,
+                 int maxPrice,
+                 List<String> facilities,
+                 AID source)
+    {
         this.id = id;
         this.customer = customer;
         this.customerId = customerId;
