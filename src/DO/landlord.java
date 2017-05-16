@@ -29,7 +29,9 @@ public class landlord {
 
     private String introduction;
 
-    public landlord(Integer landlordid, String landlordname, String landlordtype, String feature, Integer startprice, String city, String area, String detailaddress, Integer comment, BigDecimal longitude, BigDecimal lat, String concat, String introduction) {
+    private String characteristic;
+
+    public landlord(Integer landlordid, String landlordname, String landlordtype, String feature, Integer startprice, String city, String area, String detailaddress, Integer comment, BigDecimal longitude, BigDecimal lat, String concat, String introduction, String characteristic) {
         this.landlordid = landlordid;
         this.landlordname = landlordname;
         this.landlordtype = landlordtype;
@@ -43,6 +45,7 @@ public class landlord {
         this.lat = lat;
         this.concat = concat;
         this.introduction = introduction;
+        this.characteristic = characteristic;
     }
 
     public landlord() {
@@ -151,5 +154,13 @@ public class landlord {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction == null ? null : introduction.trim();
+    }
+
+    public String getCharacteristic() {
+        return characteristic;
+    }
+
+    public void setCharacteristic(String characteristic) {
+        this.characteristic = characteristic == null ? null : characteristic.trim();
     }
 }

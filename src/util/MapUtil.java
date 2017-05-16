@@ -48,6 +48,7 @@ public class MapUtil {
                     model.setTag(detail.getString("tag"));
                     model.setOverall_rating(detail.getString("overall_rating"));
                     obs.add(model);
+                    System.out.println(model);
                 }
             }
             jsonObjects.put(keyword,obs);
@@ -81,7 +82,7 @@ public class MapUtil {
 
     public static  void main(String[] args){
         List<String> keywords = new ArrayList<String>();
-        keywords.add("超市");
+        keywords.add("公交");
         keywords.add("旅游景点");
         searchAroundSite(keywords,"120.90407","30.944314");
     }

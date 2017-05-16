@@ -16,11 +16,12 @@
       <arg column=" lat" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="concat" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="introduction" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="characteristic" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     landlordId, landlordName, landlordType, feature, startPrice, city, area, detailAddress, 
-    comment, longitude, " lat", concat, introduction
+    comment, longitude, " lat", concat, introduction, characteristic
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -37,12 +38,12 @@
       feature, startPrice, city, 
       area, detailAddress, comment, 
       longitude, " lat", concat, 
-      introduction)
+      introduction, characteristic)
     values (#{landlordid,jdbcType=INTEGER}, #{landlordname,jdbcType=VARCHAR}, #{landlordtype,jdbcType=VARCHAR}, 
       #{feature,jdbcType=VARCHAR}, #{startprice,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, 
       #{area,jdbcType=VARCHAR}, #{detailaddress,jdbcType=VARCHAR}, #{comment,jdbcType=INTEGER}, 
       #{longitude,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, #{concat,jdbcType=VARCHAR}, 
-      #{introduction,jdbcType=VARCHAR})
+      #{introduction,jdbcType=VARCHAR}, #{characteristic,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="DO.landlord" >
     insert into landlord
@@ -86,6 +87,9 @@
       <if test="introduction != null" >
         introduction,
       </if>
+      <if test="characteristic != null" >
+        characteristic,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="landlordid != null" >
@@ -126,6 +130,9 @@
       </if>
       <if test="introduction != null" >
         #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="characteristic != null" >
+        #{characteristic,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -168,6 +175,9 @@
       <if test="introduction != null" >
         introduction = #{introduction,jdbcType=VARCHAR},
       </if>
+      <if test="characteristic != null" >
+        characteristic = #{characteristic,jdbcType=VARCHAR},
+      </if>
     </set>
     where landlordId = #{landlordid,jdbcType=INTEGER}
   </update>
@@ -184,7 +194,8 @@
       longitude = #{longitude,jdbcType=DECIMAL},
       " lat" = #{lat,jdbcType=DECIMAL},
       concat = #{concat,jdbcType=VARCHAR},
-      introduction = #{introduction,jdbcType=VARCHAR}
+      introduction = #{introduction,jdbcType=VARCHAR},
+      characteristic = #{characteristic,jdbcType=VARCHAR}
     where landlordId = #{landlordid,jdbcType=INTEGER}
   </update>
 </mapper>
