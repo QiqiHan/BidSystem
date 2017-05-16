@@ -1,4 +1,4 @@
-package util;
+package multiAgent.ontology;
 
 /**
  * Created by zy on 17/5/15.
@@ -14,6 +14,10 @@ public class MapObject {
     private String address;//具体地址
 
     private String distance;//距离酒店距离
+
+    public MapObject(){
+
+    }
 
     /**
      * 下面两个属性都可能为null

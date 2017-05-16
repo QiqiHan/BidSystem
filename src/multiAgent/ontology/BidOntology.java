@@ -59,6 +59,16 @@ public class BidOntology extends Ontology{
     private static final String Negotiation_Result="result";
     private static final String Negotiation_ActualPrice="actualPrice";
 
+    private static final String MapObject = "MapObject";
+    private static final String MapObject_Name="name";
+    private static final String MapObject_Lng="lng";
+    private static final String MapObject_Lat="lat";
+    private static final String MapObject_Address="address";
+    private static final String MapObject_Distance="distance";
+    private static final String MapObject_Overall_rating="overall_rating";
+    private static final String MapObject_Tag="tag";
+
+
     private static  Ontology theInstance = new BidOntology();
 
     public static Ontology getInstance(){
@@ -111,6 +121,16 @@ public class BidOntology extends Ontology{
             negotiation.add(Negotiation_LowPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             negotiation.add(Negotiation_Result,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             negotiation.add(Negotiation_ActualPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+
+            ConceptSchema  mapObject = (ConceptSchema)getSchema(MapObject);
+            mapObject.add(MapObject_Name,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            mapObject.add(MapObject_Address,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            mapObject.add(MapObject_Distance,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            mapObject.add(MapObject_Lat,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            mapObject.add(MapObject_Lng,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            mapObject.add(MapObject_Overall_rating,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            mapObject.add(MapObject_Tag,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+
         } catch (OntologyException e) {
             e.printStackTrace();
         }
