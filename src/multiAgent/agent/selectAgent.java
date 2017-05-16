@@ -26,9 +26,9 @@ public class selectAgent extends Agent {
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
     //暂时将AID作为Key
-    private Map<AID,OrderResponse> store = new HashMap<AID,OrderResponse>();
+    private Map<String,OrderResponse> store = new HashMap<String,OrderResponse>();
     //用来计数reply数，暂时也将AID作为Key
-    private Map<AID,Integer> counts = new HashMap<AID, Integer>();
+    private Map<String,Integer> counts = new HashMap<String, Integer>();
     //setup方法，负责为agent各个属性赋值，并且注册到dfAgent上
     protected void setup() {
         getContentManager().registerLanguage(codec);
@@ -37,21 +37,21 @@ public class selectAgent extends Agent {
         DFUtil.registerService(this,"select");
         addBehaviour(new selectListener(this));
     }
-    public void setOrderResponse(AID id, OrderResponse response){
-        store.put(id,response);
-        counts.put(id,0);
+    public void setOrderResponse(String orderId, OrderResponse response){
+        store.put(orderId,response);
+        counts.put(orderId,0);
     }
-    public  boolean isAllReply(AID id,Bid bid){
-        int replys = counts.get(id)+1;
-        counts.put(id,replys);
-        OrderResponse response = store.get(id);
+    public  boolean isAllReply(String orderId,Bid bid){
+        int replys = counts.get(orderId)+1;
+        counts.put(orderId,replys);
+        OrderResponse response = store.get(orderId);
         if(bid.getType() == 1) response.addBid(bid);
         if(replys == response.getResponseNum()){
             return true;
         }
         return false;
     }
-    public  OrderResponse getAndRemove(AID id){
+    public  OrderResponse getAndRemove(String id){
         OrderResponse order = store.get(id);
         store.remove(id);
         counts.remove(id);

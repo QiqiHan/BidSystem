@@ -65,9 +65,9 @@ public class selectListener extends CyclicBehaviour {
                     }else{
                         System.out.println(bid.getLandlordId().getName() +" 拒绝竞标");
                     }
-                    boolean isAll = agent.isAllReply(bid.getOrderId(),bid);
+                    boolean isAll = agent.isAllReply(bid.getId(),bid);
                     if(isAll){
-                        OrderResponse order = agent.getAndRemove(bid.getOrderId());
+                        OrderResponse order = agent.getAndRemove(bid.getId());
                         //以下代码为将OrderResponse返回给房客Agent
                         myAgent.addBehaviour(new selectInform(myAgent,order));
                     }

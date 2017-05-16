@@ -36,9 +36,7 @@ public class BidOntology extends Ontology{
     private static final String Order_SourceAid = "source";
 
     private static final String Tender = "Tender";
-    private static final String Tender_Address = "address";
-    private static final String Tender_Price = "price";
-    private static final String Tender_SourceAid = "source";
+    private static final String Tender_Order = "order";
 
     private static final String Bid = "Bid";
     private static final String Bid_Order = "id";
@@ -97,7 +95,7 @@ public class BidOntology extends Ontology{
     private BidOntology() {
         super(ONTOLOGY_NAME, BasicOntology.getInstance());
         try {
-            add(new AgentActionSchema(Order),Order.class);
+            add(new ConceptSchema(Order),Order.class);
             add(new AgentActionSchema(Tender),Tender.class);
             add(new ConceptSchema(Bid),Bid.class);
             add(new AgentActionSchema(OrderResponse),OrderResponse.class);
@@ -106,31 +104,34 @@ public class BidOntology extends Ontology{
             add(new ConceptSchema(MapObjects),MapObjects.class);
             add(new AgentActionSchema(Negotiation),Negotiation.class);
 
-            AgentActionSchema order = (AgentActionSchema)getSchema(Order);
+            ConceptSchema order = (ConceptSchema)getSchema(Order);
+            order.add(Order_Id,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             order.add(Order_Customer,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             order.add(Order_Address,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            order.add(Order_HotelType,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             order.add(Order_RoomType,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             order.add(Order_RoomNum,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             order.add(Order_Start,(PrimitiveSchema)getSchema(BasicOntology.DATE));
             order.add(Order_End,(PrimitiveSchema)getSchema(BasicOntology.DATE));
+            order.add(Order_Create,(PrimitiveSchema)getSchema(BasicOntology.DATE));
+            order.add(Order_MinPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            order.add(Order_MaxPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            order.add(Order_Facilities,(PrimitiveSchema)getSchema(BasicOntology.STRING),0,ObjectSchema.UNLIMITED);
             order.add(Order_SourceAid,(ConceptSchema)getSchema(BasicOntology.AID));
 
             ConceptSchema room = (ConceptSchema)getSchema(Room);
             room.add(Room_RoomId,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             room.add(Room_LandlordId,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             room.add(Room_Type,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            room.add(Room_Owner,(ConceptSchema)getSchema(BasicOntology.AID));
             room.add(Room_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             room.add(Room_ValidStartTime,(PrimitiveSchema)getSchema(BasicOntology.DATE));
             room.add(Room_ValidEndTime,(PrimitiveSchema)getSchema(BasicOntology.DATE));
             room.add(Room_Area,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             room.add(Room_RestNum,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-            room.add(Room_Owner,(ConceptSchema)getSchema(BasicOntology.AID));
 
             AgentActionSchema tender = (AgentActionSchema)getSchema(Tender);
-            tender.add(Tender_Address,(PrimitiveSchema)getSchema(BasicOntology.STRING));
-            tender.add(Tender_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-            tender.add(Tender_SourceAid,(ConceptSchema)getSchema(BasicOntology.AID));
-
+            tender.add(Tender_Order,(ConceptSchema)getSchema(Order));
 
             ConceptSchema  mapObject = (ConceptSchema)getSchema(MapObject);
             mapObject.add(MapObject_Name,(PrimitiveSchema)getSchema(BasicOntology.STRING));
@@ -160,7 +161,6 @@ public class BidOntology extends Ontology{
             orderResponse.add(OrderResponse_Num,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             orderResponse.add(OrderResponse_Source,(ConceptSchema)getSchema(BasicOntology.AID));
             orderResponse.add(OrderResponse_Bids,(ConceptSchema)getSchema(Bid),0, ObjectSchema.UNLIMITED);
-
 
             AgentActionSchema negotiation = (AgentActionSchema)getSchema(Negotiation);
             negotiation.add(Negotiation_UpPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));

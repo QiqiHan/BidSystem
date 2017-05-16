@@ -83,7 +83,7 @@ public class tenantServiceImpl implements tenantService {
                 e.printStackTrace();
             }
             System.out.println("---------------------");
-            System.out.println(bids.get(0).getRoom());
+            System.out.println(bids.get(0).getRoom().toString());
             System.out.println("价格："  +bids.get(0).getPrice());
         } catch (StaleProxyException e) {
             e.printStackTrace();

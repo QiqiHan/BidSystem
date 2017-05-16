@@ -33,42 +33,30 @@ public class selectAnalysis extends OneShotBehaviour {
         this.order = order;
     }
     public void action() {
-        Tender tender = new Tender(
-                order.getId(),
-                order.getMinPrice(),
-                order.getAddress(),
-                order.getStartTime(),
-                order.getEndTime(),
-                order.getRoomType(),
-                order.getRoomNum(),
-                order.getCreateTime(),
-                order.getFacilities(),
-                order.getHotelType(),
-                null,
-                order.getSource());
+        Tender tender = new Tender(order);
+
 
         String addr = order.getAddress();
-        MapObject map = MapUtil.convert(addr);
-        Double lat = Double.parseDouble(map.getLat());
-        Double lng = Double.parseDouble(map.getLng());
-
-        //寻找附近酒店，暂时算距离。因为数据太少了
-        SqlSession sqlSession = DBTools.getSession();
-        landlordMapper lordMapper = sqlSession.getMapper(landlordMapper.class);
-        List<landlord> landlords = lordMapper.selectAllLandlord();
-        //筛选最近的5个酒店
-        PriorityQueue<landlordCompare> queue = new PriorityQueue<landlordCompare>(5, new Comparator<landlordCompare>() {
-            public int compare(landlordCompare o1, landlordCompare o2) {
-                if(o1.getDistance()<o2.getDistance()) return -1;
-                else if(o1.getDistance() == o2.getDistance()) return 0;
-                else return 1;
-            }
-        });
-        for(landlord land : landlords) {
-            double distance = countDistance(lat, lng, land.getLat().doubleValue(),land.getLongitude().doubleValue());
-            landlordCompare compare = new landlordCompare(land,distance);
-            queue.add(compare);
-        }
+//        MapObject map = MapUtil.convert(addr);
+//        Double lat = Double.parseDouble(map.getLat());
+//        Double lng = Double.parseDouble(map.getLng());
+//        //寻找附近酒店，暂时算距离。因为数据太少了
+//        SqlSession sqlSession = DBTools.getSession();
+//        landlordMapper lordMapper = sqlSession.getMapper(landlordMapper.class);
+//        List<landlord> landlords = lordMapper.selectAllLandlord();
+//        //筛选最近的5个酒店
+//        PriorityQueue<landlordCompare> queue = new PriorityQueue<landlordCompare>(5, new Comparator<landlordCompare>() {
+//            public int compare(landlordCompare o1, landlordCompare o2) {
+//                if(o1.getDistance()<o2.getDistance()) return -1;
+//                else if(o1.getDistance() == o2.getDistance()) return 0;
+//                else return 1;
+//            }
+//        });
+//        for(landlord land : landlords) {
+//            double distance = countDistance(lat, lng, land.getLat().doubleValue(),land.getLongitude().doubleValue());
+//            landlordCompare compare = new landlordCompare(land,distance);
+//            queue.add(compare);
+//        }
 
 //        Iterator<landlordCompare> landlordCompares = queue.iterator();
 //        //应该是如果应标 再查周边信息

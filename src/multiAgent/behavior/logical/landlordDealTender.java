@@ -6,10 +6,7 @@ import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
 import multiAgent.agent.landlordAgent;
 import multiAgent.behavior.message.landlordPropose;
-import multiAgent.ontology.Bid;
-import multiAgent.ontology.Room;
-import multiAgent.ontology.RoomType;
-import multiAgent.ontology.Tender;
+import multiAgent.ontology.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -40,25 +37,27 @@ public class landlordDealTender extends OneShotBehaviour{
         //amiable的threshold = 20
         //promotion的threshold = 40
 //        landlord lord = agent.get
-        int price_tender = tender.getPrice();
+        Order order = tender.getOrder();
+        int price_min_tender = order.getMinPrice();
+        int price_max_tender = order.getMaxPrice();
         int type = (int)(Math.random()*2);
-        Bid bid;
+        Bid bid = null;
         if(type == 1) {
-            bid = new Bid(tender.getOrderId(),
-                    new Room(1,1, RoomType.Business+"",null,200,new Date(2017,5,2),new Date(2017,5,9),"200",2),
+            bid = new Bid(order.getId(),
+                    new Room(1,1, RoomType.Business+"",agent.getAID(),200,new Date(2017,5,2),new Date(2017,5,9),"200",2),
                     100,
                     null,
                     null,
-                    tender.getSource(),
+                    order.getSource(),
                     myAgent.getAID() ,
                     type);
         }else{
-            bid = new Bid(tender.getOrderId(),
-                    new Room(1,1, RoomType.Business+"",null,200,new Date(2017,5,2),new Date(2017,5,9),"200",2),
+            bid = new Bid(order.getId(),
+                    new Room(1,1, RoomType.Business+"",agent.getAID(),200,new Date(2017,5,2),new Date(2017,5,9),"200",2),
                     0,
                     null,
                     null,
-                    tender.getSource(),
+                    order.getSource(),
                     myAgent.getAID() ,
                     type);
         }

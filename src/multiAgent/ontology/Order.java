@@ -1,6 +1,7 @@
 package multiAgent.ontology;
 
 import jade.content.AgentAction;
+import jade.content.Concept;
 import jade.core.AID;
 import jade.util.leap.List;
 
@@ -10,7 +11,7 @@ import java.util.Date;
  * Created by H77 on 2017/5/5.
  *
  */
-public class Order implements AgentAction {
+public class Order implements Concept {
 
     //价格（给个范围），地点，时间，房间类型，房间数量，下单时间
     //设施：wifi，park，24小时热水，独立卫生间，提供早餐，接送机服务

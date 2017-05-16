@@ -12,10 +12,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import multiAgent.behavior.logical.landlordDealTender;
 import multiAgent.behavior.message.landlordPropose;
-import multiAgent.ontology.Bid;
-import multiAgent.ontology.BidOntology;
-import multiAgent.ontology.Negotiation;
-import multiAgent.ontology.Tender;
+import multiAgent.ontology.*;
 
 import java.util.Random;
 
@@ -44,7 +41,8 @@ public class landlordListener extends CyclicBehaviour {
                     ce = myAgent.getContentManager().extractContent(msg);
                     Action act = (Action) ce;
                     Tender tender = (Tender) act.getAction();
-                    System.out.println("lanlord" + myAgent.getName() + "收到信息地址" + tender.getAddress() + " 价格" + tender.getPrice());
+                    Order order = tender.getOrder();
+                    System.out.println("lanlord" + myAgent.getName() + "收到信息地址" + order.getAddress() + " 价格:" + order.getMinPrice()+"—"+order.getMaxPrice());
                     myAgent.addBehaviour(new landlordDealTender(myAgent,tender,msg.getSender()));
                 } catch (Codec.CodecException e) {
                     e.printStackTrace();

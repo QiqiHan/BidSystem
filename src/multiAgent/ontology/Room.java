@@ -33,8 +33,7 @@ public class Room implements Concept{
         this.area = area;
         this.restNum = restNum;
     }
-
-
+    public Room(){}
     public AID getOwner() {
         return owner;
     }
@@ -42,7 +41,6 @@ public class Room implements Concept{
     public void setOwner(AID owner) {
         this.owner = owner;
     }
-
 
     public int getPrice() {
         return price;
@@ -106,5 +104,20 @@ public class Room implements Concept{
 
     public void setRestNum(Integer restNum) {
         this.restNum = restNum;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomId=" + roomId +
+                ", landlordId=" + landlordId +
+                ", type='" + type + '\'' +
+                ", price=" + price +
+                ", validStartTime=" + validStartTime +
+                ", validEndTime=" + validEndTime +
+                ", area='" + area + '\'' +
+                ", restNum=" + restNum +
+                ", owner=" + owner +
+                '}';
     }
 }

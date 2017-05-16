@@ -2,11 +2,12 @@ package service;
 
 import DO.user;
 import jade.core.AID;
+import jade.util.leap.ArrayList;
+import jade.util.leap.List;
 import multiAgent.ontology.Order;
 import service.impl.managerServiceImpl;
 import service.impl.tenantServiceImpl;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -16,7 +17,7 @@ public class mainTest {
 
     public static void main(String[] args){
          tenantService tenant = tenantServiceImpl.getInstance();
-//         user user = new user("h88","123456","male","student",18);
+//        user user = new user("h77","123456","male","student",18);
 //         tenant.createTenant(user);
          managerService manager = managerServiceImpl.getInstance();
          manager.initSystem();
@@ -26,7 +27,6 @@ public class mainTest {
          Date dCreate = new Date(2017,5,3);
          Order order = new Order("1",
                  "小明",
-                 1,
                  "南京市南大",
                  "Theme Hotel",
                  "豪华套件",
@@ -36,7 +36,7 @@ public class mainTest {
                  dCreate,
                  120,
                  200,
-                 new ArrayList<String>(),
+                 new ArrayList(),
                  new AID("f2",false));
          tenant.createAgent(user.getUsername());
          tenant.putOrder(user.getUsername(),order);

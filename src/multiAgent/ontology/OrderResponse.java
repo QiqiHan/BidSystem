@@ -43,5 +43,11 @@ public class OrderResponse implements AgentAction {
     public void addBid(Bid bid){
        bids.add(bid);
     }
+    public AID getSource() {
+        return source;
+    }
+    public void setSource(AID source) {
+        this.source = source;
+    }
 
 }

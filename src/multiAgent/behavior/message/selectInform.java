@@ -30,9 +30,9 @@ public class selectInform extends OneShotBehaviour {
 
     public void action() {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        msg.addReceiver(response.getOrderId());
+        msg.addReceiver(response.getSource());
         Action act = new Action();
-        act.setActor(response.getOrderId());
+        act.setActor(agent.getAID());
         act.setAction(response);
         msg.setLanguage(codec.getName());
         msg.setOntology(ontology.getName());

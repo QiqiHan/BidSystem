@@ -66,7 +66,6 @@ public class agentApi {
         Date dCreate = new Date(2017,5,3);
         Order order = new Order("1",
                 "小明",
-                1,
                 "南京市南大",
                 "Theme Hotel",
                 "豪华套件",
@@ -76,7 +75,7 @@ public class agentApi {
                 dCreate,
                 120,
                 200,
-                new ArrayList<String>(),
+                null,
                 new AID("f2",false));
         try {
             tenantAgent.putO2AObject(order,false);
