@@ -4,9 +4,11 @@ import jade.content.AgentAction;
 import jade.core.AID;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by H77 on 2017/5/5.
+ *
  */
 public class Order implements AgentAction {
 
@@ -16,23 +18,33 @@ public class Order implements AgentAction {
     //周边：机场，景点，超市
     private String id;
     private String customer;
+    private int customerId;
     private String address;
+    private String hotelType;
     private String roomType;
     private int roomNum;
-    private Date start;
-    private Date end;
-    private int price;
+    private Date startTime;
+    private Date endTime;
+    private Date createTime;
+    private int minPrice;
+    private int maxPrice;
+    private List<String> facilities;
     private AID source;
 
-    public Order(String id, String customer, String address, String roomType, int roomNum, Date start, Date end, int price, AID source) {
+    public Order(String id, String customer, int customerId, String address, String hotelType, String roomType, int roomNum, Date start, Date end, Date create, int minPrice, int maxPrice, List<String> facilities, AID source) {
         this.id = id;
         this.customer = customer;
+        this.customerId = customerId;
         this.address = address;
+        this.hotelType = hotelType;
         this.roomType = roomType;
         this.roomNum = roomNum;
-        this.start = start;
-        this.end = end;
-        this.price = price;
+        this.startTime = start;
+        this.endTime = end;
+        this.createTime = create;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
+        this.facilities = facilities;
         this.source = source;
     }
 
@@ -62,20 +74,20 @@ public class Order implements AgentAction {
         this.roomNum = roomNum;
     }
 
-    public Date getStart() {
-        return start;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getEnd() {
-        return end;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public String getCustomer() {
@@ -94,12 +106,12 @@ public class Order implements AgentAction {
         this.address = address;
     }
 
-    public int getPrice() {
-        return price;
+    public int getMinPrice() {
+        return minPrice;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setMinPrice(int minPrice) {
+        this.minPrice = minPrice;
     }
 
     public AID getSource() {
@@ -108,5 +120,45 @@ public class Order implements AgentAction {
 
     public void setSource(AID source) {
         this.source = source;
+    }
+
+    public int getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(int maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public String getHotelType() {
+        return hotelType;
+    }
+
+    public void setHotelType(String hotelType) {
+        this.hotelType = hotelType;
+    }
+
+    public List<String> getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(List<String> facilities) {
+        this.facilities = facilities;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 }

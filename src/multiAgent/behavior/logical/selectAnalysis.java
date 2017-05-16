@@ -25,7 +25,20 @@ public class selectAnalysis extends OneShotBehaviour {
         this.order = order;
     }
     public void action() {
-        Tender tender = new Tender(order.getAddress(),order.getPrice(),order.getSource());
+        Tender tender = new Tender(1,
+                order.getId(),
+                order.getCustomerId(),
+                order.getMinPrice(),
+                order.getAddress(),
+                order.getStartTime(),
+                order.getEndTime(),
+                order.getRoomType(),
+                order.getRoomNum(),
+                order.getCreateTime(),
+                order.getFacilities(),
+                order.getHotelType(),
+                "",
+                order.getSource());
         //创建Agent的例子
         List<AID> aids  = agent.createAgent();
         myAgent.addBehaviour(new selectPropose(myAgent,tender,aids));

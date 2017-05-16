@@ -15,11 +15,11 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    roomId, landlordId, roomType, price, validStartTime, validEndTime, facilities, area, 
+    roomId, landlordId, roomType, price, validStartTime, validEndTime, facilities, area,
     restNum
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from room
     where roomId = #{roomid,jdbcType=INTEGER}
@@ -29,14 +29,14 @@
     where roomId = #{roomid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="DO.room" >
-    insert into room (roomId, landlordId, roomType, 
-      price, validStartTime, validEndTime, 
-      facilities, area, restNum
-      )
-    values (#{roomid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER}, #{roomtype,jdbcType=VARCHAR}, 
-      #{price,jdbcType=INTEGER}, #{validstarttime,jdbcType=TIMESTAMP}, #{validendtime,jdbcType=TIMESTAMP}, 
-      #{facilities,jdbcType=VARCHAR}, #{area,jdbcType=DECIMAL}, #{restnum,jdbcType=INTEGER}
-      )
+    insert into room (roomId, landlordId, roomType,
+    price, validStartTime, validEndTime,
+    facilities, area, restNum
+    )
+    values (#{roomid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER}, #{roomtype,jdbcType=VARCHAR},
+    #{price,jdbcType=INTEGER}, #{validstarttime,jdbcType=TIMESTAMP}, #{validendtime,jdbcType=TIMESTAMP},
+    #{facilities,jdbcType=VARCHAR}, #{area,jdbcType=DECIMAL}, #{restnum,jdbcType=INTEGER}
+    )
   </insert>
   <insert id="insertSelective" parameterType="DO.room" >
     insert into room
