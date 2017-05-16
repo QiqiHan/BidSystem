@@ -21,7 +21,7 @@ public class landlordDealTender extends OneShotBehaviour{
     }
     public void action() {
         int type = (int)(Math.random()*2);
-        Bid bid = null;
+        Bid bid;
         if(type == 1) {
             bid = new Bid(tender.getSource(), "南京大酒店", 100, myAgent.getAID() ,type);
         }else{
