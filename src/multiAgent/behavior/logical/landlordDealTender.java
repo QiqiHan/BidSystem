@@ -30,7 +30,17 @@ public class landlordDealTender extends OneShotBehaviour{
         this.receive = receive;
     }
     public void action() {
+        //决定是否要竞标
+        //首先查看该房间类型是否有，如果有房间数量是否满足。如果没有该类型房间或者房间数量不满足，则放弃竞标
+        //其次查看招标价格与该房间价格的差值，如果招标价格高于等于房间价格，直接参与竞标
+        //如果招标价格低于房间价格，如果差值大于某个阀值，则放弃竞标
+        //阀值由该房东的经济情况确定。
+        //比如tension的threshold = 0
+        //affordable的threshold = 10
+        //amiable的threshold = 20
+        //promotion的threshold = 40
 //        landlord lord = agent.get
+        int price_tender = tender.getPrice();
         int type = (int)(Math.random()*2);
         Bid bid;
         if(type == 1) {
