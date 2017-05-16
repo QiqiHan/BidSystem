@@ -15,10 +15,10 @@ import java.util.Date;
 public class mainTest {
 
     public static void main(String[] args){
-         tenantService tenant = new tenantServiceImpl();
+         tenantService tenant = tenantServiceImpl.getInstance();
 //         user user = new user("h88","123456","male","student",18);
 //         tenant.createTenant(user);
-         managerService manager = new managerServiceImpl();
+         managerService manager = managerServiceImpl.getInstance();
          manager.initSystem();
          user user = tenant.findTenant(1);
          Date dStart = new Date(2017,5,9);
