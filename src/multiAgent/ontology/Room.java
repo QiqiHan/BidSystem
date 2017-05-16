@@ -3,19 +3,38 @@ package multiAgent.ontology;
 import jade.content.Concept;
 import jade.core.AID;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by zcy on 2017/5/8.
  *
  */
 public class Room implements Concept{
+    private Integer roomId;
+    private Integer landlordId;
     private String type;
-    private AID owner;
     private int price;
+    private Date validStartTime;
+    private Date validEndTime;
+    private List<String> facilities;
+    private BigDecimal area;
+    private Integer restNum;
+    private AID owner;
 
-    public Room(String type,AID owner,int price){
+
+    public Room(Integer roomId, Integer landlordId, String type, AID owner, int price, Date validStartTime, Date validEndTime, List<String> facilities, BigDecimal area, Integer restNum){
+        this.roomId = roomId;
+        this.landlordId = landlordId;
         this.type = type;
         this.owner = owner;
         this.price = price;
+        this.validStartTime = validStartTime;
+        this.validEndTime = validEndTime;
+        this.facilities = facilities;
+        this.area = area;
+        this.restNum = restNum;
     }
 
 
@@ -42,5 +61,61 @@ public class Room implements Concept{
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
+    }
+
+    public Integer getLandlordId() {
+        return landlordId;
+    }
+
+    public void setLandlordId(Integer landlordId) {
+        this.landlordId = landlordId;
+    }
+
+    public Date getValidStartTime() {
+        return validStartTime;
+    }
+
+    public void setValidStartTime(Date validStartTime) {
+        this.validStartTime = validStartTime;
+    }
+
+    public Date getValidEndTime() {
+        return validEndTime;
+    }
+
+    public void setValidEndTime(Date validEndTime) {
+        this.validEndTime = validEndTime;
+    }
+
+    public List<String> getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(List<String> facilities) {
+        this.facilities = facilities;
+    }
+
+    public BigDecimal getArea() {
+        return area;
+    }
+
+    public void setArea(BigDecimal area) {
+        this.area = area;
+    }
+
+    public Integer getRestNum() {
+        return restNum;
+    }
+
+    public void setRestNum(Integer restNum) {
+        this.restNum = restNum;
     }
 }
