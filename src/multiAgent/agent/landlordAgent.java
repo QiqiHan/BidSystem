@@ -1,5 +1,6 @@
 package multiAgent.agent;
 
+import DO.landlord;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
@@ -16,6 +17,7 @@ public class landlordAgent extends Agent{
     //营销策略
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
+    private landlord owner = null;
     //landlordAgent 生命周期
     private boolean isDone = false;
 

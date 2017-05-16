@@ -3,6 +3,7 @@ package multiAgent.behavior.logical;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
+import multiAgent.agent.landlordAgent;
 import multiAgent.behavior.message.landlordPropose;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.Tender;
@@ -15,13 +16,16 @@ public class landlordDealTender extends OneShotBehaviour{
 
     private Tender tender;
     private AID receive;
+    private landlordAgent agent;
     public landlordDealTender(Agent agent , Tender tender, AID receive){
+        super(agent);
+        this.agent = (landlordAgent) agent;
         this.tender = tender;
         this.receive = receive;
     }
     public void action() {
         int type = (int)(Math.random()*2);
-        Bid bid;
+        Bid bid = null;
         if(type == 1) {
             bid = new Bid(tender.getSource(), "南京大酒店", 100, myAgent.getAID() ,type);
         }else{
