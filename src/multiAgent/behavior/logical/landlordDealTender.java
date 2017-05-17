@@ -46,8 +46,8 @@ public class landlordDealTender extends OneShotBehaviour{
                     100,
                     null,
                     null,
+                    myAgent.getAID(),
                     order.getSource(),
-                    myAgent.getAID() ,
                     type);
         }else{
             bid = new Bid(order.getId(),
@@ -55,8 +55,8 @@ public class landlordDealTender extends OneShotBehaviour{
                     0,
                     null,
                     null,
+                    myAgent.getAID(),
                     order.getSource(),
-                    myAgent.getAID() ,
                     type);
         }
         myAgent.addBehaviour(new landlordPropose(myAgent,bid,receive));

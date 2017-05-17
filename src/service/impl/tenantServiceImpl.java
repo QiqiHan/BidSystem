@@ -72,19 +72,19 @@ public class tenantServiceImpl implements tenantService {
         AgentController tenantAgent = agentHandler.agents.get(name);
         try {
             tenantAgent.putO2AObject(o,false);
-            List<Bid> bids = null;
-            while(bids == null){
-                bids = agentHandler.results.get(o.getId());
-            }
-            agentHandler.results.remove(o.getId());
-            try {
-                Thread.sleep(2500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("---------------------");
-            System.out.println(bids.get(0).getRoom().toString());
-            System.out.println("价格："  +bids.get(0).getPrice());
+//            List<Bid> bids = null;
+//            while(bids == null){
+//                bids = agentHandler.results.get(o.getId());
+//            }
+//            agentHandler.results.remove(o.getId());
+//            try {
+//                Thread.sleep(2500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            System.out.println("---------------------");
+//            System.out.println(bids.get(0).getRoom().toString());
+//            System.out.println("价格："  +bids.get(0).getPrice());
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }

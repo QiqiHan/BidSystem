@@ -37,7 +37,7 @@ public class mainTest {
                  120,
                  200,
                  new ArrayList(),
-                 new AID("f2",false));
+                 new AID(user.getUsername(),false));
          tenant.createAgent(user.getUsername());
          tenant.putOrder(user.getUsername(),order);
     }

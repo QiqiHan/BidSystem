@@ -8,6 +8,9 @@ import jade.core.Agent;
 import multiAgent.behavior.listener.landlordListener;
 import multiAgent.ontology.BidOntology;
 import multiAgent.agentHelper.DFUtil;
+import util.CondVar;
+
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by H77 on 2017/5/6.
@@ -24,9 +27,18 @@ public class landlordAgent extends Agent{
     protected void setup() {
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
+        setEnabledO2ACommunication(true,10);
+        //args[0]是landlord  args[1]是countDownBatch
+        Object[] args = getArguments();
         DFUtil.registerService(this,"landlord");
-        System.out.println("创建 landlordAgent");
         addBehaviour(new landlordListener(this));
+        if (args.length > 0) {
+            owner = (landlord) args[0];
+            CountDownLatch count = (CountDownLatch)args[1];
+            System.out.println("创建landlordAgent "+ owner.getLandlordname());
+            count.countDown();
+        }
+
     }
 
     protected boolean done(){
@@ -37,6 +49,11 @@ public class landlordAgent extends Agent{
     }
     public void setDone(boolean done) {
         isDone = done;
+    }
+
+    public void takeDown(){
+        System.out.println("landlordAgent 被销毁");
+        setEnabledO2ACommunication(false,0);
     }
 
 }

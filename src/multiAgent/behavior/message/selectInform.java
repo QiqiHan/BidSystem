@@ -27,7 +27,6 @@ public class selectInform extends OneShotBehaviour {
         this.agent = (selectAgent)agent;
         response = order;
     }
-
     public void action() {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
         msg.addReceiver(response.getSource());

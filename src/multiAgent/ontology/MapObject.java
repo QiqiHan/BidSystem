@@ -73,7 +73,11 @@ public class MapObject implements Concept{
     }
 
     public void setOverall_rating(String overall_rating) {
-        this.overall_rating = overall_rating;
+        if(overall_rating != null){
+            this.overall_rating = overall_rating;
+        }else {
+            this.overall_rating = "";
+        }
     }
 
     public String getTag() {
@@ -81,7 +85,11 @@ public class MapObject implements Concept{
     }
 
     public void setTag(String tag) {
-        this.tag = tag;
+        if(tag != null){
+            this.tag = tag;
+        }else{
+            this.tag = "";
+        }
     }
 
     @Override

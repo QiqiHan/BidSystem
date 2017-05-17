@@ -3,8 +3,8 @@ package multiAgent.ontology;
 import jade.content.AgentAction;
 import jade.content.Concept;
 import jade.core.AID;
+import jade.util.leap.List;
 
-import java.util.List;
 
 /**
  * Created by H77 on 2017/5/7.

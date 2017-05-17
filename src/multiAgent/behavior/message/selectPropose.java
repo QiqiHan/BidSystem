@@ -41,10 +41,6 @@ public class selectPropose extends OneShotBehaviour{
         for(AID aid : aids){
             msg.addReceiver(aid);
         }
-        Order order = tender.getOrder();
-        //在selectAgent中先缓存
-        OrderResponse response = new OrderResponse(order.getId(),aids.size(),order.getSource(),new ArrayList());
-        agent.setOrderResponse(order.getId(),response);
 
         msg.setLanguage(codec.getName());
         msg.setOntology(ontology.getName());

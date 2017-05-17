@@ -1,5 +1,6 @@
 package multiAgent.behavior.listener;
 
+import DO.landlord;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
@@ -14,13 +15,12 @@ import jade.lang.acl.MessageTemplate;
 import multiAgent.agent.selectAgent;
 import multiAgent.behavior.logical.selectAnalysis;
 import multiAgent.behavior.message.selectInform;
-import multiAgent.ontology.Bid;
-import multiAgent.ontology.BidOntology;
-import multiAgent.ontology.Order;
-import multiAgent.ontology.OrderResponse;
+import multiAgent.ontology.*;
+import util.MapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zy on 17/5/6.
@@ -29,7 +29,6 @@ public class selectListener extends CyclicBehaviour {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
-    private List<AID> lanlordAids;
     private selectAgent agent;
     public selectListener(Agent agent){
          super(agent);
@@ -53,7 +52,6 @@ public class selectListener extends CyclicBehaviour {
                          * todo
                          * 下面是去查询并且筛选数据，然后生成招标书，并且发送给房东agent
                          */
-                        lanlordAids = new ArrayList<AID>();
                         myAgent.addBehaviour(new selectAnalysis(agent,o));
                     }
                 }else if( msg.getPerformative() == ACLMessage.PROPOSE){
@@ -61,6 +59,27 @@ public class selectListener extends CyclicBehaviour {
                     Action act = (Action) ce;
                     Bid bid = (Bid) act.getAction();
                     if(bid.getType() == 1) {
+                        //如果同意竞标 bid中添加周边信息
+                        landlord land = agent.getLandLord(bid.getLandlordId());
+                        List<String> keywords = new ArrayList<String>();
+                        keywords.add("景点");
+                        keywords.add("超市");
+                        keywords.add("公交");
+                        Map<String,List<MapObject>> maps = MapUtil.searchAroundSite(keywords,land.getLongitude().toString(),land.getLatitude().toString());
+                        jade.util.leap.List aroundsites = new jade.util.leap.ArrayList();
+                        for(String key : keywords){
+                            List<MapObject> lists = maps.get(key);
+                            MapObjects object = new MapObjects();
+
+                            jade.util.leap.List objects = new jade.util.leap.ArrayList();
+                            for(MapObject ob : lists){
+                                 objects.add(ob);
+                            }
+                            object.setKeyWords(key);
+                            object.setObjects(objects);
+                            aroundsites.add(object);
+                        }
+                        bid.setAroundsites(aroundsites);
                         System.out.println(bid.getLandlordId().getName() + " 同意竞标");
                     }else{
                         System.out.println(bid.getLandlordId().getName() +" 拒绝竞标");
