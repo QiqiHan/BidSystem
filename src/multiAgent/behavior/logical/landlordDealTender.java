@@ -1,6 +1,5 @@
 package multiAgent.behavior.logical;
 
-import DO.landlord;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
@@ -8,7 +7,6 @@ import multiAgent.agent.landlordAgent;
 import multiAgent.behavior.message.landlordPropose;
 import multiAgent.ontology.*;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**

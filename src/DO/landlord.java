@@ -21,11 +21,11 @@ public class landlord {
 
     private String detailaddress;
 
-    private Integer comment;
+    private String comment;
 
     private BigDecimal longitude;
 
-    private BigDecimal lat;
+    private BigDecimal latitude;
 
     private String concat;
 
@@ -33,7 +33,7 @@ public class landlord {
 
     private String characteristic;
 
-    public landlord(Integer landlordid, String landlordname, String password, String landlordtype, String feature, Integer startprice, String city, String area, String detailaddress, Integer comment, BigDecimal longitude, BigDecimal lat, String concat, String introduction, String characteristic) {
+    public landlord(Integer landlordid, String landlordname, String password, String landlordtype, String feature, Integer startprice, String city, String area, String detailaddress, String comment, BigDecimal longitude, BigDecimal latitude, String concat, String introduction, String characteristic) {
         this.landlordid = landlordid;
         this.landlordname = landlordname;
         this.password = password;
@@ -45,7 +45,7 @@ public class landlord {
         this.detailaddress = detailaddress;
         this.comment = comment;
         this.longitude = longitude;
-        this.lat = lat;
+        this.latitude = latitude;
         this.concat = concat;
         this.introduction = introduction;
         this.characteristic = characteristic;
@@ -127,12 +127,12 @@ public class landlord {
         this.detailaddress = detailaddress == null ? null : detailaddress.trim();
     }
 
-    public Integer getComment() {
+    public String getComment() {
         return comment;
     }
 
-    public void setComment(Integer comment) {
-        this.comment = comment;
+    public void setComment(String comment) {
+        this.comment = comment == null ? null : comment.trim();
     }
 
     public BigDecimal getLongitude() {
@@ -143,12 +143,12 @@ public class landlord {
         this.longitude = longitude;
     }
 
-    public BigDecimal getLat() {
-        return lat;
+    public BigDecimal getLatitude() {
+        return latitude;
     }
 
-    public void setLat(BigDecimal lat) {
-        this.lat = lat;
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
     }
 
     public String getConcat() {

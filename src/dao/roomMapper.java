@@ -1,6 +1,7 @@
 package dao;
 
 import DO.room;
+import org.apache.ibatis.annotations.Param;
 
 public interface roomMapper {
     int deleteByPrimaryKey(Integer roomid);
@@ -11,7 +12,7 @@ public interface roomMapper {
 
     room selectByPrimaryKey(Integer roomid);
 
-    room selectByLandlordIdAndRoomType(Integer landlordId,String roomType);
+    room selectByLandlordIdAndRoomType(@Param("landlordId") Integer landlordId, @Param("roomType") String roomType);
 
     int updateByPrimaryKeySelective(room record);
 

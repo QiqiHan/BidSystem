@@ -1,21 +1,13 @@
 package multiAgent.behavior.logical;
 
-import DO.landlord;
-import dao.landlordMapper;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
 import multiAgent.agent.selectAgent;
-import multiAgent.agentHelper.landlordCompare;
 import multiAgent.behavior.message.selectPropose;
-import multiAgent.ontology.MapObject;
 import multiAgent.ontology.Order;
 import multiAgent.ontology.Tender;
-import org.apache.ibatis.session.SqlSession;
-import util.DBTools;
-import util.MapUtil;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 /**

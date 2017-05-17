@@ -121,11 +121,11 @@ public class MapUtil {
     }
 
     public static  void main(String[] args){
-//        List<String> keywords = new ArrayList<String>();
-//        keywords.add("公交");
+        List<String> keywords = new ArrayList<String>();
+        keywords.add("Supermarket");
 //        keywords.add("旅游景点");
-//        searchAroundSite(keywords,"120.90407","30.944314");
-          convert("西塘");
+        searchAroundSite(keywords,"120.90407","30.944314");
+//          convert("Xitang");
     }
 }
 

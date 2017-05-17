@@ -18,17 +18,17 @@
     roomId, landlordId, roomType, price, validStartTime, validEndTime, facilities, area,
     restNum
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer;java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
     from room
     where roomId = #{roomid,jdbcType=INTEGER}
   </select>
-  <select id="selectByLandlordIdAndRoomType" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="selectByLandlordIdAndRoomType" resultMap="BaseResultMap">
       select
       <include refid="Base_Column_List" />
       from room
-      where landlordId = #{landlordid,jdbcType=INTEGER} and roomType = #{roomtype,jdbcType=VARCHAR}
+      where landlordId = #{landlordId,jdbcType=INTEGER} and roomType = #{roomType,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from room
