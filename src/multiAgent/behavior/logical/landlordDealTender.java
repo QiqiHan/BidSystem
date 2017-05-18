@@ -35,10 +35,19 @@ public class landlordDealTender extends OneShotBehaviour{
         //amiable的threshold = 20
         //promotion的threshold = 40
 //        landlord lord = agent.get
+        int type;
         Order order = tender.getOrder();
         int price_min_tender = order.getMinPrice();
         int price_max_tender = order.getMaxPrice();
-        int type = (int)(Math.random()*2);
+        int price_room = 1; //该房东该类型房间的价格
+        if(price_room<=price_min_tender){
+            type = 1;
+        }else if(price_room<price_max_tender){
+
+        }else{
+
+        }
+        type = (int)(Math.random()*2);
         Bid bid = null;
         if(type == 1) {
             bid = new Bid(order.getId(),
