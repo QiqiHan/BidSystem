@@ -4,20 +4,21 @@ import jade.content.AgentAction;
 
 /**
  * Created by zy on 17/5/8.
+ *
  */
 public class Negotiation implements AgentAction {
 
-    private int upPrice;
+    private int minReduction;  //最小降价幅度
 
-    private int lowPrice;
+    private int maxReduction;  //最大降价幅度
 
     private int result;//1表示同意，0表示拒绝，-1表示还未处理
 
     private int actualPrice;
 
-    public Negotiation(int upPrice, int lowPrice, int result,int actualPrice) {
-        this.upPrice = upPrice;
-        this.lowPrice = lowPrice;
+    public Negotiation(int minReduction, int maxReduction, int result,int actualPrice) {
+        this.minReduction = minReduction;
+        this.maxReduction = maxReduction;
         this.result = result;
         this.actualPrice=actualPrice;
     }
@@ -25,20 +26,20 @@ public class Negotiation implements AgentAction {
     public Negotiation(){}
 
 
-    public int getUpPrice() {
-        return upPrice;
+    public int getMinReduction() {
+        return minReduction;
     }
 
-    public void setUpPrice(int upPrice) {
-        this.upPrice = upPrice;
+    public void setMinReduction(int minReduction) {
+        this.minReduction = minReduction;
     }
 
-    public int getLowPrice() {
-        return lowPrice;
+    public int getMaxReduction() {
+        return maxReduction;
     }
 
-    public void setLowPrice(int lowPrice) {
-        this.lowPrice = lowPrice;
+    public void setMaxReduction(int maxReduction) {
+        this.maxReduction = maxReduction;
     }
 
     public int getResult() {

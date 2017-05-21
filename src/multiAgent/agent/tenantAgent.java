@@ -1,5 +1,6 @@
 package multiAgent.agent;
 
+import DO.landlord;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
@@ -24,6 +25,9 @@ public class tenantAgent extends Agent {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
+    private landlord owner = null;
+    //tenantAgent 生命周期
+    private boolean isDone = false;
 
     protected void setup() {
         getContentManager().registerLanguage(codec);
@@ -34,6 +38,7 @@ public class tenantAgent extends Agent {
         if (args.length > 0) {
             CondVar latch = (CondVar) args[0];
             latch.signal();
+//            owner = () args[1];
         }
         System.out.println("创建 tenantAgent");
         addBehaviour(new tenantListener(this));
@@ -46,6 +51,7 @@ public class tenantAgent extends Agent {
 //        return true;
 //    }
 
+//    public tenant getOwner(){
     public void takeDown(){
         System.out.println("tenantAgent 被销毁");
         setEnabledO2ACommunication(false,0);

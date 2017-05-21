@@ -81,7 +81,20 @@ public class landlordDealTender extends OneShotBehaviour{
                 if(price_room+threshold>price_max_tender){
                     type = 0;
                 }else{
-                    type = 1;
+                    //价格符合了要求，判断订单的时间（是否是节假日）和空房率
+                    Date startTime = order.getStartTime();
+                    Date endTime = order.getEndTime();
+                    if(isHoliday(startTime)){
+                        if(isHoliday(endTime)){
+                            //起止时间都是节假日，只有当空房率高于50%时才接受招标
+                            type = 1;
+                        }else{
+                            //开始时间是节假日，结束时间不是节假日，当空房率高于30%时接受招标
+                            type = 1;
+                        }
+                    }else{
+                        type = 1;
+                    }
                 }
             }
         }
@@ -107,5 +120,10 @@ public class landlordDealTender extends OneShotBehaviour{
                     type);
         }
         myAgent.addBehaviour(new landlordPropose(myAgent,bid,receive));
+    }
+
+    private boolean isHoliday(Date d){
+
+        return false;
     }
 }
