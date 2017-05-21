@@ -51,6 +51,9 @@ public class landlordAgent extends Agent{
         isDone = done;
     }
 
+    public landlord getOwner(){
+        return owner;
+    }
     public void takeDown(){
         System.out.println("landlordAgent 被销毁");
         setEnabledO2ACommunication(false,0);

@@ -15,6 +15,7 @@ public interface landlordService {
     public boolean creatRoom(room room);
     public boolean deleteRoom(int roomid);
     public room findRoom(int roomid);
+    public room findRoomByLandlordAndType(int landlordid, String type);
 
 
 }

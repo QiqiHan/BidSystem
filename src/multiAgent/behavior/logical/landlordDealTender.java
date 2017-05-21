@@ -1,11 +1,16 @@
 package multiAgent.behavior.logical;
 
+import DO.landlord;
+import DO.room;
+import dao.roomMapper;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
 import multiAgent.agent.landlordAgent;
 import multiAgent.behavior.message.landlordPropose;
 import multiAgent.ontology.*;
+import service.impl.landlordServiceImpl;
+import service.landlordService;
 
 import java.util.Date;
 
@@ -34,20 +39,53 @@ public class landlordDealTender extends OneShotBehaviour{
         //affordable的threshold = 10
         //amiable的threshold = 20
         //promotion的threshold = 40
-//        landlord lord = agent.get
-        int type;
+
+        int type; //如果type是1代表要竞标，如果是0表示不竞标
+        landlord landlord = agent.getOwner();  //该agent代表的房东
+        String characteristic = landlord.getCharacteristic();  //该房东的经济情况
         Order order = tender.getOrder();
         int price_min_tender = order.getMinPrice();
         int price_max_tender = order.getMaxPrice();
-        int price_room = 1; //该房东该类型房间的价格
-        if(price_room<=price_min_tender){
-            type = 1;
-        }else if(price_room<price_max_tender){
+        String roomType = order.getRoomType();
+        int roomNum = order.getRoomNum();
 
+        landlordService landlordService = landlordServiceImpl.getInstance();
+        room r = landlordService.findRoomByLandlordAndType(landlord.getLandlordid(),roomType);
+        if(r==null){
+            //该房东没有该类型的房间,拒绝竞标
+            type = 0;
+        }else if(r.getRestnum()<roomNum){
+            //该房东该类型的房间数量不满足用户需求，拒绝竞标
+            type = 0;
         }else{
+            int price_room = r.getPrice();  //该房东该类型房间的价格
+            if(price_room<price_min_tender){
+                //招标价格最小值高于房间价格，参与竞标
+                type = 1;
+            }else if(price_room>price_max_tender){
+                //招标价格最大值低于房间价格，不参与竞标
+                type = 0;
+            }else{
+                //房间价格在招标价格区间内
+                int threshold = 0;
+                if(characteristic.equals("tension")){
+                    threshold = 0;
+                }else if(characteristic.equals("affordable")){
+                    threshold = 10;
+                }else if(characteristic.equals("amiable")){
+                    threshold = 20;
+                }else if(characteristic.equals("promotion")){
+                    threshold = 40;
+                }
 
+                if(price_room+threshold>price_max_tender){
+                    type = 0;
+                }else{
+                    type = 1;
+                }
+            }
         }
-        type = (int)(Math.random()*2);
+
         Bid bid = null;
         if(type == 1) {
             bid = new Bid(order.getId(),

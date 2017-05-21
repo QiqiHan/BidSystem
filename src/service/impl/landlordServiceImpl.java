@@ -62,4 +62,11 @@ public class landlordServiceImpl implements landlordService {
         room room = mapper.selectByPrimaryKey(roomid);
         return room;
     }
+
+    public room findRoomByLandlordAndType(int landlordid, String type){
+        SqlSession sqlSession = DBTools.getSession();
+        roomMapper mapper = sqlSession.getMapper(roomMapper.class);
+        room room = mapper.selectByLandlordIdAndRoomType(landlordid,type);
+        return room;
+    }
 }
