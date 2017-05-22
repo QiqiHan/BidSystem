@@ -24,6 +24,12 @@
     from room
     where roomId = #{roomid,jdbcType=INTEGER}
   </select>
+  <select id="selectByLandlordIdAndRoomType" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from room
+      where landlordId = #{landlordId,jdbcType=INTEGER} and roomType = #{roomType,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from room
     where roomId = #{roomid,jdbcType=INTEGER}

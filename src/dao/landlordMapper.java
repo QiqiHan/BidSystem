@@ -2,6 +2,8 @@ package dao;
 
 import DO.landlord;
 
+import java.util.List;
+
 public interface landlordMapper {
     int deleteByPrimaryKey(Integer landlordid);
 
@@ -10,6 +12,8 @@ public interface landlordMapper {
     int insertSelective(landlord record);
 
     landlord selectByPrimaryKey(Integer landlordid);
+
+    List<landlord> selectAllLandlord();
 
     int updateByPrimaryKeySelective(landlord record);
 
