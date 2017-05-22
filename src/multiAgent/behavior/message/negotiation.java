@@ -1,5 +1,6 @@
 package multiAgent.behavior.message;
 
+import DO.tenant;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
@@ -10,6 +11,7 @@ import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.util.leap.List;
+import multiAgent.agent.tenantAgent;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Negotiation;
@@ -38,8 +40,22 @@ public class negotiation  extends OneShotBehaviour {
                 message.setLanguage(codec.getName());
                 message.setOntology(ontology.getName());
 
+                tenant t = ((tenantAgent)myAgent).getOwner();
+                String economic = t.getEconomic();
+                int minReduction = 0;
+                int maxReduction = 0;
+                if(economic.equals("poor")){
+                    minReduction = 20;
+                    maxReduction = 50;
+                }else if(economic.equals("normal")){
+                    minReduction = 10;
+                    maxReduction = 30;
+                }else if(economic.equals("rich")){
+                    minReduction = 0;
+                    maxReduction = 20;
+                }
                 //组装Negotitation对象，这边其实需要计算大概还价多少
-                Negotiation negotiation = new Negotiation(1, 10, -1,0);
+                Negotiation negotiation = new Negotiation(minReduction, maxReduction, -1,0);
                 Action sendAct = new Action();
                 sendAct.setActor(myAgent.getAID());
                 sendAct.setAction(negotiation);
