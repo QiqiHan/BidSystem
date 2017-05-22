@@ -16,22 +16,22 @@ public class room {
 
     private Date validendtime;
 
-    private String facilities;
-
     private BigDecimal area;
 
     private Integer restnum;
 
-    public room(Integer roomid, Integer landlordid, String roomtype, Integer price, Date validstarttime, Date validendtime, String facilities, BigDecimal area, Integer restnum) {
+    private Integer totalnum;
+
+    public room(Integer roomid, Integer landlordid, String roomtype, Integer price, Date validstarttime, Date validendtime, BigDecimal area, Integer restnum, Integer totalnum) {
         this.roomid = roomid;
         this.landlordid = landlordid;
         this.roomtype = roomtype;
         this.price = price;
         this.validstarttime = validstarttime;
         this.validendtime = validendtime;
-        this.facilities = facilities;
         this.area = area;
         this.restnum = restnum;
+        this.totalnum = totalnum;
     }
 
     public room() {
@@ -86,14 +86,6 @@ public class room {
         this.validendtime = validendtime;
     }
 
-    public String getFacilities() {
-        return facilities;
-    }
-
-    public void setFacilities(String facilities) {
-        this.facilities = facilities == null ? null : facilities.trim();
-    }
-
     public BigDecimal getArea() {
         return area;
     }
@@ -108,5 +100,13 @@ public class room {
 
     public void setRestnum(Integer restnum) {
         this.restnum = restnum;
+    }
+
+    public Integer getTotalnum() {
+        return totalnum;
+    }
+
+    public void setTotalnum(Integer totalnum) {
+        this.totalnum = totalnum;
     }
 }

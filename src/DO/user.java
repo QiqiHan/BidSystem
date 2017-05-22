@@ -21,13 +21,7 @@ public class user {
         this.job = job;
         this.age = age;
     }
-    public user(String username, String password, String sex, String job, Integer age) {
-        this.username = username;
-        this.password = password;
-        this.sex = sex;
-        this.job = job;
-        this.age = age;
-    }
+
     public user() {
         super();
     }

@@ -103,5 +103,10 @@
                selectByExampleQueryId="false">
         </table>
 
+        <table tableName="tenant" domainObjectName="tenant"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
     </context>
 </generatorConfiguration>

@@ -15,7 +15,7 @@
     bidId, landlordId, result, price, roomId, orderId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
     from bid
     where bidId = #{bidid,jdbcType=INTEGER}
@@ -25,12 +25,12 @@
     where bidId = #{bidid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="DO.bid" >
-    insert into bid (bidId, landlordId, result,
-    price, roomId, orderId
-    )
-    values (#{bidid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER}, #{result,jdbcType=INTEGER},
-    #{price,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}
-    )
+    insert into bid (bidId, landlordId, result, 
+      price, roomId, orderId
+      )
+    values (#{bidid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER}, #{result,jdbcType=INTEGER}, 
+      #{price,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="DO.bid" >
     insert into bid

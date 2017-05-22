@@ -24,11 +24,6 @@
     landlordId, landlordName, password, landlordType, feature, startPrice, city, area, 
     detailAddress, comment, longitude, latitude, concat, introduction, characteristic
   </sql>
-  <select id="selectAllLandlord" resultType="DO.landlord" >
-    select
-    <include refid="Base_Column_List" />
-    from landlord
-  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

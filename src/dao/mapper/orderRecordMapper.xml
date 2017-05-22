@@ -19,33 +19,33 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    recordId, userId, landlordId, price, createdAt, facilities, roomType, hotelType,
+    recordId, userId, landlordId, price, createdAt, facilities, roomType, hotelType, 
     aroundSite, startTime, leaveTime, roomNum, orderId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
-    from orderRecord
+    from orderrecord
     where recordId = #{recordid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from orderRecord
+    delete from orderrecord
     where recordId = #{recordid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="DO.orderRecord" >
-    insert into orderRecord (recordId, userId, landlordId,
-    price, createdAt, facilities,
-    roomType, hotelType, aroundSite,
-    startTime, leaveTime, roomNum,
-    orderId)
-    values (#{recordid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER},
-    #{price,jdbcType=INTEGER}, #{createdat,jdbcType=TIMESTAMP}, #{facilities,jdbcType=VARCHAR},
-    #{roomtype,jdbcType=VARCHAR}, #{hoteltype,jdbcType=VARCHAR}, #{aroundsite,jdbcType=VARCHAR},
-    #{starttime,jdbcType=TIMESTAMP}, #{leavetime,jdbcType=TIMESTAMP}, #{roomnum,jdbcType=INTEGER},
-    #{orderid,jdbcType=VARCHAR})
+    insert into orderrecord (recordId, userId, landlordId, 
+      price, createdAt, facilities, 
+      roomType, hotelType, aroundSite, 
+      startTime, leaveTime, roomNum, 
+      orderId)
+    values (#{recordid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER}, 
+      #{price,jdbcType=INTEGER}, #{createdat,jdbcType=TIMESTAMP}, #{facilities,jdbcType=VARCHAR}, 
+      #{roomtype,jdbcType=VARCHAR}, #{hoteltype,jdbcType=VARCHAR}, #{aroundsite,jdbcType=VARCHAR}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{leavetime,jdbcType=TIMESTAMP}, #{roomnum,jdbcType=INTEGER}, 
+      #{orderid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="DO.orderRecord" >
-    insert into orderRecord
+    insert into orderrecord
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordid != null" >
         recordId,
@@ -130,7 +130,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="DO.orderRecord" >
-    update orderRecord
+    update orderrecord
     <set >
       <if test="userid != null" >
         userId = #{userid,jdbcType=INTEGER},
@@ -172,7 +172,7 @@
     where recordId = #{recordid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="DO.orderRecord" >
-    update orderRecord
+    update orderrecord
     set userId = #{userid,jdbcType=INTEGER},
       landlordId = #{landlordid,jdbcType=INTEGER},
       price = #{price,jdbcType=INTEGER},

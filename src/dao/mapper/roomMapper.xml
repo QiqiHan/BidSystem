@@ -9,40 +9,34 @@
       <arg column="price" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="validStartTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="validEndTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="facilities" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="area" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="restNum" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="totalNum" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    roomId, landlordId, roomType, price, validStartTime, validEndTime, facilities, area,
-    restNum
+    roomId, landlordId, roomType, price, validStartTime, validEndTime, area, restNum, 
+    totalNum
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
     from room
     where roomId = #{roomid,jdbcType=INTEGER}
-  </select>
-  <select id="selectByLandlordIdAndRoomType" resultMap="BaseResultMap">
-      select
-      <include refid="Base_Column_List" />
-      from room
-      where landlordId = #{landlordId,jdbcType=INTEGER} and roomType = #{roomType,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from room
     where roomId = #{roomid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="DO.room" >
-    insert into room (roomId, landlordId, roomType,
-    price, validStartTime, validEndTime,
-    facilities, area, restNum
-    )
-    values (#{roomid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER}, #{roomtype,jdbcType=VARCHAR},
-    #{price,jdbcType=INTEGER}, #{validstarttime,jdbcType=TIMESTAMP}, #{validendtime,jdbcType=TIMESTAMP},
-    #{facilities,jdbcType=VARCHAR}, #{area,jdbcType=DECIMAL}, #{restnum,jdbcType=INTEGER}
-    )
+    insert into room (roomId, landlordId, roomType, 
+      price, validStartTime, validEndTime, 
+      area, restNum, totalNum
+      )
+    values (#{roomid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER}, #{roomtype,jdbcType=VARCHAR}, 
+      #{price,jdbcType=INTEGER}, #{validstarttime,jdbcType=TIMESTAMP}, #{validendtime,jdbcType=TIMESTAMP}, 
+      #{area,jdbcType=DECIMAL}, #{restnum,jdbcType=INTEGER}, #{totalnum,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="DO.room" >
     insert into room
@@ -65,14 +59,14 @@
       <if test="validendtime != null" >
         validEndTime,
       </if>
-      <if test="facilities != null" >
-        facilities,
-      </if>
       <if test="area != null" >
         area,
       </if>
       <if test="restnum != null" >
         restNum,
+      </if>
+      <if test="totalnum != null" >
+        totalNum,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -94,14 +88,14 @@
       <if test="validendtime != null" >
         #{validendtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="facilities != null" >
-        #{facilities,jdbcType=VARCHAR},
-      </if>
       <if test="area != null" >
         #{area,jdbcType=DECIMAL},
       </if>
       <if test="restnum != null" >
         #{restnum,jdbcType=INTEGER},
+      </if>
+      <if test="totalnum != null" >
+        #{totalnum,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -123,14 +117,14 @@
       <if test="validendtime != null" >
         validEndTime = #{validendtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="facilities != null" >
-        facilities = #{facilities,jdbcType=VARCHAR},
-      </if>
       <if test="area != null" >
         area = #{area,jdbcType=DECIMAL},
       </if>
       <if test="restnum != null" >
         restNum = #{restnum,jdbcType=INTEGER},
+      </if>
+      <if test="totalnum != null" >
+        totalNum = #{totalnum,jdbcType=INTEGER},
       </if>
     </set>
     where roomId = #{roomid,jdbcType=INTEGER}
@@ -142,9 +136,9 @@
       price = #{price,jdbcType=INTEGER},
       validStartTime = #{validstarttime,jdbcType=TIMESTAMP},
       validEndTime = #{validendtime,jdbcType=TIMESTAMP},
-      facilities = #{facilities,jdbcType=VARCHAR},
       area = #{area,jdbcType=DECIMAL},
-      restNum = #{restnum,jdbcType=INTEGER}
+      restNum = #{restnum,jdbcType=INTEGER},
+      totalNum = #{totalnum,jdbcType=INTEGER}
     where roomId = #{roomid,jdbcType=INTEGER}
   </update>
 </mapper>
