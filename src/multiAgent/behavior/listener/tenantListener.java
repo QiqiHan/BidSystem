@@ -13,6 +13,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.util.leap.ArrayList;
+import multiAgent.agentHelper.ValueCal;
 import multiAgent.behavior.message.negotiation;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
@@ -36,6 +37,7 @@ public class tenantListener extends CyclicBehaviour {
     private int currentResponse = 0;
     private List bids = new ArrayList();
     private Map<AID,Bid> mapped = new HashMap<AID,Bid>();
+    private ValueCal cal = new ValueCal();
 
     public tenantListener(Agent agent){
         super(agent);

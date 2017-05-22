@@ -1,6 +1,8 @@
 package service.impl;
 
+import DO.tenant;
 import DO.user;
+import dao.tenantMapper;
 import dao.userMapper;
 import jade.core.AID;
 import jade.wrapper.AgentContainer;
@@ -26,21 +28,23 @@ public class tenantServiceImpl implements tenantService {
     private tenantServiceImpl(){
     }
     public static tenantService getInstance(){return tenantImpl;}
-    public boolean createTenant(user user) {
+    public boolean createTenant(tenant user) {
         SqlSession sqlSession = DBTools.getSession();
-        userMapper mapper = sqlSession.getMapper(dao.userMapper.class);
+        tenantMapper mapper = sqlSession.getMapper(dao.tenantMapper.class);
         mapper.insert(user);
         sqlSession.commit();
         return true;
     }
 
-    public user findTenant(int tenantId) {
+    public tenant findTenant(int tenantId) {
         SqlSession sqlSession = DBTools.getSession();
-        userMapper mapper = sqlSession.getMapper(dao.userMapper.class);
-        user user = mapper.selectByPrimaryKey(tenantId);
+        tenantMapper mapper = sqlSession.getMapper(dao.tenantMapper.class);
+        tenant user = mapper.selectByPrimaryKey(tenantId);
         return user;
     }
-    public void createAgent(String name) {
+    public void createAgent(int tenantId) {
+        tenant user = this.findTenant(tenantId);
+        String name = user.getName();
         AgentContainer container = agentHandler.containers.get("main");
         try {
             CondVar startUpLatch = new CondVar();
@@ -57,7 +61,9 @@ public class tenantServiceImpl implements tenantService {
             e.printStackTrace();
         }
     }
-    public void closeAgent(String name) {
+    public void closeAgent(int tenantId) {
+        tenant user = this.findTenant(tenantId);
+        String name = user.getName();
         AgentController tenantAgent = agentHandler.agents.get(name);
         try {
             tenantAgent.kill();
