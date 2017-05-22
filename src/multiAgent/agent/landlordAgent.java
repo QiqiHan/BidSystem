@@ -57,9 +57,15 @@ public class landlordAgent extends Agent{
     public landlord getOwner(){
         return owner;
     }
+
+    public Map<Integer, Order> getOrderToNegotiate() {
+        return orderToNegotiate;
+    }
+
     public void takeDown(){
         System.out.println("landlordAgent 被销毁");
         setEnabledO2ACommunication(false,0);
     }
+
 
 }

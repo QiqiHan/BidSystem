@@ -58,4 +58,12 @@ public class Negotiation implements AgentAction {
     public void setActualPrice(int actualPrice) {
         this.actualPrice = actualPrice;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

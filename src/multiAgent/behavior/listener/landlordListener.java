@@ -10,11 +10,13 @@ import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import multiAgent.agent.landlordAgent;
 import multiAgent.behavior.logical.landlordDealTender;
 import multiAgent.behavior.message.landlordPropose;
 import multiAgent.ontology.*;
 import util.DateUtil;
 
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -60,6 +62,8 @@ public class landlordListener extends CyclicBehaviour {
                     Action act = (Action) ce;
                     if(act.getAction() instanceof Negotiation){
                         Negotiation negotiation = (Negotiation)act.getAction();
+                        Map<Integer,Order> map = ((landlordAgent)myAgent).getOrderToNegotiate();
+                        Order order = map.get(negotiation.getId());
 //                        if(DateUtil.isHoliday()){
                             //节假日不接受降价
 //                        }
