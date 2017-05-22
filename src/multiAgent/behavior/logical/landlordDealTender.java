@@ -12,6 +12,7 @@ import multiAgent.ontology.*;
 import service.impl.landlordServiceImpl;
 import service.landlordService;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -23,6 +24,8 @@ public class landlordDealTender extends OneShotBehaviour{
     private Tender tender;
     private AID receive;
     private landlordAgent agent;
+    private String[] holidays = new String[]{"04-04","04-05","04-06","05-01","05-02","05-03","10-01","10-02","10-03","10-04","10-05","10-06","10-07"};
+
     public landlordDealTender(Agent agent , Tender tender, AID receive){
         super(agent);
         this.agent = (landlordAgent) agent;
@@ -84,13 +87,23 @@ public class landlordDealTender extends OneShotBehaviour{
                     //价格符合了要求，判断订单的时间（是否是节假日）和空房率
                     Date startTime = order.getStartTime();
                     Date endTime = order.getEndTime();
+                    double vacant = 0;
                     if(isHoliday(startTime)){
                         if(isHoliday(endTime)){
                             //起止时间都是节假日，只有当空房率高于50%时才接受招标
-                            type = 1;
+                            if(vacant>0.5){
+                                type = 1;
+                            }else{
+                                type = 0;
+                            }
                         }else{
                             //开始时间是节假日，结束时间不是节假日，当空房率高于30%时接受招标
-                            type = 1;
+                            if(vacant>0.3){
+                                type = 1;
+                            }else{
+                                type = 0;
+                            }
+
                         }
                     }else{
                         type = 1;
@@ -123,7 +136,13 @@ public class landlordDealTender extends OneShotBehaviour{
     }
 
     private boolean isHoliday(Date d){
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = simpleDateFormat.format(d).substring(5);
+        for (String holiday : holidays) {
+            if (holiday.equals(date)) {
+                return true;
+            }
+        }
         return false;
     }
 }
