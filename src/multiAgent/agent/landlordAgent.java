@@ -8,8 +8,10 @@ import jade.core.Agent;
 import multiAgent.behavior.listener.landlordListener;
 import multiAgent.ontology.BidOntology;
 import multiAgent.agentHelper.DFUtil;
+import multiAgent.ontology.Order;
 import util.CondVar;
 
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -23,6 +25,7 @@ public class landlordAgent extends Agent{
     private landlord owner = null;
     //landlordAgent 生命周期
     private boolean isDone = false;
+    private Map<Integer,Order> orderToNegotiate;
 
     protected void setup() {
         getContentManager().registerLanguage(codec);

@@ -13,11 +13,13 @@ import jade.lang.acl.MessageTemplate;
 import multiAgent.behavior.logical.landlordDealTender;
 import multiAgent.behavior.message.landlordPropose;
 import multiAgent.ontology.*;
+import util.DateUtil;
 
 import java.util.Random;
 
 /**
  * Created by H77 on 2017/5/6.
+ *
  */
 public class landlordListener extends CyclicBehaviour {
 
@@ -58,6 +60,9 @@ public class landlordListener extends CyclicBehaviour {
                     Action act = (Action) ce;
                     if(act.getAction() instanceof Negotiation){
                         Negotiation negotiation = (Negotiation)act.getAction();
+//                        if(DateUtil.isHoliday()){
+                            //节假日不接受降价
+//                        }
                         Random r=new Random();
                         int a=r.nextInt(2);
                         if(a<1){
