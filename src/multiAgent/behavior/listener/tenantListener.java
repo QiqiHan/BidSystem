@@ -1,5 +1,6 @@
 package multiAgent.behavior.listener;
 
+import DO.tenant;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
@@ -13,6 +14,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.util.leap.ArrayList;
+import multiAgent.agent.tenantAgent;
 import multiAgent.agentHelper.ValueCal;
 import multiAgent.behavior.message.negotiation;
 import multiAgent.ontology.Bid;
@@ -65,8 +67,12 @@ public class tenantListener extends CyclicBehaviour {
                                 Bid bid = (Bid) orderResponse.getBids().get(i);
                                 mapped.put(bid.getLandlordId(), bid);
                             }
-                            responseNum = orderResponse.getBids().size();
-                            myAgent.addBehaviour(new negotiation(myAgent, orderResponse.getBids()));
+                            //according to tenant preference to choose some bids
+                            List response = cal.ChooseRoom(orderResponse.getBids(),((tenantAgent)myAgent).getOwner());
+//                            responseNum = orderResponse.getBids().size();
+//                            myAgent.addBehaviour(new negotiation(myAgent, orderResponse.getBids()));
+                            responseNum = response.size();
+                            myAgent.addBehaviour(new negotiation(myAgent,response));
                         }
                     }
                 }catch (Codec.CodecException e){
@@ -88,7 +94,10 @@ public class tenantListener extends CyclicBehaviour {
                             System.out.println("房源"+msg.getSender().getName()+"接收降价");
                             System.out.println("降低"+negotiation.getActualPrice());
                             lowerPriceNum ++ ;
-                            bids.add(mapped.get(msg.getSender()));
+                            Bid tempbid = mapped.get(msg.getSender());
+                            tempbid.setPrice(tempbid.getPrice()- negotiation.getActualPrice());
+//                            bids.add(mapped.get(msg.getSender()));
+                            bids.add(tempbid);
                         }else if(negotiation.getResult() == 0){
                             System.out.println("房源"+msg.getSender().getName()+"拒绝降价");
                         }else {
@@ -105,9 +114,22 @@ public class tenantListener extends CyclicBehaviour {
                         }else{
                             lowerPriceNum = 0;
                             currentResponse = 0;
-                            responseNum = lowerPriceNum;
-                            myAgent.addBehaviour(new negotiation(myAgent,bids));
-                            bids.clear();
+                            tenant t =  ((tenantAgent)myAgent).getOwner();
+                            if(t.getPreference().equals("economical")){
+                                List results = cal.ChooseRoom(bids,t);
+                                responseNum = results.size();
+                                myAgent.addBehaviour(new negotiation(myAgent,bids));
+                                bids.clear();
+                            }else if(t.getPreference().equals("comfortable")){
+                                responseNum = bids.size();
+                                myAgent.addBehaviour(new negotiation(myAgent,bids));
+                                bids.clear();
+                            }else{
+
+                            }
+//                            responseNum = lowerPriceNum;
+//                            myAgent.addBehaviour(new negotiation(myAgent,bids));
+//                            bids.clear();
                         }
                     }
 
