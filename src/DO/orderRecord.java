@@ -29,7 +29,9 @@ public class orderRecord {
 
     private String orderid;
 
-    public orderRecord(Integer recordid, Integer userid, Integer landlordid, Integer price, Date createdat, String facilities, String roomtype, String hoteltype, String aroundsite, Date starttime, Date leavetime, Integer roomnum, String orderid) {
+    private Integer point;
+
+    public orderRecord(Integer recordid, Integer userid, Integer landlordid, Integer price, Date createdat, String facilities, String roomtype, String hoteltype, String aroundsite, Date starttime, Date leavetime, Integer roomnum, String orderid, Integer point) {
         this.recordid = recordid;
         this.userid = userid;
         this.landlordid = landlordid;
@@ -43,6 +45,7 @@ public class orderRecord {
         this.leavetime = leavetime;
         this.roomnum = roomnum;
         this.orderid = orderid;
+        this.point = point;
     }
 
     public orderRecord() {
@@ -151,5 +154,13 @@ public class orderRecord {
 
     public void setOrderid(String orderid) {
         this.orderid = orderid == null ? null : orderid.trim();
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
     }
 }

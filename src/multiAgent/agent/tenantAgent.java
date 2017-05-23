@@ -6,6 +6,7 @@ import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
 import jade.core.Agent;
+import multiAgent.agentHelper.ValueCal;
 import multiAgent.behavior.listener.tenantApiListener;
 import multiAgent.behavior.listener.tenantListener;
 import multiAgent.behavior.logical.tenantBackOrderResult;
@@ -42,7 +43,9 @@ public class tenantAgent extends Agent {
             owner = (tenant) args[1];
         }
         System.out.println("创建 tenantAgent");
-        addBehaviour(new tenantListener(this));
+        ValueCal cal = new ValueCal();
+        cal.TrainrandomForest(this.getOwner().getId());
+        addBehaviour(new tenantListener(this,cal));
         addBehaviour(new tenantApiListener(this));
         addBehaviour(new tenantBackOrderResult(null,null));
     }

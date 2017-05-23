@@ -15,30 +15,30 @@ import java.util.Date;
  */
 public class mainTest {
 
-    public static void main(String[] args){
-         tenantService tenant = tenantServiceImpl.getInstance();
-//        user user = new user("h77","123456","male","student",18);
-//         tenant.createTenant(user);
-         managerService manager = managerServiceImpl.getInstance();
-         manager.initSystem();
-         user user = tenant.findTenant(1);
-         Date dStart = new Date(2017,5,9);
-         Date dEnd = new Date(2017,5,12);
-         Date dCreate = new Date(2017,5,3);
-         Order order = new Order("1",
-                 "小明",
-                 "南京市南大",
-                 "Theme Hotel",
-                 "豪华套件",
-                 1,
-                 dStart,
-                 dEnd,
-                 dCreate,
-                 120,
-                 200,
-                 new ArrayList(),
-                 new AID(user.getUsername(),false));
-         tenant.createAgent(user.getUsername());
-         tenant.putOrder(user.getUsername(),order);
-    }
+//    public static void main(String[] args){
+//         tenantService tenant = tenantServiceImpl.getInstance();
+////        user user = new user("h77","123456","male","student",18);
+////         tenant.createTenant(user);
+//         managerService manager = managerServiceImpl.getInstance();
+//         manager.initSystem();
+//         user user = tenant.findTenant(1);
+//         Date dStart = new Date(2017,5,9);
+//         Date dEnd = new Date(2017,5,12);
+//         Date dCreate = new Date(2017,5,3);
+//         Order order = new Order("1",
+//                 "小明",
+//                 "南京市南大",
+//                 "Theme Hotel",
+//                 "豪华套件",
+//                 1,
+//                 dStart,
+//                 dEnd,
+//                 dCreate,
+//                 120,
+//                 200,
+//                 new ArrayList(),
+//                 new AID(user.getUsername(),false));
+//         tenant.createAgent(user.getUsername());
+//         tenant.putOrder(user.getUsername(),order);
+//    }
 }

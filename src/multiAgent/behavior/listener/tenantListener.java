@@ -39,10 +39,11 @@ public class tenantListener extends CyclicBehaviour {
     private int currentResponse = 0;
     private List bids = new ArrayList();
     private Map<AID,Bid> mapped = new HashMap<AID,Bid>();
-    private ValueCal cal = new ValueCal();
+    private ValueCal cal = null;
 
-    public tenantListener(Agent agent){
+    public tenantListener(Agent agent, ValueCal c){
         super(agent);
+        cal = c;
     }
 
     public void action() {

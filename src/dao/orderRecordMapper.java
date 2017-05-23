@@ -2,6 +2,8 @@ package dao;
 
 import DO.orderRecord;
 
+import java.util.List;
+
 public interface orderRecordMapper {
     int deleteByPrimaryKey(Integer recordid);
 
@@ -14,4 +16,6 @@ public interface orderRecordMapper {
     int updateByPrimaryKeySelective(orderRecord record);
 
     int updateByPrimaryKey(orderRecord record);
+
+    List<orderRecord> getallorder(Integer userid);
 }

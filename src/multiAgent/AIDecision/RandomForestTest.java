@@ -14,13 +14,14 @@ import java.util.List;
 public class RandomForestTest {
 
     public static void main(String[] args){
-        File f = new File("D:/jade/train.csv");
+        File f = new File("/Users/sam/Documents/QQ文件/train.csv");
         List<String> dataSet = CSVUtils.importCsv(f);
+        System.out.println(dataSet.get(0));
 
         Attribute[] attrs = initAttribute(dataSet.get(0).split(","));
-        double[][] x = new double[dataSet.size()-1][7];
-        int [] y = new int[dataSet.size()-1];
-        for(int i = 1 ; i <dataSet.size() ; i++){
+        double[][] x = new double[dataSet.size()-1-100][7];
+        int [] y = new int[dataSet.size()-1-100];
+        for(int i = 1 ; i <(dataSet.size()-100) ; i++){
             String str = dataSet.get(i);
             String[] strs = str.split(",");
             double[]  arr = dataDeal(strs);
@@ -29,16 +30,16 @@ public class RandomForestTest {
         }
          RandomForest  forest = new RandomForest(attrs,x,y,5);
 
-        File f1 = new File("D:/jade/train.csv");
+        File f1 = new File("/Users/sam/Documents/QQ文件/train.csv");
         List<String> dataSet1 = CSVUtils.importCsv(f1);
-        double[][] testx = new double[dataSet1.size()-1][7];
-        int [] testy = new int[dataSet1.size()-1];
-        for(int i = 1 ; i <dataSet1.size() ; i++){
+        double[][] testx = new double[100][7];
+        int [] testy = new int[100];
+        for(int i = (dataSet1.size()-100) ; i <dataSet1.size() ; i++){
             String str = dataSet1.get(i);
             String[] strs = str.split(",");
             double[]  arr = dataDeal(strs);
-            testx[i-1] = arr;
-            testy[i-1] = Integer.parseInt(strs[1]);
+            testx[i-(dataSet1.size()-100)] = arr;
+            testy[i-(dataSet1.size()-100)] = Integer.parseInt(strs[1]);
         }
 
         int errors = 0;

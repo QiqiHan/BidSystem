@@ -1,7 +1,9 @@
 package service.impl;
 
+import DO.orderRecord;
 import DO.tenant;
 import DO.user;
+import dao.orderRecordMapper;
 import dao.tenantMapper;
 import dao.userMapper;
 import jade.core.AID;
@@ -94,6 +96,13 @@ public class tenantServiceImpl implements tenantService {
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<orderRecord> getrecords(int tenantId){
+        SqlSession sqlSession = DBTools.getSession();
+        orderRecordMapper recordMapper = sqlSession.getMapper(dao.orderRecordMapper.class);
+        List<orderRecord> allrecord = recordMapper.getallorder(tenantId);
+        return allrecord;
     }
 
 }
