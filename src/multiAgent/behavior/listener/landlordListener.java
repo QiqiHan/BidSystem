@@ -1,5 +1,8 @@
 package multiAgent.behavior.listener;
 
+import DO.landlord;
+import DO.room;
+import dao.GetDO;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
@@ -16,6 +19,7 @@ import multiAgent.behavior.message.landlordPropose;
 import multiAgent.ontology.*;
 import util.DateUtil;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
@@ -62,18 +66,65 @@ public class landlordListener extends CyclicBehaviour {
                     Action act = (Action) ce;
                     if(act.getAction() instanceof Negotiation){
                         Negotiation negotiation = (Negotiation)act.getAction();
+
                         Map<Integer,Order> map = ((landlordAgent)myAgent).getOrderToNegotiate();
                         Order order = map.get(negotiation.getId());
-//                        if(DateUtil.isHoliday()){
+                        Date start = order.getStartTime();
+                        Date end = order.getEndTime();
+
+                        landlord lord = ((landlordAgent)myAgent).getOwner();
+                        String economy = lord.getCharacteristic(); //房东经济情况
+
+                        room room = GetDO.findRoomByLandlordAndType(lord.getLandlordid(),order.getRoomType());
+                        int init_price = room.getPrice();  //该房间的标价
+                        int current_price = negotiation.getActualPrice();  //此次协商前的房间价格
+                        int max = negotiation.getMaxReduction();  //房客希望的最高降价幅度
+                        int min = negotiation.getMinReduction();  //房客希望的最低降价幅度
+
+                        if(DateUtil.isHoliday(start) || DateUtil.isHoliday(end)){
                             //节假日不接受降价
-//                        }
-                        Random r=new Random();
-                        int a=r.nextInt(2);
-                        if(a<1){
                             negotiation.setResult(0);
                         }else{
-                            negotiation.setResult(1);
-                            negotiation.setActualPrice(5);
+
+                            if(economy.equals("tension")){
+                                //不接受降价
+                                negotiation.setResult(0);
+                            }else if(economy.equals("affordable")){
+                                if(current_price*1.0/init_price > 0.95){
+                                    //接收降价，降价额为最低降价幅度
+                                    negotiation.setResult(1);
+                                    negotiation.setActualPrice(current_price-min);
+                                }else{
+                                    //不接受降价
+                                    negotiation.setResult(0);
+                                }
+                            }else if(economy.equals("amiable")){
+                                if(current_price*1.0/init_price > 0.95){
+                                    //接收降价，降价额为最高降价幅度
+                                    negotiation.setResult(1);
+                                    negotiation.setActualPrice(current_price-max);
+                                }else if(current_price*1.0/init_price > 0.90){
+                                    //接收降价，降价额为最低降价幅度
+                                    negotiation.setResult(1);
+                                    negotiation.setActualPrice(current_price-min);
+                                }else{
+                                    //不接受降价
+                                    negotiation.setResult(0);
+                                }
+                            }else if(economy.equals("promotion")){
+                                if(current_price*1.0/init_price > 0.9){
+                                    //接收降价，降价额为最高降价幅度
+                                    negotiation.setResult(1);
+                                    negotiation.setActualPrice(current_price-max);
+                                }else if(current_price*1.0/init_price > 0.8){
+                                    //接收降价，降价额为最低降价幅度
+                                    negotiation.setResult(1);
+                                    negotiation.setActualPrice(current_price-min);
+                                }else{
+                                    //不接受降价
+                                    negotiation.setResult(0);
+                                }
+                            }
                         }
 
                         //回复给房客
