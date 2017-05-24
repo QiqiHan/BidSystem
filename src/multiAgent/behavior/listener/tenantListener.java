@@ -22,6 +22,7 @@ import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Negotiation;
 import multiAgent.ontology.OrderResponse;
 import jade.util.leap.List;
+import service.common.agentHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +38,8 @@ public class tenantListener extends CyclicBehaviour {
     private int responseNum = 0;
     private int lowerPriceNum = 0;
     private int currentResponse = 0;
-    private List bids = new ArrayList();
+    private List bids = new ArrayList();            //用于下次的negotiation
+    private List finalBids = new ArrayList();       //不在降价的bid
     private Map<AID,Bid> mapped = new HashMap<AID,Bid>();
     private ValueCal cal = null;
 
@@ -92,7 +94,7 @@ public class tenantListener extends CyclicBehaviour {
                     Action act = (Action) ce;
                     if(act.getAction() instanceof  Negotiation){
                         Negotiation negotiation = (Negotiation)act.getAction();
-                        if(negotiation.getResult() == 1){
+                        if(negotiation.getResult() == 1){       //diminish the price
                             System.out.println("房源"+msg.getSender().getName()+"接收降价");
                             System.out.println("降低"+negotiation.getActualPrice());
                             lowerPriceNum ++ ;
@@ -100,11 +102,15 @@ public class tenantListener extends CyclicBehaviour {
                             tempbid.setPrice(tempbid.getPrice()- negotiation.getActualPrice());
 //                            bids.add(mapped.get(msg.getSender()));
                             bids.add(tempbid);
-                        }else if(negotiation.getResult() == 0){
+                        }else if(negotiation.getResult() == 0){        //don't diminish the price
                             System.out.println("房源"+msg.getSender().getName()+"拒绝降价");
+                            Bid tempbid = mapped.get(msg.getSender());
+                            finalBids.add(tempbid);
                         }else {
                             System.out.println("房源" + msg.getSender().getName() + "未响应降价");
-                        }
+                            Bid tempbid = mapped.get(msg.getSender());
+                            finalBids.add(tempbid);
+                        }   //对于后两者不再进行讨价还价
                     }
 
                     if(currentResponse == responseNum){
@@ -113,6 +119,9 @@ public class tenantListener extends CyclicBehaviour {
                             //所有房源都不降价
                             System.out.println("所有房源都不降价了");
                             //返回现在的最好的房源
+                            Bid bestBid = cal.getBestBid(finalBids);
+                            tenant t =  ((tenantAgent)myAgent).getOwner();
+                            agentHandler.finalBid.put(t.getId(),bestBid);
                         }else{
                             lowerPriceNum = 0;
                             currentResponse = 0;

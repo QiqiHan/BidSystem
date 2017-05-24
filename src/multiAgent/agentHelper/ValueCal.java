@@ -87,6 +87,21 @@ public class ValueCal {
         return result;
     }
 
+    public Bid getBestBid(List bids){
+        Bid result = null;
+        int point = 0;
+        for(int i=0;i<bids.size();i++){
+            Bid bid = (Bid)bids.get(i);
+            int tempvalue = this.randomForestCal(bid);
+            if(tempvalue>point){
+                result = bid;
+                point = tempvalue;
+            }
+        }
+
+        return result;
+    }
+
     //train the randomTree
     public void TrainrandomForest(int tenantid){
 

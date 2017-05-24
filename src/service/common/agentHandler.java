@@ -22,4 +22,7 @@ public class agentHandler {
     public static final Map<String,AID> aids= new ConcurrentHashMap<String,AID>();
     //保存对应order的result
     public static final Map<String,List<Bid>> results= new ConcurrentHashMap<String,List<Bid>>();
+    //保存经过只能还价之后返回的具体房源信息
+    public static final Map<Integer,Bid> finalBid = new ConcurrentHashMap<Integer, Bid>();
+
 }
