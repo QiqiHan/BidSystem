@@ -60,10 +60,31 @@ public class ValueCal {
             }
 
         }else{
+        }
+        return rooms;
+    }
 
+    //calculate the mark of all bids ,to find some bids whose mark is larger than average.
+    public List bidvalue(List bids){
+        List result = new ArrayList();
+        int[] values = new int[bids.size()];
+        int sum = 0;
+
+        for(int i=0;i<bids.size();i++){
+            Bid bid = (Bid)bids.get(i);
+            int tempvalue = this.randomForestCal(bid);
+            values[i] = tempvalue;
+            sum+=tempvalue;
+        }
+        int average = sum/(bids.size());
+
+        for(int i=0;i<bids.size();i++){
+            if(values[i]>average){
+                result.add(bids.get(i));
+            }
         }
 
-        return rooms;
+        return result;
     }
 
     //train the randomTree

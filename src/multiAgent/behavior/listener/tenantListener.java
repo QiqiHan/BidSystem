@@ -69,7 +69,8 @@ public class tenantListener extends CyclicBehaviour {
                                 mapped.put(bid.getLandlordId(), bid);
                             }
                             //according to tenant preference to choose some bids
-                            List response = cal.ChooseRoom(orderResponse.getBids(),((tenantAgent)myAgent).getOwner());
+//                            List response = cal.ChooseRoom(orderResponse.getBids(),((tenantAgent)myAgent).getOwner());
+                            List response = cal.bidvalue(orderResponse.getBids());
 //                            responseNum = orderResponse.getBids().size();
 //                            myAgent.addBehaviour(new negotiation(myAgent, orderResponse.getBids()));
                             responseNum = response.size();
@@ -116,21 +117,22 @@ public class tenantListener extends CyclicBehaviour {
                             lowerPriceNum = 0;
                             currentResponse = 0;
                             tenant t =  ((tenantAgent)myAgent).getOwner();
-                            if(t.getPreference().equals("economical")){
-                                List results = cal.ChooseRoom(bids,t);
-                                responseNum = results.size();
-                                myAgent.addBehaviour(new negotiation(myAgent,bids));
-                                bids.clear();
-                            }else if(t.getPreference().equals("comfortable")){
-                                responseNum = bids.size();
-                                myAgent.addBehaviour(new negotiation(myAgent,bids));
-                                bids.clear();
-                            }else{
-
-                            }
-//                            responseNum = lowerPriceNum;
-//                            myAgent.addBehaviour(new negotiation(myAgent,bids));
-//                            bids.clear();
+//                            if(t.getPreference().equals("economical")){
+//                                List results = cal.ChooseRoom(bids,t);
+//                                responseNum = results.size();
+//                                myAgent.addBehaviour(new negotiation(myAgent,bids));
+//                                bids.clear();
+//                            }else if(t.getPreference().equals("comfortable")){
+//                                responseNum = bids.size();
+//                                myAgent.addBehaviour(new negotiation(myAgent,bids));
+//                                bids.clear();
+//                            }else{
+//
+//                            }
+                            List results = cal.bidvalue(bids);
+                            responseNum = results.size();
+                            myAgent.addBehaviour(new negotiation(myAgent,bids));
+                            bids.clear();
                         }
                     }
 
