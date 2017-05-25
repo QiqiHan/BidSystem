@@ -3,9 +3,11 @@ package DO;
 public class bid {
     private Integer bidid;
 
-    private Integer landlordid;
+    private Integer tenantid;
 
-    private Integer result;
+    private String landlordname;
+
+    private Integer result; //0:accept  1:refuse  2:negotiate
 
     private Integer price;
 
@@ -13,13 +15,17 @@ public class bid {
 
     private String orderid;
 
-    public bid(Integer bidid, Integer landlordid, Integer result, Integer price, Integer roomid, String orderid) {
+    private Integer score;
+
+    public bid(Integer bidid,Integer tenantid ,String landlordname, Integer result, Integer price, Integer roomid, String orderid,Integer score) {
         this.bidid = bidid;
-        this.landlordid = landlordid;
+        this.tenantid = tenantid;
+        this.landlordname = landlordname;
         this.result = result;
         this.price = price;
         this.roomid = roomid;
         this.orderid = orderid;
+        this.score = score;
     }
 
     public bid() {
@@ -32,14 +38,6 @@ public class bid {
 
     public void setBidid(Integer bidid) {
         this.bidid = bidid;
-    }
-
-    public Integer getLandlordid() {
-        return landlordid;
-    }
-
-    public void setLandlordid(Integer landlordid) {
-        this.landlordid = landlordid;
     }
 
     public Integer getResult() {
@@ -72,5 +70,29 @@ public class bid {
 
     public void setOrderid(String orderid) {
         this.orderid = orderid == null ? null : orderid.trim();
+    }
+
+    public String getLandlordname() {
+        return landlordname;
+    }
+
+    public void setLandlordname(String landlordname) {
+        this.landlordname = landlordname;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getTenantid() {
+        return tenantid;
+    }
+
+    public void setTenantid(Integer tenantid) {
+        this.tenantid = tenantid;
     }
 }

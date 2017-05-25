@@ -64,6 +64,9 @@ public class ValueCal {
         return rooms;
     }
 
+
+
+
     //calculate the mark of all bids ,to find some bids whose mark is larger than average.
     public List bidvalue(List bids){
         List result = new ArrayList();
