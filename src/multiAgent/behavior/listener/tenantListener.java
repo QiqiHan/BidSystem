@@ -132,7 +132,7 @@ public class tenantListener extends CyclicBehaviour {
                             //所有房源都不降价
                             System.out.println("所有房源都不降价了");
                             //返回现在的最好的房源
-                            
+
                         }else{
                             lowerPriceNum = 0;
                             currentResponse = 0;
