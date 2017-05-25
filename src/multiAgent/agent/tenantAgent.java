@@ -12,11 +12,13 @@ import multiAgent.behavior.listener.tenantListener;
 import multiAgent.behavior.logical.tenantBackOrderResult;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
+import multiAgent.ontology.Order;
 import service.common.agentHandler;
 import util.CondVar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by h77 on 2017/5/5.
@@ -30,6 +32,7 @@ public class tenantAgent extends Agent {
     private tenant owner = null;
     //tenantAgent 生命周期
     private boolean isDone = false;
+    private Map<Integer,Order> tenantTOorder;
 
     protected void setup() {
         getContentManager().registerLanguage(codec);
@@ -58,6 +61,8 @@ public class tenantAgent extends Agent {
     public tenant getOwner(){
         return owner;
     }
+    public void setOrder(Integer id,Order order){ tenantTOorder.put(id,order);}
+    public Order getOrder(Integer id){return tenantTOorder.get(id);}
     public void takeDown(){
         System.out.println("tenantAgent 被销毁");
         setEnabledO2ACommunication(false,0);

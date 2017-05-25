@@ -22,6 +22,7 @@ public class tenantApiListener extends CyclicBehaviour {
             if (obj instanceof Order) {
                 Order o = (Order) obj;
                 agent.addBehaviour(new tenantRequest(agent, o));
+                agent.setOrder(agent.getOwner().getId(),o);
             }
         }else{
             block();

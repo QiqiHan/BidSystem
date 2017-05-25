@@ -2,7 +2,12 @@ package multiAgent.agentHelper;
 
 import DO.orderRecord;
 import DO.tenant;
+import multiAgent.agent.tenantAgent;
+import multiAgent.agentHelper.calScore.CalPoints;
+import multiAgent.agentHelper.calScore.ComfortablePerson;
+import multiAgent.agentHelper.calScore.EconomicalPerson;
 import multiAgent.ontology.Bid;
+import multiAgent.ontology.Order;
 import multiAgent.ontology.Room;
 import multiAgent.ontology.RoomType;
 import service.impl.tenantServiceImpl;
@@ -10,6 +15,7 @@ import service.tenantService;
 import smile.classification.RandomForest;
 import smile.data.Attribute;
 import smile.data.NumericAttribute;
+import sun.management.Agent;
 import sun.management.resources.agent;
 
 import jade.util.leap.List;
@@ -29,42 +35,97 @@ public class ValueCal {
     private RandomForest forest = null;
     private HashMap<RoomType,Integer> roomPoint = new HashMap<RoomType, Integer>();
 
+    //the result of bid
+    private List reject = new ArrayList();
+    private List GoodBid = new ArrayList();
+
     public ValueCal(){
         this.fill_hashmap();
     }
 
-    public List ChooseRoom(List bids, tenant user){
-        List rooms = new ArrayList();
+    public List ScreenBids(List bids, tenant user, Order order,boolean InNegotiation){
+        List resultBids = new ArrayList();
 
+        //calculate the average/max/min Price
+        int averagePrice = 0;
+        int sumPrice = 0;
+        int maxPrice = ((Bid)bids.get(0)).getPrice();
+        int minPrice = ((Bid)bids.get(0)).getPrice();
+        for(int i=0;i<bids.size();i++){
+            int tempPrice = ((Bid)bids.get(i)).getPrice();
+            sumPrice+= tempPrice;
+            if(tempPrice>maxPrice){
+                maxPrice = tempPrice;
+            }else if(tempPrice<minPrice){
+                minPrice = tempPrice;
+            }
+        }
+        averagePrice = sumPrice/(bids.size());
+
+        //deal with the detail scores
+        CalPoints calPoints = null;
         if(user.getPreference().equals("economical")){
-            int sum=0;
+            calPoints = new EconomicalPerson();
             for(int i=0;i<bids.size();i++){
-                sum+=((Bid)bids.get(i)).getPrice();
-            }
-            int average = sum/(bids.size());
-            for(int i=0;i<bids.size();i++){
-                Bid tempbid = (Bid)bids.get(i);
-                if(tempbid.getPrice()<average){
-                    rooms.add(tempbid);
+                Bid tempbid = ((Bid)bids.get(i));
+                int priceScore = calPoints.calPrice(maxPrice,minPrice,averagePrice,tempbid.getPrice());
+                int roomScore = calPoints.calRoom(tempbid.getRoom().getType(),order.getRoomType(),roomPoint);
+                int facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
+                int siteScore = calPoints.calsite(tempbid.getAroundsites());
+                int sum = priceScore+roomScore+facilityScore+siteScore;
+                if(sum<7){
+                    reject.add(tempbid);
+                }else if(sum>=13){
+                    GoodBid.add(tempbid);
+                    resultBids.add(tempbid);
+                }else{
+                    resultBids.add(tempbid);
                 }
             }
-
         }else if(user.getPreference().equals("comfortable")){
+            calPoints = new ComfortablePerson();
             for(int i=0;i<bids.size();i++){
                 Bid tempbid = (Bid)bids.get(i);
-                Room room = tempbid.getRoom();
-                if(room.getType().equals(RoomType.Deluxe)){
-                    rooms.add(tempbid);
+                int priceScore = calPoints.calPrice(maxPrice,minPrice,averagePrice,tempbid.getPrice());
+                int roomScore = calPoints.calRoom(tempbid.getRoom().getType(),order.getRoomType(),roomPoint);
+                int facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
+                int siteScore = calPoints.calsite(tempbid.getAroundsites());
+                int sum = priceScore+roomScore+facilityScore+siteScore;
+                if(sum<7){
+                    reject.add(tempbid);
+                }else if(sum>=13){
+                    GoodBid.add(tempbid);
+                    resultBids.add(tempbid);
+                }else{
+                    resultBids.add(tempbid);
                 }
-
             }
 
         }else{
         }
-        return rooms;
+        if(!InNegotiation){
+            if(GoodBid.size()==1){
+                return null;
+            }else if(resultBids.size() == 0){
+                return null;
+            }else{
+                GoodBid.clear();
+                return resultBids;
+            }
+        }else{
+            return resultBids;
+        }
+
+
     }
 
+    public List getReject() {
+        return reject;
+    }
 
+    public List getGoodBid() {
+        return GoodBid;
+    }
 
 
     //calculate the mark of all bids ,to find some bids whose mark is larger than average.
