@@ -17,6 +17,7 @@ import service.common.agentHandler;
 import util.CondVar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,14 +41,15 @@ public class tenantAgent extends Agent {
         setEnabledO2ACommunication(true,10);
 
         Object[] args = getArguments();
+        tenantTOorder = new HashMap<Integer, Order>();
         if (args.length > 0) {
             CondVar latch = (CondVar) args[0];
-            latch.signal();
             owner = (tenant) args[1];
+            latch.signal();
         }
         System.out.println("创建 tenantAgent");
         ValueCal cal = new ValueCal();
-        cal.TrainrandomForest(this.getOwner().getId());
+//        cal.TrainrandomForest(this.getOwner().getId());
         addBehaviour(new tenantListener(this,cal));
         addBehaviour(new tenantApiListener(this));
         addBehaviour(new tenantBackOrderResult(null,null));

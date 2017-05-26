@@ -50,7 +50,7 @@ public class tenantServiceImpl implements tenantService {
         AgentContainer container = agentHandler.containers.get("main");
         try {
             CondVar startUpLatch = new CondVar();
-            AgentController tenantAgent = container.createNewAgent(name,"multiAgent.agent.tenantAgent",new Object[] { startUpLatch });
+            AgentController tenantAgent = container.createNewAgent(name,"multiAgent.agent.tenantAgent",new Object[] { startUpLatch ,user});
             tenantAgent.start();
             try {
                 startUpLatch.waitOn();
