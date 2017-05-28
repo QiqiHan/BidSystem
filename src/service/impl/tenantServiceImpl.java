@@ -98,11 +98,5 @@ public class tenantServiceImpl implements tenantService {
         }
     }
 
-    public List<orderRecord> getrecords(int tenantId){
-        SqlSession sqlSession = DBTools.getSession();
-        orderRecordMapper recordMapper = sqlSession.getMapper(dao.orderRecordMapper.class);
-        List<orderRecord> allrecord = recordMapper.getallorder(tenantId);
-        return allrecord;
-    }
 
 }

@@ -1,6 +1,7 @@
 package multiAgent.agentHelper;
 
 import DO.orderRecord;
+import dao.daoImpl.tenantDao;
 import jade.util.leap.ArrayList;
 import jade.util.leap.List;
 import multiAgent.ontology.Bid;
@@ -68,7 +69,7 @@ public class RandomForestCal {
 
 //        File f = new File("D:/jade/train.csv");
 //        java.util.List<String> dataSet = CSVUtils.importCsv(f);
-        tenantService tenant = tenantServiceImpl.getInstance();
+        tenantDao tenant = new tenantDao();
         java.util.List<orderRecord> orders = tenant.getrecords(tenantid);
 
         Attribute[] attrs = initAttribute();

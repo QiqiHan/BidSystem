@@ -17,5 +17,4 @@ public interface tenantService {
     public void closeAgent(int tenantId);
     public void putOrder(String name,Order o);
 
-    public List<orderRecord> getrecords(int tenantId);
 }

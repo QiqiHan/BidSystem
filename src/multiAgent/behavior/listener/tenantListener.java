@@ -17,10 +17,7 @@ import jade.util.leap.ArrayList;
 import multiAgent.agent.tenantAgent;
 import multiAgent.agentHelper.ValueCal;
 import multiAgent.behavior.message.negotiation;
-import multiAgent.ontology.Bid;
-import multiAgent.ontology.BidOntology;
-import multiAgent.ontology.Negotiation;
-import multiAgent.ontology.OrderResponse;
+import multiAgent.ontology.*;
 import jade.util.leap.List;
 import service.common.agentHandler;
 
@@ -72,7 +69,8 @@ public class tenantListener extends CyclicBehaviour {
                             }
                             //according to tenant preference to choose some bids
                             tenant thistenant = ((tenantAgent)myAgent).getOwner();
-                            List response = cal.ScreenBids(orderResponse.getBids(),thistenant,((tenantAgent)myAgent).getOrder(thistenant.getId()),false);
+                            Order order = ((tenantAgent)myAgent).getOrder(thistenant.getId());
+                            List response = cal.ScreenBids(orderResponse.getBids(),thistenant,order,false);
 //                            List response = cal.bidvalue(orderResponse.getBids());
                             if(response == null){
                                 if(cal.getGoodBid().size()!=0){
@@ -85,7 +83,7 @@ public class tenantListener extends CyclicBehaviour {
                                 }
                             }else{
                                 responseNum = response.size();
-                                myAgent.addBehaviour(new negotiation(myAgent,response));
+                                myAgent.addBehaviour(new negotiation(myAgent,response,order.getId()));
                             }
 //                            responseNum = orderResponse.getBids().size();
 //                            myAgent.addBehaviour(new negotiation(myAgent, orderResponse.getBids()));
@@ -137,10 +135,11 @@ public class tenantListener extends CyclicBehaviour {
                             lowerPriceNum = 0;
                             currentResponse = 0;
                             tenant t =  ((tenantAgent)myAgent).getOwner();
-                            List results = cal.ScreenBids(bids,t,((tenantAgent)myAgent).getOrder(t.getId()),true);  //对于
+                            Order order = ((tenantAgent)myAgent).getOrder(t.getId());
+                            List results = cal.ScreenBids(bids,t,order,true);
 //                            List results = cal.bidvalue(bids);
                             responseNum = results.size();
-                            myAgent.addBehaviour(new negotiation(myAgent,bids));
+                            myAgent.addBehaviour(new negotiation(myAgent,bids,order.getId()));
                             bids.clear();
                         }
                     }

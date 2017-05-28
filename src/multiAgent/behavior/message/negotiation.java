@@ -25,10 +25,12 @@ public class negotiation  extends OneShotBehaviour {
     private List Bids;
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
+    private String Orderid = null;
 
-    public negotiation(Agent agent,List Bids){
+    public negotiation(Agent agent,List Bids,String orderid){
         super(agent);
         this.Bids = Bids;
+        this.Orderid = orderid;
     }
 
     public void action() {
@@ -55,7 +57,7 @@ public class negotiation  extends OneShotBehaviour {
                     maxReduction = 20;
                 }
                 //组装Negotitation对象，这边其实需要计算大概还价多少
-                Negotiation negotiation = new Negotiation(minReduction, maxReduction, -1,0);
+                Negotiation negotiation = new Negotiation(Orderid,minReduction, maxReduction, -1,0);
                 Action sendAct = new Action();
                 sendAct.setActor(myAgent.getAID());
                 sendAct.setAction(negotiation);
