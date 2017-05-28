@@ -7,6 +7,7 @@ import multiAgent.ontology.Bid;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -18,6 +19,8 @@ public class agentHandler {
     public static final Map<String,AgentContainer> containers = new ConcurrentHashMap<String, AgentContainer>();
     //保存相应的agent
     public static final Map<String,AgentController> agents= new ConcurrentHashMap<String,AgentController>();
+    //保存相应的queue
+    public static final Map<String,Queue> queues = new ConcurrentHashMap<String, Queue>();
     //保存agent对应的AID
     public static final Map<String,AID> aids= new ConcurrentHashMap<String,AID>();
     //保存对应order的result

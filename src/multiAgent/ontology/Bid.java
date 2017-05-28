@@ -16,6 +16,7 @@ public class Bid implements Concept {
     //市场价，是否再同意降价,床的大小，房间大小
     private String id; //就是orderId,现在暂时用的AID
     private Room room;
+    private int num;
     private int price;
     private List facilities;
     private List aroundsites;
@@ -86,5 +87,10 @@ public class Bid implements Concept {
     public void setAroundsites(List aroundsites) {
         this.aroundsites = aroundsites;
     }
-
+    public int getNum() {
+        return num;
+    }
+    public void setNum(int num) {
+        this.num = num;
+    }
 }

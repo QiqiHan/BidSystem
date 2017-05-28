@@ -1,17 +1,19 @@
 package service.impl;
 
-import DO.orderRecord;
+import DO.landlord;
 import DO.tenant;
-import DO.user;
-import dao.orderRecordMapper;
+import VO.BidInfo;
+import VO.OrderInfo;
+import dao.daoImpl.tenantDao;
 import dao.tenantMapper;
-import dao.userMapper;
+import dao.daoImpl.landlordDao;
 import jade.core.AID;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.Order;
+import multiAgent.ontology.Room;
 import org.apache.ibatis.session.SqlSession;
 import service.common.agentHandler;
 import service.tenantService;
@@ -19,7 +21,10 @@ import util.CondVar;
 import util.DBTools;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by H77 on 2017/5/15.
@@ -48,9 +53,10 @@ public class tenantServiceImpl implements tenantService {
         tenant user = this.findTenant(tenantId);
         String name = user.getName();
         AgentContainer container = agentHandler.containers.get("main");
+        Queue<Bid> bidQueue = new LinkedBlockingQueue<Bid>();
         try {
             CondVar startUpLatch = new CondVar();
-            AgentController tenantAgent = container.createNewAgent(name,"multiAgent.agent.tenantAgent",new Object[] { startUpLatch ,user});
+            AgentController tenantAgent = container.createNewAgent(name,"multiAgent.agent.tenantAgent",new Object[] { startUpLatch ,user ,bidQueue});
             tenantAgent.start();
             try {
                 startUpLatch.waitOn();
@@ -59,6 +65,7 @@ public class tenantServiceImpl implements tenantService {
             }
             agentHandler.agents.put(name,tenantAgent);
             agentHandler.aids.put(name,new AID(name,false));
+            agentHandler.queues.put(name,bidQueue);
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
@@ -74,28 +81,41 @@ public class tenantServiceImpl implements tenantService {
         }
         agentHandler.agents.remove(name);
         agentHandler.aids.remove(name);
+        agentHandler.queues.remove(name);
     }
 
-    public void putOrder(String name,Order o) {
+    public BidInfo Order(String name, OrderInfo o) {
+        OrderInfo orderInfo = o;
+        tenant user = tenantDao.getTenant(orderInfo.getUserId());
+        Order order = new Order(o.getUserId()+"",
+                user.getName(),
+                orderInfo.getAddress(),
+                orderInfo.getHotelType(),
+                orderInfo.getRoomType(),
+                orderInfo.getRoomNum(),
+                orderInfo.getStartTime(),
+                orderInfo.getEndTime(),
+                new Date(),
+                orderInfo.getMinPrice(),
+                orderInfo.getMaxPrice(),
+                orderInfo.getFacilities(),
+                new AID(user.getName(),false));
         AgentController tenantAgent = agentHandler.agents.get(name);
+        Bid bid = null;
         try {
             tenantAgent.putO2AObject(o,false);
-//            List<Bid> bids = null;
-//            while(bids == null){
-//                bids = agentHandler.results.get(o.getId());
-//            }
-//            agentHandler.results.remove(o.getId());
-//            try {
-//                Thread.sleep(2500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            System.out.println("---------------------");
-//            System.out.println(bids.get(0).getRoom().toString());
-//            System.out.println("价格："  +bids.get(0).getPrice());
-        } catch (StaleProxyException e) {
+            bid = (Bid)((LinkedBlockingQueue<Bid>)agentHandler.queues.get(name)).take();
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        Room r = bid.getRoom();
+        landlord l =  landlordDao.findlandlordByid(r.getLandlordId());
+        List<String> facilitys = new ArrayList<String>();
+        for(int i = 0 ; i <bid.getFacilities().size() ; i++){
+            facilitys.add((String)bid.getFacilities().get(i));
+        }
+        BidInfo info = new BidInfo(l.getLandlordtype(),l.getLandlordtype(),r.getType(),bid.getPrice()+"",r.getPrice()+"",bid.getNum(),facilitys);
+        return info;
     }
 
 

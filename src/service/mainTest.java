@@ -1,6 +1,7 @@
 package service;
 
 import DO.tenant;
+import VO.OrderInfo;
 import jade.core.AID;
 import jade.util.leap.ArrayList;
 import jade.util.leap.List;
@@ -28,20 +29,17 @@ public class mainTest {
          List facility = new ArrayList();
          facility.add("wifi");
          facility.add("park");
-         Order order = new Order("1",
-                 "小明",
+         OrderInfo order = new OrderInfo(user.getId(),
                  "南京市南大",
                  "Theme",
                  "Business",
                  1,
-                 dStart,
-                 dEnd,
-                 dCreate,
                  100,
                  900,
                  facility,
-                 new AID(user.getName(),false));
+                 dStart,
+                 dEnd);
          tenant.createAgent(user.getId());
-         tenant.putOrder(user.getName(),order);
+         tenant.Order(user.getName(),order);
     }
 }

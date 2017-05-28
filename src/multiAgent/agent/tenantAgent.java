@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by h77 on 2017/5/5.
@@ -34,17 +35,18 @@ public class tenantAgent extends Agent {
     //tenantAgent 生命周期
     private boolean isDone = false;
     private Map<Integer,Order> tenantTOorder;
+    private LinkedBlockingQueue<Bid> queues;
 
     protected void setup() {
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
         setEnabledO2ACommunication(true,10);
-
         Object[] args = getArguments();
         tenantTOorder = new HashMap<Integer, Order>();
         if (args.length > 0) {
             CondVar latch = (CondVar) args[0];
             owner = (tenant) args[1];
+            queues = (LinkedBlockingQueue<Bid>)args[2];
             latch.signal();
         }
         System.out.println("创建 tenantAgent");
@@ -68,6 +70,13 @@ public class tenantAgent extends Agent {
     public void takeDown(){
         System.out.println("tenantAgent 被销毁");
         setEnabledO2ACommunication(false,0);
+    }
+    public void putResult(Bid bid){
+        try {
+            this.queues.put(bid);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

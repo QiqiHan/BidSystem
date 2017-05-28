@@ -3,6 +3,9 @@ package service;
 import DO.orderRecord;
 import DO.tenant;
 import DO.user;
+import VO.BidInfo;
+import VO.OrderInfo;
+import multiAgent.ontology.Bid;
 import multiAgent.ontology.Order;
 
 import java.util.List;
@@ -15,6 +18,6 @@ public interface tenantService {
     public tenant findTenant(int tenantId);
     public void createAgent(int tenantId);
     public void closeAgent(int tenantId);
-    public void putOrder(String name,Order o);
+    public BidInfo Order(String name, OrderInfo o);
 
 }

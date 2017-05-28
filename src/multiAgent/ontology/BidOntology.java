@@ -42,6 +42,7 @@ public class BidOntology extends Ontology{
     private static final String Bid_Order = "id";
     private static final String Bid_Room = "room";
     private static final String Bid_Price = "price";
+    private static final String Bid_Num = "num";
     private static final String Bid_Facilities = "facilities";
     private static final String Bid_Aroundsites = "aroundsites";
     private static final String Bid_Tenant = "tenantId";
@@ -151,6 +152,7 @@ public class BidOntology extends Ontology{
             bid.add(Bid_Order,(PrimitiveSchema)getSchema(BasicOntology.STRING));
             bid.add(Bid_Room,(ConceptSchema)getSchema(Room));
             bid.add(Bid_Price,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            bid.add(Bid_Num,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             bid.add(Bid_Facilities,(PrimitiveSchema)getSchema(BasicOntology.STRING),0,ObjectSchema.UNLIMITED);
             bid.add(Bid_Aroundsites,(ConceptSchema)getSchema(MapObjects),0,ObjectSchema.UNLIMITED);
             bid.add(Bid_Landlord,(ConceptSchema)getSchema(BasicOntology.AID));
