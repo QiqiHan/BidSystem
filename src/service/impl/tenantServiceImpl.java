@@ -20,10 +20,7 @@ import service.tenantService;
 import util.CondVar;
 import util.DBTools;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -103,8 +100,9 @@ public class tenantServiceImpl implements tenantService {
         AgentController tenantAgent = agentHandler.agents.get(name);
         Bid bid = null;
         try {
-            tenantAgent.putO2AObject(o,false);
-            bid = (Bid)((LinkedBlockingQueue<Bid>)agentHandler.queues.get(name)).take();
+            tenantAgent.putO2AObject(order,false);
+            LinkedBlockingQueue<Bid> queues = (LinkedBlockingQueue<Bid>) agentHandler.queues.get(name);
+            bid = queues.take();
         } catch (Exception e) {
             e.printStackTrace();
         }
