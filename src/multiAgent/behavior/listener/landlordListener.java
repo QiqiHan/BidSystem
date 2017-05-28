@@ -2,7 +2,6 @@ package multiAgent.behavior.listener;
 
 import DO.landlord;
 import DO.room;
-import dao.GetDO;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
@@ -15,13 +14,11 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import multiAgent.agent.landlordAgent;
 import multiAgent.behavior.logical.landlordDealTender;
-import multiAgent.behavior.message.landlordPropose;
 import multiAgent.ontology.*;
 import util.DateUtil;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Created by H77 on 2017/5/6.

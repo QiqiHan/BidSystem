@@ -3,6 +3,7 @@ package service;
 import DO.tenant;
 import jade.core.AID;
 import jade.util.leap.ArrayList;
+import jade.util.leap.List;
 import multiAgent.ontology.Order;
 import service.impl.managerServiceImpl;
 import service.impl.tenantServiceImpl;
@@ -24,6 +25,9 @@ public class mainTest {
          Date dStart = new Date(2017,5,28);
          Date dEnd = new Date(2017,5,29);
          Date dCreate = new Date(2017,5,28);
+         List facility = new ArrayList();
+         facility.add("wifi");
+         facility.add("park");
          Order order = new Order("1",
                  "小明",
                  "南京市南大",
@@ -35,7 +39,7 @@ public class mainTest {
                  dCreate,
                  100,
                  900,
-                 new ArrayList(),
+                 facility,
                  new AID(user.getName(),false));
          tenant.createAgent(user.getId());
          tenant.putOrder(user.getName(),order);

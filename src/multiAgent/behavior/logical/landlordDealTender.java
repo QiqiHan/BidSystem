@@ -2,19 +2,15 @@ package multiAgent.behavior.logical;
 
 import DO.landlord;
 import DO.room;
-import dao.GetDO;
-import dao.roomMapper;
+import dao.daoImpl.roomDao;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
 import multiAgent.agent.landlordAgent;
 import multiAgent.behavior.message.landlordPropose;
 import multiAgent.ontology.*;
-import service.impl.landlordServiceImpl;
-import service.landlordService;
 import util.DateUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -54,7 +50,7 @@ public class landlordDealTender extends OneShotBehaviour{
         String roomType = order.getRoomType();
         int roomNum = order.getRoomNum();
 
-        room r = GetDO.findRoomByLandlordAndType(landlord.getLandlordid(),roomType);
+        room r = roomDao.findRoomByLandlordAndType(landlord.getLandlordid(),roomType);
         if(r==null){
             //该房东没有该类型的房间,拒绝竞标
             type = 0;
