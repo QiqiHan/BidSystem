@@ -13,9 +13,9 @@ import java.util.HashMap;
 public class EconomicalPerson implements CalPoints {
 
     public int calPrice(int max, int min, int average, int targetPrice) {   //max 6 points
-        if(targetPrice == min){
+        if(targetPrice <= min){
             return 6;
-        }else if(targetPrice == max){
+        }else if(targetPrice >= max){
             return 0;
         }
 

@@ -39,15 +39,15 @@ public class ValueCal {
     private List reject = new ArrayList();
     private List GoodBid = new ArrayList();
 
+    private static int init_maxPrice = 0;
+    private static int init_minPrice = 0;
+    private static int init_avePrice = 0;
+
     public ValueCal(){
         this.fill_hashmap();
     }
 
-    public List ScreenBids(List bids, tenant user, Order order,boolean InNegotiation){
-        List resultBids = new ArrayList();
-
-        //calculate the average/max/min Price
-        int averagePrice = 0;
+    public void initPrice(List bids){
         int sumPrice = 0;
         int maxPrice = ((Bid)bids.get(0)).getPrice();
         int minPrice = ((Bid)bids.get(0)).getPrice();
@@ -60,7 +60,29 @@ public class ValueCal {
                 minPrice = tempPrice;
             }
         }
-        averagePrice = sumPrice/(bids.size());
+        init_avePrice = sumPrice/(bids.size());
+        init_maxPrice = maxPrice;
+        init_minPrice = minPrice;
+    }
+
+    public List ScreenBids(List bids, tenant user, Order order,boolean InNegotiation){
+        List resultBids = new ArrayList();
+
+        //calculate the average/max/min Price
+//        int averagePrice = 0;
+//        int sumPrice = 0;
+//        int maxPrice = ((Bid)bids.get(0)).getPrice();
+//        int minPrice = ((Bid)bids.get(0)).getPrice();
+//        for(int i=0;i<bids.size();i++){
+//            int tempPrice = ((Bid)bids.get(i)).getPrice();
+//            sumPrice+= tempPrice;
+//            if(tempPrice>maxPrice){
+//                maxPrice = tempPrice;
+//            }else if(tempPrice<minPrice){
+//                minPrice = tempPrice;
+//            }
+//        }
+//        averagePrice = sumPrice/(bids.size());
 
         //deal with the detail scores
         CalPoints calPoints = null;
@@ -68,7 +90,7 @@ public class ValueCal {
             calPoints = new EconomicalPerson();
             for(int i=0;i<bids.size();i++){
                 Bid tempbid = ((Bid)bids.get(i));
-                int priceScore = calPoints.calPrice(maxPrice,minPrice,averagePrice,tempbid.getPrice());
+                int priceScore = calPoints.calPrice(init_maxPrice,init_minPrice,init_avePrice,tempbid.getPrice());
                 int roomScore = calPoints.calRoom(tempbid.getRoom().getType(),order.getRoomType(),roomPoint);
                 int facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
                 int siteScore = calPoints.calsite(tempbid.getAroundsites());
@@ -87,7 +109,7 @@ public class ValueCal {
             calPoints = new ComfortablePerson();
             for(int i=0;i<bids.size();i++){
                 Bid tempbid = (Bid)bids.get(i);
-                int priceScore = calPoints.calPrice(maxPrice,minPrice,averagePrice,tempbid.getPrice());
+                int priceScore = calPoints.calPrice(init_maxPrice,init_minPrice,init_avePrice,tempbid.getPrice());
                 int roomScore = calPoints.calRoom(tempbid.getRoom().getType(),order.getRoomType(),roomPoint);
                 int facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
                 int siteScore = calPoints.calsite(tempbid.getAroundsites());
@@ -102,9 +124,9 @@ public class ValueCal {
                     resultBids.add(tempbid);
                 }
             }
-
         }else{
         }
+
         if(!InNegotiation){
             if(GoodBid.size()==1){
                 return null;
@@ -129,6 +151,33 @@ public class ValueCal {
         return GoodBid;
     }
 
+
+    private List chooseResult_bid(int sum,boolean inNegotiation,Bid tempBid){
+        List resultBids = new ArrayList();
+        int goodLevel = 12;
+
+        if(!inNegotiation){
+            if(sum<6){
+                reject.add(tempBid);
+            }else if(sum>=goodLevel){
+                GoodBid.add(tempBid);
+            }else{
+                resultBids.add(tempBid);
+            }
+
+            if(GoodBid.size()==1){
+                return null;
+            }else if(GoodBid.size()>1){
+                int all = 0;
+                for(int i=0;i<GoodBid.size();i++){
+
+                }
+            }
+
+        }
+
+        return resultBids;
+    }
 
 
     //fill the hashmap

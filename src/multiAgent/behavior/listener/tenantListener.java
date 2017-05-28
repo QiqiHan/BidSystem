@@ -70,6 +70,7 @@ public class tenantListener extends CyclicBehaviour {
                             //according to tenant preference to choose some bids
                             tenant thistenant = ((tenantAgent)myAgent).getOwner();
                             Order order = ((tenantAgent)myAgent).getOrder(thistenant.getId());
+                            cal.initPrice(orderResponse.getBids());
                             List response = cal.ScreenBids(orderResponse.getBids(),thistenant,order,false);
 //                            List response = cal.bidvalue(orderResponse.getBids());
                             if(response == null){
