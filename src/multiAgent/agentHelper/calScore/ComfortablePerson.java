@@ -12,9 +12,9 @@ import java.util.HashMap;
  */
 public class ComfortablePerson implements CalPoints {
     public int calPrice(int max, int min, int average, int targetPrice) {   //max 3 points
-        if(targetPrice == max){
+        if(targetPrice >= max){
             return 0;
-        }else if(targetPrice == min){
+        }else if(targetPrice <= min){
             return 3;
         }
 
