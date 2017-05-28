@@ -59,6 +59,9 @@ public class landlordDealTender extends OneShotBehaviour{
         for(int i = 0 ; i < facility.length ; i++){
             facilitys.add(i,facility[i]);
         }
+
+        agent.getOrderToNegotiate().put(order.getId(),order);
+
 //        landlord land = landlordDao.findlandlordByid(landlord.)
         if(r==null){
             //该房东没有该类型的房间,拒绝竞标

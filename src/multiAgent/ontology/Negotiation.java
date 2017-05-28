@@ -7,7 +7,8 @@ import jade.content.AgentAction;
  *
  */
 public class Negotiation implements AgentAction {
-    private int id;
+
+    private String id;
 
     private int minReduction;  //最小降价幅度
 
@@ -17,7 +18,8 @@ public class Negotiation implements AgentAction {
 
     private int actualPrice;
 
-    public Negotiation(int minReduction, int maxReduction, int result,int actualPrice) {
+    public Negotiation(String id , int minReduction, int maxReduction, int result,int actualPrice) {
+        this.id = id;
         this.minReduction = minReduction;
         this.maxReduction = maxReduction;
         this.result = result;
@@ -58,12 +60,12 @@ public class Negotiation implements AgentAction {
     public void setActualPrice(int actualPrice) {
         this.actualPrice = actualPrice;
     }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
+
 }

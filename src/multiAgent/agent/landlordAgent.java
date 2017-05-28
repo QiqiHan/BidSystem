@@ -11,6 +11,7 @@ import multiAgent.agentHelper.DFUtil;
 import multiAgent.ontology.Order;
 import util.CondVar;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -25,7 +26,7 @@ public class landlordAgent extends Agent{
     private landlord owner = null;
     //landlordAgent 生命周期
     private boolean isDone = false;
-    private Map<Integer,Order> orderToNegotiate;
+    private Map<String,Order> orderToNegotiate;
 
     protected void setup() {
         getContentManager().registerLanguage(codec);
@@ -39,9 +40,9 @@ public class landlordAgent extends Agent{
             owner = (landlord) args[0];
             CountDownLatch count = (CountDownLatch)args[1];
             System.out.println("创建landlordAgent "+ owner.getLandlordname());
+            orderToNegotiate = new HashMap<String, Order>();
             count.countDown();
         }
-
     }
 
     protected boolean done(){
@@ -58,7 +59,7 @@ public class landlordAgent extends Agent{
         return owner;
     }
 
-    public Map<Integer, Order> getOrderToNegotiate() {
+    public Map<String, Order> getOrderToNegotiate() {
         return orderToNegotiate;
     }
 

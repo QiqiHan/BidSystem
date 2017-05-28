@@ -67,8 +67,9 @@ public class BidOntology extends Ontology{
     private static final String Room_Owner = "owner";
 
     private static final String Negotiation = "Negotiation";
-    private static final String Negotiation_UpPrice = "upPrice";
-    private static final String Negotiation_LowPrice = "lowPrice";
+    private static final String Negotiation_Id = "id";
+    private static final String Negotiation_minReduction = "minReduction";
+    private static final String Negotiation_maxReduction = "maxReduction";
     private static final String Negotiation_Result="result";
     private static final String Negotiation_ActualPrice="actualPrice";
 
@@ -163,8 +164,9 @@ public class BidOntology extends Ontology{
             orderResponse.add(OrderResponse_Bids,(ConceptSchema)getSchema(Bid),0, ObjectSchema.UNLIMITED);
 
             AgentActionSchema negotiation = (AgentActionSchema)getSchema(Negotiation);
-            negotiation.add(Negotiation_UpPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
-            negotiation.add(Negotiation_LowPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            negotiation.add(Negotiation_Id,(PrimitiveSchema)getSchema(BasicOntology.STRING));
+            negotiation.add(Negotiation_minReduction,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
+            negotiation.add(Negotiation_maxReduction,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             negotiation.add(Negotiation_Result,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
             negotiation.add(Negotiation_ActualPrice,(PrimitiveSchema)getSchema(BasicOntology.INTEGER));
 
