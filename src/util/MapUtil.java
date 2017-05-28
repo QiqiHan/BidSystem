@@ -50,7 +50,7 @@ public class MapUtil {
                     model.setTag(detail.getString("tag"));
                     model.setOverall_rating(detail.getString("overall_rating"));
                     obs.add(model);
-                    System.out.println(model);
+//                    System.out.println(model);
                 }
             }
             jsonObjects.put(keyword,obs);

@@ -21,20 +21,20 @@ public class mainTest {
          managerService manager = managerServiceImpl.getInstance();
          manager.initSystem();
          tenant user = tenant.findTenant(1);
-         Date dStart = new Date(2017,5,9);
-         Date dEnd = new Date(2017,5,12);
-         Date dCreate = new Date(2017,5,3);
+         Date dStart = new Date(2017,5,28);
+         Date dEnd = new Date(2017,5,29);
+         Date dCreate = new Date(2017,5,28);
          Order order = new Order("1",
                  "小明",
                  "南京市南大",
-                 "Theme Hotel",
-                 "豪华套件",
+                 "Theme",
+                 "Business",
                  1,
                  dStart,
                  dEnd,
                  dCreate,
-                 120,
-                 200,
+                 100,
+                 900,
                  new ArrayList(),
                  new AID(user.getName(),false));
          tenant.createAgent(user.getId());
