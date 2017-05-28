@@ -2,10 +2,13 @@ package multiAgent.behavior.logical;
 
 import DO.landlord;
 import DO.room;
+import dao.daoImpl.landlordDao;
 import dao.daoImpl.roomDao;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.util.leap.ArrayList;
+import jade.util.leap.List;
 import multiAgent.agent.landlordAgent;
 import multiAgent.behavior.message.landlordPropose;
 import multiAgent.ontology.*;
@@ -51,6 +54,12 @@ public class landlordDealTender extends OneShotBehaviour{
         int roomNum = order.getRoomNum();
 
         room r = roomDao.findRoomByLandlordAndType(landlord.getLandlordid(),roomType);
+        String[] facility = landlord.getFeature().split(",");
+        List facilitys = new ArrayList();
+        for(int i = 0 ; i < facility.length ; i++){
+            facilitys.add(i,facility[i]);
+        }
+//        landlord land = landlordDao.findlandlordByid(landlord.)
         if(r==null){
             //该房东没有该类型的房间,拒绝竞标
             type = 0;
@@ -111,15 +120,17 @@ public class landlordDealTender extends OneShotBehaviour{
 
         Bid bid = null;
         if(type == 1) {
+            //决定竞价
             bid = new Bid(order.getId(),
-                    new Room(1,1, RoomType.Business+"",agent.getAID(),200,new Date(2017,5,2),new Date(2017,5,9),"200",2),
-                    100,
-                    null,
+                    new Room(1,1, RoomType.Business+"",agent.getAID(),r.getPrice(),r.getValidstarttime(),r.getValidendtime(),r.getPrice()+"",2),
+                    r.getPrice(),
+                    facilitys,
                     null,
                     myAgent.getAID(),
                     order.getSource(),
                     type);
         }else{
+            //拒绝竞价
             bid = new Bid(order.getId(),
                     new Room(1,1, RoomType.Business+"",agent.getAID(),200,new Date(2017,5,2),new Date(2017,5,9),"200",2),
                     0,

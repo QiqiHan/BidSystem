@@ -2,6 +2,7 @@ package multiAgent.behavior.listener;
 
 import DO.landlord;
 import DO.room;
+import dao.daoImpl.roomDao;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
@@ -72,7 +73,7 @@ public class landlordListener extends CyclicBehaviour {
                         landlord lord = ((landlordAgent)myAgent).getOwner();
                         String economy = lord.getCharacteristic(); //房东经济情况
 
-                        room room = GetDO.findRoomByLandlordAndType(lord.getLandlordid(),order.getRoomType());
+                        room room = roomDao.findRoomByLandlordAndType(lord.getLandlordid(),order.getRoomType());
                         int init_price = room.getPrice();  //该房间的标价
                         int current_price = negotiation.getActualPrice();  //此次协商前的房间价格
                         int max = negotiation.getMaxReduction();  //房客希望的最高降价幅度
