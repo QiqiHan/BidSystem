@@ -65,7 +65,7 @@ public class landlordListener extends CyclicBehaviour {
                     if(act.getAction() instanceof Negotiation){
                         Negotiation negotiation = (Negotiation)act.getAction();
 
-                        Map<Integer,Order> map = ((landlordAgent)myAgent).getOrderToNegotiate();
+                        Map<String,Order> map = ((landlordAgent)myAgent).getOrderToNegotiate();
                         Order order = map.get(negotiation.getId());
                         Date start = order.getStartTime();
                         Date end = order.getEndTime();
