@@ -110,7 +110,7 @@ public class tenantListener extends CyclicBehaviour {
                             System.out.println("降低"+negotiation.getActualPrice());
                             lowerPriceNum ++ ;
                             Bid tempbid = mapped.get(msg.getSender());
-                            tempbid.setPrice(tempbid.getPrice()- negotiation.getActualPrice());
+                            tempbid.setPrice(negotiation.getActualPrice());
 //                            bids.add(mapped.get(msg.getSender()));
                             bids.add(tempbid);
                         }else if(negotiation.getResult() == 0){        //don't diminish the price
@@ -118,6 +118,7 @@ public class tenantListener extends CyclicBehaviour {
                             Bid tempbid = mapped.get(msg.getSender());
                             finalBids.add(tempbid);
                         }else {
+                            System.out.print(negotiation.getResult()+"!!!!!");
                             System.out.println("房源" + msg.getSender().getName() + "未响应降价");
                             Bid tempbid = mapped.get(msg.getSender());
                             finalBids.add(tempbid);
@@ -132,6 +133,7 @@ public class tenantListener extends CyclicBehaviour {
                             //返回现在的最好的房源
 
                         }else{
+                            System.out.print("再次协商！！");
                             lowerPriceNum = 0;
                             currentResponse = 0;
                             tenant t =  ((tenantAgent)myAgent).getOwner();
@@ -139,7 +141,7 @@ public class tenantListener extends CyclicBehaviour {
                             List results = cal.ScreenBids(bids,t,order,true);
 //                            List results = cal.bidvalue(bids);
                             responseNum = results.size();
-                            myAgent.addBehaviour(new negotiation(myAgent,bids,order.getId()));
+                            myAgent.addBehaviour(new negotiation(myAgent,results,order.getId()));
                             bids.clear();
                         }
                     }

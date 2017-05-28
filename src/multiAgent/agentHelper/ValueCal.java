@@ -73,6 +73,7 @@ public class ValueCal {
                 int facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
                 int siteScore = calPoints.calsite(tempbid.getAroundsites());
                 int sum = priceScore+roomScore+facilityScore+siteScore;
+                System.out.print("Bid id is"+tempbid.getId()+" and it's score :"+sum);
                 if(sum<7){
                     reject.add(tempbid);
                 }else if(sum>=13){
@@ -91,6 +92,7 @@ public class ValueCal {
                 int facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
                 int siteScore = calPoints.calsite(tempbid.getAroundsites());
                 int sum = priceScore+roomScore+facilityScore+siteScore;
+                System.out.print("Bid id is"+tempbid.getId()+" and it's score :"+sum);
                 if(sum<7){
                     reject.add(tempbid);
                 }else if(sum>=13){

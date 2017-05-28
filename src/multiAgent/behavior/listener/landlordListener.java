@@ -84,11 +84,11 @@ public class landlordListener extends CyclicBehaviour {
                             negotiation.setResult(0);
                         }else{
 
-                            if(economy.equals("tension")){
+                            if(economy.equals("Tension")){
                                 //不接受降价
                                 negotiation.setResult(0);
-                            }else if(economy.equals("affordable")){
-                                if(current_price*1.0/init_price > 0.95){
+                            }else if(economy.equals("Affordable")){
+                                if((current_price*1.0/init_price) > 0.95){
                                     //接收降价，降价额为最低降价幅度
                                     negotiation.setResult(1);
                                     negotiation.setActualPrice(current_price-min);
@@ -96,12 +96,12 @@ public class landlordListener extends CyclicBehaviour {
                                     //不接受降价
                                     negotiation.setResult(0);
                                 }
-                            }else if(economy.equals("amiable")){
-                                if(current_price*1.0/init_price > 0.95){
+                            }else if(economy.equals("Amiable")){
+                                if((current_price*1.0/init_price) > 0.95){
                                     //接收降价，降价额为最高降价幅度
                                     negotiation.setResult(1);
                                     negotiation.setActualPrice(current_price-max);
-                                }else if(current_price*1.0/init_price > 0.90){
+                                }else if((current_price*1.0/init_price) > 0.90){
                                     //接收降价，降价额为最低降价幅度
                                     negotiation.setResult(1);
                                     negotiation.setActualPrice(current_price-min);
@@ -109,12 +109,12 @@ public class landlordListener extends CyclicBehaviour {
                                     //不接受降价
                                     negotiation.setResult(0);
                                 }
-                            }else if(economy.equals("promotion")){
-                                if(current_price*1.0/init_price > 0.9){
+                            }else if(economy.equals("Promotion")){
+                                if((current_price*1.0/init_price) > 0.9){
                                     //接收降价，降价额为最高降价幅度
                                     negotiation.setResult(1);
                                     negotiation.setActualPrice(current_price-max);
-                                }else if(current_price*1.0/init_price > 0.8){
+                                }else if((current_price*1.0/init_price) > 0.8){
                                     //接收降价，降价额为最低降价幅度
                                     negotiation.setResult(1);
                                     negotiation.setActualPrice(current_price-min);

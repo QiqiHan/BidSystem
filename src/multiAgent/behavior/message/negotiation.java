@@ -57,7 +57,7 @@ public class negotiation  extends OneShotBehaviour {
                     maxReduction = 20;
                 }
                 //组装Negotitation对象，这边其实需要计算大概还价多少
-                Negotiation negotiation = new Negotiation(Orderid,minReduction, maxReduction, -1,0);
+                Negotiation negotiation = new Negotiation(Orderid,minReduction, maxReduction, -1,bid.getPrice());
                 Action sendAct = new Action();
                 sendAct.setActor(myAgent.getAID());
                 sendAct.setAction(negotiation);
