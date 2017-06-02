@@ -155,11 +155,7 @@ public class tenantListener extends CyclicBehaviour {
                             Order order = agent.getOrder(t.getId());
                             List results = cal.ScreenBids(bids,t,order,true);
                             if(results == null){
-                                java.util.List<Bid> resultBids = new java.util.ArrayList<Bid>();
-                                for(int i=0;i<cal.getGoodBid().size();i++){
-                                    Bid temp = (Bid)cal.getGoodBid().get(i);
-                                    resultBids.add(temp);
-                                }
+                                java.util.List<Bid> resultBids = (java.util.List<Bid>) cal.getGoodBid();
                                 agent.putResult(resultBids);
                                 agent.doDelete();         //clear the agent
                             }else{
