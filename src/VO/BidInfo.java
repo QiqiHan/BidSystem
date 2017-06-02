@@ -80,5 +80,16 @@ public class BidInfo {
         this.facilitys = facilitys;
     }
 
-
+    @Override
+    public String toString() {
+        return "BidInfo{" +
+                "hotelName='" + hotelName + '\'' +
+                ", hotelType='" + hotelType + '\'' +
+                ", roomType='" + roomType + '\'' +
+                ", actualPrice='" + actualPrice + '\'' +
+                ", roomPrice='" + roomPrice + '\'' +
+                ", num=" + num +
+                ", facilitys=" + facilitys +
+                '}';
+    }
 }

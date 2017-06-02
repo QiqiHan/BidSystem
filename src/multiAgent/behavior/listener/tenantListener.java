@@ -39,9 +39,11 @@ public class tenantListener extends CyclicBehaviour {
     private List finalBids = new ArrayList();       //不在降价的bid
     private Map<AID,Bid> mapped = new HashMap<AID,Bid>();
     private ValueCal cal = null;
+    private tenantAgent agent;
 
     public tenantListener(Agent agent, ValueCal c){
         super(agent);
+        this.agent = (tenantAgent)agent;
         cal = c;
     }
 
@@ -80,11 +82,11 @@ public class tenantListener extends CyclicBehaviour {
                                     java.util.List<Bid> resBid = new java.util.ArrayList<Bid>();
                                     resBid.add(bestBid);
 //                                    tenant t =  ((tenantAgent)myAgent).getOwner();
-                                    ((tenantAgent) myAgent).putResult(resBid);
-                                    ((tenantAgent) myAgent).takeDown();      //clear the agent
+                                    agent.putResult(resBid);
+                                    agent.doDelete();      //clear the agent
                                 }else{
                                     //reject all the bid
-                                    System.out.print("reject all bids!!");
+                                    System.out.println("reject all bids!!");
                                 }
                             }else{
                                 responseNum = response.size();
@@ -142,19 +144,19 @@ public class tenantListener extends CyclicBehaviour {
                                 Bid temp = (Bid)cal.getGoodBid().get(i);
                                 resultBids.add(temp);
                             }
-                            ((tenantAgent) myAgent).putResult(resultBids);
-                            ((tenantAgent) myAgent).takeDown();  //clear the agent
+                            agent.putResult(resultBids);
+                            agent.doDelete();
                         }else{
                             System.out.print("再次协商！！");
                             lowerPriceNum = 0;
                             currentResponse = 0;
-                            tenant t =  ((tenantAgent)myAgent).getOwner();
-                            Order order = ((tenantAgent)myAgent).getOrder(t.getId());
+                            tenant t =  agent.getOwner();
+                            Order order = agent.getOrder(t.getId());
                             List results = cal.ScreenBids(bids,t,order,true);
                             if(results == null){
                                 java.util.List<Bid> resultBids = (java.util.List<Bid>) cal.getGoodBid();
-                                ((tenantAgent) myAgent).putResult(resultBids);
-                                ((tenantAgent) myAgent).takeDown();         //clear the agent
+                                agent.putResult(resultBids);
+                                agent.doDelete();         //clear the agent
                             }else{
                                 responseNum = results.size();
                                 myAgent.addBehaviour(new negotiation(myAgent,results,order.getId()));

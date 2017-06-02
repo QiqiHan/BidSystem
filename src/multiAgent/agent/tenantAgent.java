@@ -56,9 +56,8 @@ public class tenantAgent extends Agent {
 
 //    public boolean done(){
 //        //结束生命周期
-//        return true;
+//        return isDone;
 //    }
-
     public tenant getOwner(){
         return owner;
     }

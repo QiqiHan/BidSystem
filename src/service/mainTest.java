@@ -1,6 +1,7 @@
 package service;
 
 import DO.tenant;
+import VO.BidInfo;
 import VO.OrderInfo;
 import jade.core.AID;
 import jade.util.leap.ArrayList;
@@ -40,6 +41,9 @@ public class mainTest {
                  dStart,
                  dEnd);
          tenant.createAgent(user.getId());
-         tenant.Order(user.getName(),order);
+         java.util.List<BidInfo> bids =  tenant.Order(user.getName(),order);
+         for(BidInfo bid : bids){
+              System.out.println(bid.toString());
+         }
     }
 }

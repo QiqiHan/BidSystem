@@ -115,7 +115,7 @@ public class tenantServiceImpl implements tenantService {
             for(int i = 0 ; i <bid.getFacilities().size() ; i++){
                 facilitys.add((String)bid.getFacilities().get(i));
             }
-            BidInfo info = new BidInfo(l.getLandlordtype(),l.getLandlordtype(),r.getType(),bid.getPrice()+"",r.getPrice()+"",bid.getNum(),facilitys);
+            BidInfo info = new BidInfo(l.getLandlordname(),l.getLandlordtype(),r.getType(),bid.getPrice()+"",r.getPrice()+"",bid.getNum(),facilitys);
             resultBidInfo.add(info);
         }
 
