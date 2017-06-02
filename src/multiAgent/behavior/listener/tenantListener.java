@@ -74,13 +74,17 @@ public class tenantListener extends CyclicBehaviour {
                             List response = cal.ScreenBids(orderResponse.getBids(),thistenant,order,false);
 //                            List response = cal.bidvalue(orderResponse.getBids());
                             if(response == null){
-                                if(cal.getGoodBid().size()!=0){
+                                if(cal.getGoodBid().size()==1){         //just one good bid; and put the result in the LinkedBlockingQueue
                                     //return the bid that is accepted
                                     Bid bestBid = (Bid)cal.getGoodBid().get(0);
-                                    tenant t =  ((tenantAgent)myAgent).getOwner();
-                                    agentHandler.finalBid.put(t.getId(),bestBid);
+                                    java.util.List<Bid> resBid = new java.util.ArrayList<Bid>();
+                                    resBid.add(bestBid);
+//                                    tenant t =  ((tenantAgent)myAgent).getOwner();
+                                    ((tenantAgent) myAgent).putResult(resBid);
+//                                    agentHandler.finalBid.put(t.getId(),bestBid);
                                 }else{
                                     //reject all the bid
+                                    System.out.print("reject all bids!!");
                                 }
                             }else{
                                 responseNum = response.size();
@@ -106,20 +110,21 @@ public class tenantListener extends CyclicBehaviour {
                     Action act = (Action) ce;
                     if(act.getAction() instanceof  Negotiation){
                         Negotiation negotiation = (Negotiation)act.getAction();
-                        if(negotiation.getResult() == 1){       //diminish the price
+                        if(negotiation.getResult() == 1){       //diminish the price        //and these bids will be calculate scores
                             System.out.println("房源"+msg.getSender().getName()+"接收降价");
-                            System.out.println("降低"+negotiation.getActualPrice());
+                            System.out.println("降低到"+negotiation.getActualPrice());
                             lowerPriceNum ++ ;
                             Bid tempbid = mapped.get(msg.getSender());
                             tempbid.setPrice(negotiation.getActualPrice());
 //                            bids.add(mapped.get(msg.getSender()));
                             bids.add(tempbid);
                         }else if(negotiation.getResult() == 0){        //don't diminish the price
+                            // stop calculating the score and if it is good ,the GoodBid had one in the last process of calculate scores
                             System.out.println("房源"+msg.getSender().getName()+"拒绝降价");
                             Bid tempbid = mapped.get(msg.getSender());
                             finalBids.add(tempbid);
                         }else {
-                            System.out.print(negotiation.getResult()+"!!!!!");
+                            // stop calculating the score and if it is good ,the GoodBid had one in the last process of calculate scores
                             System.out.println("房源" + msg.getSender().getName() + "未响应降价");
                             Bid tempbid = mapped.get(msg.getSender());
                             finalBids.add(tempbid);
@@ -132,7 +137,12 @@ public class tenantListener extends CyclicBehaviour {
                             //所有房源都不降价
                             System.out.println("所有房源都不降价了");
                             //返回现在的最好的房源
-
+                            java.util.List<Bid> resultBids = new java.util.ArrayList<Bid>();
+                            for(int i=0;i<cal.getGoodBid().size();i++){
+                                Bid temp = (Bid)cal.getGoodBid().get(i);
+                                resultBids.add(temp);
+                            }
+                            ((tenantAgent) myAgent).putResult(resultBids);
                         }else{
                             System.out.print("再次协商！！");
                             lowerPriceNum = 0;
@@ -140,10 +150,15 @@ public class tenantListener extends CyclicBehaviour {
                             tenant t =  ((tenantAgent)myAgent).getOwner();
                             Order order = ((tenantAgent)myAgent).getOrder(t.getId());
                             List results = cal.ScreenBids(bids,t,order,true);
-//                            List results = cal.bidvalue(bids);
-                            responseNum = results.size();
-                            myAgent.addBehaviour(new negotiation(myAgent,results,order.getId()));
-                            bids.clear();
+                            if(results == null){
+                                java.util.List<Bid> resultBids = (java.util.List<Bid>) cal.getGoodBid();
+                                ((tenantAgent) myAgent).putResult(resultBids);
+                            }else{
+                                responseNum = results.size();
+                                myAgent.addBehaviour(new negotiation(myAgent,results,order.getId()));
+                                bids.clear();
+                            }
+
                         }
                     }
 

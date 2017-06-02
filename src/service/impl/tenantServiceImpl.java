@@ -81,7 +81,7 @@ public class tenantServiceImpl implements tenantService {
         agentHandler.queues.remove(name);
     }
 
-    public BidInfo Order(String name, OrderInfo o) {
+    public List<BidInfo> Order(String name, OrderInfo o) {
         OrderInfo orderInfo = o;
         tenant user = tenantDao.getTenant(orderInfo.getUserId());
         Order order = new Order(o.getUserId()+"",
@@ -98,22 +98,28 @@ public class tenantServiceImpl implements tenantService {
                 orderInfo.getFacilities(),
                 new AID(user.getName(),false));
         AgentController tenantAgent = agentHandler.agents.get(name);
-        Bid bid = null;
+        List<Bid> bids = new ArrayList<Bid>();
         try {
             tenantAgent.putO2AObject(order,false);
-            LinkedBlockingQueue<Bid> queues = (LinkedBlockingQueue<Bid>) agentHandler.queues.get(name);
-            bid = queues.take();
+            LinkedBlockingQueue<List<Bid>> queues = (LinkedBlockingQueue<List<Bid>>) agentHandler.queues.get(name);
+            bids = queues.take();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Room r = bid.getRoom();
-        landlord l =  landlordDao.findlandlordByid(r.getLandlordId());
-        List<String> facilitys = new ArrayList<String>();
-        for(int i = 0 ; i <bid.getFacilities().size() ; i++){
-            facilitys.add((String)bid.getFacilities().get(i));
+
+        List<BidInfo> resultBidInfo = new ArrayList<BidInfo>();
+        for(Bid bid:bids){
+            Room r = bid.getRoom();
+            landlord l =  landlordDao.findlandlordByid(r.getLandlordId());
+            List<String> facilitys = new ArrayList<String>();
+            for(int i = 0 ; i <bid.getFacilities().size() ; i++){
+                facilitys.add((String)bid.getFacilities().get(i));
+            }
+            BidInfo info = new BidInfo(l.getLandlordtype(),l.getLandlordtype(),r.getType(),bid.getPrice()+"",r.getPrice()+"",bid.getNum(),facilitys);
+            resultBidInfo.add(info);
         }
-        BidInfo info = new BidInfo(l.getLandlordtype(),l.getLandlordtype(),r.getType(),bid.getPrice()+"",r.getPrice()+"",bid.getNum(),facilitys);
-        return info;
+
+        return resultBidInfo;
     }
 
 
