@@ -16,6 +16,7 @@ import multiAgent.agent.tenantAgent;
 import multiAgent.ontology.Bid;
 import multiAgent.ontology.BidOntology;
 import multiAgent.ontology.Negotiation;
+import util.CondVar;
 
 
 /**
@@ -28,12 +29,15 @@ public class negotiation  extends OneShotBehaviour {
     private Ontology ontology = BidOntology.getInstance();
     private String Orderid = null;
     private boolean End = false;
+    private tenantAgent agent;
+
 
     public negotiation(Agent agent,List Bids,String orderid,boolean end){
         super(agent);
         this.Bids = Bids;
         this.Orderid = orderid;
-        End = end;
+        this.End = end;
+        this.agent = (tenantAgent)agent;
     }
 
     public void action() {
@@ -76,6 +80,9 @@ public class negotiation  extends OneShotBehaviour {
                 myAgent.getContentManager().fillContent(message, sendAct);
                 //发消息
                 myAgent.send(message);
+                if(End){
+                    agent.doDelete();   //clear the agent
+                }
             }
         }catch (Codec.CodecException e){
             e.printStackTrace();
@@ -85,6 +92,7 @@ public class negotiation  extends OneShotBehaviour {
             e.printStackTrace();
         }
     }
+
 
 
 }
