@@ -25,7 +25,6 @@ public class landlordAgent extends Agent{
     private Ontology ontology = BidOntology.getInstance();
     private landlord owner = null;
     //landlordAgent 生命周期
-    private boolean isDone = false;
     private Map<String,Order> orderToNegotiate;
 
     protected void setup() {
@@ -45,15 +44,6 @@ public class landlordAgent extends Agent{
         }
     }
 
-    protected boolean done(){
-        return isDone;
-    }
-    public boolean isDone() {
-        return isDone;
-    }
-    public void setDone(boolean done) {
-        isDone = done;
-    }
 
     public landlord getOwner(){
         return owner;
@@ -64,7 +54,7 @@ public class landlordAgent extends Agent{
     }
 
     public void takeDown(){
-        System.out.println("landlordAgent 被销毁");
+        System.out.println("landlordAgent "+owner.getLandlordname()+"  被销毁");
         setEnabledO2ACommunication(false,0);
     }
 

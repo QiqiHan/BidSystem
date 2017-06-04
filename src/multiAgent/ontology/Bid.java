@@ -12,7 +12,6 @@ import jade.util.leap.List;
  */
 public class Bid implements Concept {
 
-
     //市场价，是否再同意降价,床的大小，房间大小
     private String id; //就是orderId,现在暂时用的AID
     private Room room;

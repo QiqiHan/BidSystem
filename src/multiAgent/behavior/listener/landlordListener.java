@@ -29,9 +29,10 @@ public class landlordListener extends CyclicBehaviour {
 
     private Codec codec = new SLCodec();
     private Ontology ontology = BidOntology.getInstance();
-
+    private landlordAgent landAgent ;
     public landlordListener(Agent agent){
         super(agent);
+        this.landAgent = (landlordAgent)agent;
     }
 
     public void action() {
@@ -66,10 +67,18 @@ public class landlordListener extends CyclicBehaviour {
                         Negotiation negotiation = (Negotiation)act.getAction();
 
                         Map<String,Order> map = ((landlordAgent)myAgent).getOrderToNegotiate();
+                        //房客Agent结束协商过程的时候会通知房东Agent
+                        if(negotiation.getResult() == 2){
+                             map.remove(negotiation.getId());
+                             //该房东Agent没有需要处理的关于order的协商
+                             if(map.isEmpty()){
+                                 landAgent.doDelete();
+                             }
+                        }
+
                         Order order = map.get(negotiation.getId());
                         Date start = order.getStartTime();
                         Date end = order.getEndTime();
-
                         landlord lord = ((landlordAgent)myAgent).getOwner();
                         String economy = lord.getCharacteristic(); //房东经济情况
 

@@ -121,6 +121,9 @@ public class landlordDealTender extends OneShotBehaviour{
             }
         }
 
+
+        //对于竞价结果需要持久化
+
         Bid bid = null;
         if(type == 1) {
             //决定竞价
