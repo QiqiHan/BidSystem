@@ -1,8 +1,11 @@
 package multiAgent.agentHelper;
 
 import DO.bid;
+import DO.landlord;
 import DO.orderRecord;
 import DO.tenant;
+import VO.Consult;
+import dao.daoImpl.landlordDao;
 import multiAgent.agent.tenantAgent;
 import multiAgent.agentHelper.calScore.CalPoints;
 import multiAgent.agentHelper.calScore.ComfortablePerson;
@@ -67,7 +70,7 @@ public class ValueCal {
         init_minPrice = minPrice;
     }
 
-    public List ScreenBids(List bids, tenant user, Order order,boolean InNegotiation){
+    public List ScreenBids(List bids, tenant user, Order order, boolean InNegotiation, jade.core.Agent agent){
         List resultBids = new ArrayList();
 
         int goodBidScore = 0;
@@ -92,6 +95,12 @@ public class ValueCal {
                 }else{
                     resultBids.add(tempbid);
                 }
+
+                if(!InNegotiation){
+                    this.initConsult(tempbid.getRoom().getLandlordId(),user.getName(),user.getEconomic(),sum,tempbid.getPrice(),agent);
+                }else{
+
+                }
             }
         }else if(user.getPreference().equals("comfortable")){
             calPoints = new ComfortablePerson();
@@ -110,6 +119,12 @@ public class ValueCal {
                     GoodBid.add(tempbid);
                 }else{
                     resultBids.add(tempbid);
+                }
+
+                if(!InNegotiation){
+                    this.initConsult(tempbid.getRoom().getLandlordId(),user.getName(),user.getEconomic(),sum,tempbid.getPrice(),agent);
+                }else{
+
                 }
             }
         }else{
@@ -157,6 +172,34 @@ public class ValueCal {
         roomPoint.put(RoomType.Business,4);
         roomPoint.put(RoomType.Deluxe,5);
     }
+
+    private void initConsult(int landlordid, String tenantName, String economy, int score, int price, jade.core.Agent agent){
+        landlord lord = landlordDao.findlandlordByid(landlordid);
+        int minReduction = 0;
+        int maxReduction = (price-init_minPrice)/price;
+        if(economy.equals("poor")){
+            minReduction = maxReduction/3;
+        }else if(economy.equals("normal")){
+            minReduction = maxReduction/5;
+        }else if(economy.equals("rich")){
+            minReduction = 0;
+        }
+
+        String level = "";
+        if(score>=goodLevel){
+            level = "好";
+        }else if(score<6){
+            level = "差";
+        }else{
+            level = "中";
+        }
+        Consult consult = new Consult(tenantName,lord.getLandlordname(),minReduction,maxReduction,0,level,0);
+        java.util.List<Consult> consults = new java.util.ArrayList<Consult>();
+        consults.add(consult);
+        ((tenantAgent)agent).setConsult(landlordid,consults);
+    }
+
+
 
     private void saveBid(int tenantid,String name,int result){
         bid saveobject = new bid();

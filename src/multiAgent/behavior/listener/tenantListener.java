@@ -1,6 +1,7 @@
 package multiAgent.behavior.listener;
 
 import DO.tenant;
+import VO.BidInfo;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
@@ -36,7 +37,7 @@ public class tenantListener extends CyclicBehaviour {
     private int lowerPriceNum = 0;
     private int currentResponse = 0;
     private List bids = new ArrayList();            //用于下次的negotiation
-    private List finalBids = new ArrayList();       //不在降价的bid
+    private List finalBids = new ArrayList();       //不再降价的bid
     private Map<AID,Bid> mapped = new HashMap<AID,Bid>();
     private ValueCal cal = null;
     private tenantAgent agent;
@@ -73,7 +74,7 @@ public class tenantListener extends CyclicBehaviour {
                             tenant thistenant = ((tenantAgent)myAgent).getOwner();
                             Order order = ((tenantAgent)myAgent).getOrder(thistenant.getId());
                             cal.initPrice(orderResponse.getBids());
-                            List response = cal.ScreenBids(orderResponse.getBids(),thistenant,order,false);
+                            List response = cal.ScreenBids(orderResponse.getBids(),thistenant,order,false,myAgent);
 //                            List response = cal.bidvalue(orderResponse.getBids());
                             if(response == null){
                                 if(cal.getGoodBid().size()==1){         //just one good bid; and put the result in the LinkedBlockingQueue
@@ -153,7 +154,7 @@ public class tenantListener extends CyclicBehaviour {
                             currentResponse = 0;
                             tenant t =  agent.getOwner();
                             Order order = agent.getOrder(t.getId());
-                            List results = cal.ScreenBids(bids,t,order,true);
+                            List results = cal.ScreenBids(bids,t,order,true,myAgent);
                             if(results == null){
                                 java.util.List<Bid> resultBids = new java.util.ArrayList<Bid>();
                                 for(int i=0;i<cal.getGoodBid().size();i++){
@@ -187,6 +188,10 @@ public class tenantListener extends CyclicBehaviour {
         }else{
             block();
         }
+    }
+
+    public BidInfo creatBidInfo(){
+        return null;
     }
 
 }
