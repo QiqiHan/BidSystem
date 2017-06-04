@@ -81,16 +81,16 @@ public class landlordDealTender extends OneShotBehaviour{
                 //房间价格在招标价格区间内
                 int threshold = 0;
                 if(characteristic.equals("tension")){
-                    threshold = 0;
+                    threshold = 3;
                 }else if(characteristic.equals("affordable")){
-                    threshold = 10;
+                    threshold = 8;
                 }else if(characteristic.equals("amiable")){
-                    threshold = 20;
+                    threshold = 10;
                 }else if(characteristic.equals("promotion")){
-                    threshold = 40;
+                    threshold = 15;
                 }
-
-                if(price_room+threshold>price_max_tender){
+                //价格太高时，不会接受
+                if(price_room*( 1+threshold )>price_max_tender){
                     type = 0;
                 }else{
                     //价格符合了要求，判断订单的时间（是否是节假日）和空房率
@@ -127,6 +127,7 @@ public class landlordDealTender extends OneShotBehaviour{
             bid = new Bid(order.getId(),
                     new Room(r.getRoomid(),agent.getOwner().getLandlordid(), RoomType.Business+"",agent.getAID(),r.getPrice(),r.getValidstarttime(),r.getValidendtime(),r.getPrice()+"",2),
                     r.getPrice(),
+                    order.getRoomNum(),
                     facilitys,
                     null,
                     myAgent.getAID(),
@@ -137,6 +138,7 @@ public class landlordDealTender extends OneShotBehaviour{
             bid = new Bid(order.getId(),
                     new Room(1,1, RoomType.Business+"",agent.getAID(),200,new Date(2017,5,2),new Date(2017,5,9),"200",2),
                     0,
+                    order.getRoomNum(),
                     null,
                     null,
                     myAgent.getAID(),

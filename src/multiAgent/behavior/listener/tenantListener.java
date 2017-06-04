@@ -142,7 +142,6 @@ public class tenantListener extends CyclicBehaviour {
                             java.util.List<Bid> resultBids = new java.util.ArrayList<Bid>();
                             for(int i=0;i<cal.getGoodBid().size();i++){
                                 Bid temp = (Bid)cal.getGoodBid().get(i);
-//                                System.out.println("test1,Whether ,"+ "Price："+temp.getPrice()+"LandlordId"+temp.getLandlordId()+"Room类型中的 landlordid："+temp.getRoom().getLandlordId());
                                 resultBids.add(temp);
                             }
                             agent.putResult(resultBids);
@@ -155,7 +154,11 @@ public class tenantListener extends CyclicBehaviour {
                             Order order = agent.getOrder(t.getId());
                             List results = cal.ScreenBids(bids,t,order,true);
                             if(results == null){
-                                java.util.List<Bid> resultBids = (java.util.List<Bid>) cal.getGoodBid();
+                                java.util.List<Bid> resultBids = new java.util.ArrayList<Bid>();
+                                for(int i=0;i<cal.getGoodBid().size();i++){
+                                    Bid temp = (Bid)cal.getGoodBid().get(i);
+                                    resultBids.add(temp);
+                                }
                                 agent.putResult(resultBids);
                                 agent.doDelete();         //clear the agent
                             }else{
@@ -163,7 +166,6 @@ public class tenantListener extends CyclicBehaviour {
                                 myAgent.addBehaviour(new negotiation(myAgent,results,order.getId()));
                                 bids.clear();
                             }
-
                         }
                     }
 
