@@ -218,7 +218,7 @@ public class ValueCal {
         }else if(economy.equals("rich")){
             minReduction = 1;
         }
-        System.out.print("最大降价幅度："+maxReduction+"  最小降价幅度:"+minReduction);
+        System.out.println("最大降价幅度："+maxReduction+"  最小降价幅度:"+minReduction);
 
         String level = "";
         if(score>=goodLevel){

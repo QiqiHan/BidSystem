@@ -86,8 +86,9 @@ public class tenantListener extends CyclicBehaviour {
                                     //return the bid that is accepted
                                     java.util.List<BidInfo> resultBids = this.creatBidInfo(cal.getGoodBid());
                                     agent.putResult(resultBids);
-                                    myAgent.addBehaviour(new negotiation(myAgent,allbids,order.getId(),true));
-                                    agent.doDelete();      //clear the agent
+                                    negotiation neg = new negotiation(myAgent,allbids,"",true);
+                                    myAgent.addBehaviour(neg);
+//                                    agent.doDelete();      //clear the agent
                                 } else {
                                     //reject all the bid
                                     System.out.println("reject all bids!!");
@@ -152,8 +153,9 @@ public class tenantListener extends CyclicBehaviour {
                             java.util.List<BidInfo> resultBids = this.creatBidInfo(cal.getGoodBid());
 
                             agent.putResult(resultBids);
-                            myAgent.addBehaviour(new negotiation(myAgent,allbids,"",true));
-                            agent.doDelete();   //clear the agent
+                            negotiation neg = new negotiation(myAgent,allbids,"",true);
+                            myAgent.addBehaviour(neg);
+
                         } else {
                             System.out.print("再次协商！！");
                             lowerPriceNum = 0;
@@ -165,8 +167,9 @@ public class tenantListener extends CyclicBehaviour {
                                 java.util.List<BidInfo> resultBids = this.creatBidInfo(cal.getGoodBid());
 
                                 agent.putResult(resultBids);
-                                myAgent.addBehaviour(new negotiation(myAgent,allbids,order.getId(),true));
-                                agent.doDelete();         //clear the agent
+                                negotiation neg = new negotiation(myAgent,allbids,order.getId(),true);
+                                myAgent.addBehaviour(neg);
+//                                agent.doDelete();         //clear the agent
                             } else {
                                 responseNum = results.size();
                                 myAgent.addBehaviour(new negotiation(myAgent, results, order.getId(),false));

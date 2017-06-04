@@ -43,7 +43,10 @@ public class landlordAgent extends Agent{
             count.countDown();
         }
     }
-
+    public void takeDown(){
+        System.out.println("landlordAgent "+owner.getLandlordname()+"  被销毁");
+        setEnabledO2ACommunication(false,0);
+    }
 
     public landlord getOwner(){
         return owner;
@@ -53,10 +56,7 @@ public class landlordAgent extends Agent{
         return orderToNegotiate;
     }
 
-    public void takeDown(){
-        System.out.println("landlordAgent "+owner.getLandlordname()+"  被销毁");
-        setEnabledO2ACommunication(false,0);
-    }
+
 
 
 }
