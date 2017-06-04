@@ -45,7 +45,7 @@ public class negotiation  extends OneShotBehaviour {
 
                 int landlordid = bid.getRoom().getLandlordId();
                 java.util.List<Consult> consults = ((tenantAgent)myAgent).getConsult(landlordid);
-                Consult oneConsult = consults.get(consults.size());
+                Consult oneConsult = consults.get(consults.size()-1);
 //                tenant t = ((tenantAgent)myAgent).getOwner();
 //                String economic = t.getEconomic();
                 int minReduction = oneConsult.getMinReduction();

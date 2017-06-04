@@ -14,7 +14,7 @@ public class Consult
 
     private int actualPrice;    //协商后的实际价格
 
-    private int type;     //0:申请降价，1：返回协商结果
+    private int type;     //0:申请降价，1：返回协商结果(同意)，2：返回协商结果(拒绝)
 
     private String BidLevel;    //好，中，差
 

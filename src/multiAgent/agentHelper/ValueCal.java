@@ -99,7 +99,7 @@ public class ValueCal {
                 if(!InNegotiation){
                     this.initConsult(tempbid.getRoom().getLandlordId(),user.getName(),user.getEconomic(),sum,tempbid.getPrice(),agent);
                 }else{
-
+                    this.setConsult(tempbid.getRoom().getLandlordId(),user.getEconomic(),sum,tempbid.getPrice(),agent);
                 }
             }
         }else if(user.getPreference().equals("comfortable")){
@@ -124,7 +124,7 @@ public class ValueCal {
                 if(!InNegotiation){
                     this.initConsult(tempbid.getRoom().getLandlordId(),user.getName(),user.getEconomic(),sum,tempbid.getPrice(),agent);
                 }else{
-
+                    this.setConsult(tempbid.getRoom().getLandlordId(),user.getEconomic(),sum,tempbid.getPrice(),agent);
                 }
             }
         }else{
@@ -193,9 +193,35 @@ public class ValueCal {
         }else{
             level = "中";
         }
-        Consult consult = new Consult(tenantName,lord.getLandlordname(),minReduction,maxReduction,0,level,0);
+        Consult consult = new Consult(tenantName,lord.getLandlordname(),minReduction,maxReduction,0,level,price);
         java.util.List<Consult> consults = new java.util.ArrayList<Consult>();
         consults.add(consult);
+        ((tenantAgent)agent).setConsult(landlordid,consults);
+    }
+
+    private void setConsult(int landlordid, String economy, int score, int price, jade.core.Agent agent){
+        java.util.List<Consult> consults = ((tenantAgent)agent).getConsult(landlordid);
+        Consult oneConsult = consults.get(consults.size() - 1);
+        int minReduction = 0;
+        int maxReduction = (price-init_minPrice)/price;
+        if(economy.equals("poor")){
+            minReduction = maxReduction/3;
+        }else if(economy.equals("normal")){
+            minReduction = maxReduction/5;
+        }else if(economy.equals("rich")){
+            minReduction = 0;
+        }
+
+        String level = "";
+        if(score>=goodLevel){
+            level = "好";
+        }else if(score<6){
+            level = "差";
+        }else{
+            level = "中";
+        }
+        Consult result = new Consult(oneConsult.getTenantName(), oneConsult.getLandlordName(), minReduction, maxReduction, 0, level, price);
+        consults.add(result);
         ((tenantAgent)agent).setConsult(landlordid,consults);
     }
 
