@@ -41,6 +41,7 @@ public class tenantListener extends CyclicBehaviour {
     private int currentResponse = 0;
     private List bids = new ArrayList();            //用于下次的negotiation
     private List finalBids = new ArrayList();       //不再降价的bid
+    private List allbids = new ArrayList();         //用于存储全部的Bid信息
     private Map<AID, Bid> mapped = new HashMap<AID, Bid>();
     private ValueCal cal = null;
     private tenantAgent agent;
@@ -73,6 +74,7 @@ public class tenantListener extends CyclicBehaviour {
                                 Bid bid = (Bid) orderResponse.getBids().get(i);
                                 mapped.put(bid.getLandlordId(), bid);
                             }
+                            allbids = orderResponse.getBids();      //保存全部的Bid信息
                             //according to tenant preference to choose some bids
                             tenant thistenant = ((tenantAgent) myAgent).getOwner();
                             Order order = ((tenantAgent) myAgent).getOrder(thistenant.getId());
@@ -84,6 +86,7 @@ public class tenantListener extends CyclicBehaviour {
                                     //return the bid that is accepted
                                     java.util.List<BidInfo> resultBids = this.creatBidInfo(cal.getGoodBid());
                                     agent.putResult(resultBids);
+                                    myAgent.addBehaviour(new negotiation(myAgent,allbids,order.getId(),true));
                                     agent.doDelete();      //clear the agent
                                 } else {
                                     //reject all the bid
@@ -91,7 +94,7 @@ public class tenantListener extends CyclicBehaviour {
                                 }
                             } else {
                                 responseNum = response.size();
-                                myAgent.addBehaviour(new negotiation(myAgent, response, order.getId()));
+                                myAgent.addBehaviour(new negotiation(myAgent, response, order.getId(),false));
                             }
 //                            responseNum = orderResponse.getBids().size();
 //                            myAgent.addBehaviour(new negotiation(myAgent, orderResponse.getBids()));
@@ -149,7 +152,8 @@ public class tenantListener extends CyclicBehaviour {
                             java.util.List<BidInfo> resultBids = this.creatBidInfo(cal.getGoodBid());
 
                             agent.putResult(resultBids);
-                            agent.doDelete();
+                            myAgent.addBehaviour(new negotiation(myAgent,allbids,"",true));
+                            agent.doDelete();   //clear the agent
                         } else {
                             System.out.print("再次协商！！");
                             lowerPriceNum = 0;
@@ -161,10 +165,11 @@ public class tenantListener extends CyclicBehaviour {
                                 java.util.List<BidInfo> resultBids = this.creatBidInfo(cal.getGoodBid());
 
                                 agent.putResult(resultBids);
+                                myAgent.addBehaviour(new negotiation(myAgent,allbids,order.getId(),true));
                                 agent.doDelete();         //clear the agent
                             } else {
                                 responseNum = results.size();
-                                myAgent.addBehaviour(new negotiation(myAgent, results, order.getId()));
+                                myAgent.addBehaviour(new negotiation(myAgent, results, order.getId(),false));
                                 bids.clear();
                             }
                         }
