@@ -27,6 +27,7 @@ public class Bid implements Concept {
     public Bid(String id,
                Room room,
                int price,
+               int num,
                List facilities,
                List aroundsites,
                AID landlordId ,
@@ -36,6 +37,7 @@ public class Bid implements Concept {
         this.id = id;
         this.room = room;
         this.price = price;
+        this.num = num;
         this.facilities =facilities;
         this.aroundsites = aroundsites;
         this.landlordId = landlordId;

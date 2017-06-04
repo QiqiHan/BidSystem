@@ -78,6 +78,11 @@ public class landlordListener extends CyclicBehaviour {
                         int current_price = negotiation.getActualPrice();  //此次协商前的房间价格
                         int max = negotiation.getMaxReduction();  //房客希望的最高降价幅度
                         int min = negotiation.getMinReduction();  //房客希望的最低降价幅度
+                        // 空房率
+                        double availability = room.getRestnum()*1.00/room.getTotalnum();
+                        //房东需要判断2个价格幅度区间，一个是对应max降价幅度 一个是对应min降价幅度
+
+
 
                         if(DateUtil.isHoliday(start) || DateUtil.isHoliday(end)){
                             //节假日不接受降价
@@ -88,36 +93,65 @@ public class landlordListener extends CyclicBehaviour {
                                 //不接受降价
                                 negotiation.setResult(0);
                             }else if(economy.equals("Affordable")){
-                                if((current_price*1.0/init_price) > 0.95){
+                                //空房率的标准设为60%
+                                double minDegree = 0.9 / (availability / 0.6) ;
+                                minDegree = minDegree > 0.9 ? 0.9 : minDegree;
+                                if((current_price*1.0/init_price) > minDegree){
+
                                     //接收降价，降价额为最低降价幅度
                                     negotiation.setResult(1);
-                                    negotiation.setActualPrice(current_price-min);
+                                    int reduction = (int)((1+availability/2)*min);
+                                    reduction = reduction < max ? reduction : max;
+                                    negotiation.setActualPrice( (int)(current_price*(100-reduction)/100));
                                 }else{
                                     //不接受降价
                                     negotiation.setResult(0);
                                 }
                             }else if(economy.equals("Amiable")){
-                                if((current_price*1.0/init_price) > 0.95){
+                                 //空房率的标准设为55%
+                                double minDegree = 0.85 / (availability / 0.55) ;
+                                minDegree = minDegree > 0.85 ? 0.85 : minDegree;
+
+                                double maxDegree = 0.92 /(availability /0.55);
+                                maxDegree = maxDegree > 0.92 ? 0.92 : maxDegree;
+
+                                if((current_price*1.0/init_price) > maxDegree){
                                     //接收降价，降价额为最高降价幅度
                                     negotiation.setResult(1);
-                                    negotiation.setActualPrice(current_price-max);
-                                }else if((current_price*1.0/init_price) > 0.90){
+                                    int reduction = (int)(max/(2-availability));
+                                    reduction = reduction > min ? reduction :min;
+                                    negotiation.setActualPrice((int)(current_price*(100-reduction)/100));
+
+                                }else if((current_price*1.0/init_price) > minDegree){
                                     //接收降价，降价额为最低降价幅度
                                     negotiation.setResult(1);
-                                    negotiation.setActualPrice(current_price-min);
+                                    int reduction = (int)((1+availability/2)*min);
+                                    reduction = reduction < max ? reduction : max;
+                                    negotiation.setActualPrice((int)(current_price*(100-reduction)/100));
                                 }else{
                                     //不接受降价
                                     negotiation.setResult(0);
                                 }
                             }else if(economy.equals("Promotion")){
-                                if((current_price*1.0/init_price) > 0.9){
+                                //空房率的标准设为50%
+                                double minDegree = 0.78 / (availability / 0.5) ;
+                                minDegree = minDegree > 0.78 ? 0.78 : minDegree;
+
+                                double maxDegree = 0.85 /(availability /0.5);
+                                maxDegree = maxDegree > 0.85 ? 0.85 : maxDegree;
+
+                                if((current_price*1.0/init_price) > minDegree){
                                     //接收降价，降价额为最高降价幅度
                                     negotiation.setResult(1);
-                                    negotiation.setActualPrice(current_price-max);
+                                    int reduction = (int)(max/(2-availability));
+                                    reduction = reduction > min ? reduction :min;
+                                    negotiation.setActualPrice((int)(current_price*(100-reduction)/100));
                                 }else if((current_price*1.0/init_price) > 0.8){
                                     //接收降价，降价额为最低降价幅度
                                     negotiation.setResult(1);
-                                    negotiation.setActualPrice(current_price-min);
+                                    int reduction = (int)((1+availability/2)*min);
+                                    reduction = reduction < max ? reduction : max;
+                                    negotiation.setActualPrice((int)(current_price*(100-reduction)/100));
                                 }else{
                                     //不接受降价
                                     negotiation.setResult(0);
