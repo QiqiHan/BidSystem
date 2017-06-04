@@ -86,7 +86,7 @@ public class ValueCal {
                 int facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
                 int siteScore = calPoints.calsite(tempbid.getAroundsites());
                 int sum = priceScore+roomScore+facilityScore+siteScore;
-                System.out.println("Bid id is"+tempbid.getLandlordId().getName() +" and it's score :"+sum);
+                System.out.println("竞标书 ID 是"+tempbid.getLandlordId().getName() +" 并且他的分数是:"+sum);
                 if(sum<6){
                     reject.add(tempbid);
                 }else if(sum>=goodLevel){
@@ -111,7 +111,7 @@ public class ValueCal {
                 int facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
                 int siteScore = calPoints.calsite(tempbid.getAroundsites());
                 int sum = priceScore+roomScore+facilityScore+siteScore;
-                System.out.println("Bid id is"+tempbid.getLandlordId().getName() +" and it's score :"+sum);
+                System.out.println("竞标书 ID 是"+tempbid.getLandlordId().getName() +" 并且他的分数是:"+sum);
                 if(sum<6){
                     reject.add(tempbid);
                 }else if(sum>=goodLevel){
@@ -187,15 +187,15 @@ public class ValueCal {
         }else if(economy.equals("rich")){
             minReduction = 0;
         }
-//        System.out.print("1st::maxReduction is:"+maxReduction+";;;; minReductio is:"+minReduction);
+        System.out.println("最大降价幅度："+maxReduction+" 最小降价幅度:"+minReduction);
 
         String level = "";
         if(score>=goodLevel){
-            level = "好";
+            level = "good";
         }else if(score<6){
-            level = "差";
+            level = "bad";
         }else{
-            level = "中";
+            level = "middle";
         }
         Consult consult = new Consult(tenantName,lord.getLandlordname(),minReduction,maxReduction,0,level,price);
         java.util.List<Consult> consults = new java.util.ArrayList<Consult>();
@@ -218,7 +218,7 @@ public class ValueCal {
         }else if(economy.equals("rich")){
             minReduction = 0;
         }
-//        System.out.print("maxReduction is:"+maxReduction+";;;; minReductio is:"+minReduction);
+        System.out.print("最大降价幅度："+maxReduction+"  最小降价幅度:"+minReduction);
 
         String level = "";
         if(score>=goodLevel){

@@ -30,16 +30,27 @@ public class mainTest {
          List facility = new ArrayList();
          facility.add("wifi");
          facility.add("park");
+         facility.add("toilet");
          OrderInfo order = new OrderInfo(user.getId(),
-                 "南京市南大",
-                 "Theme",
+                 "浙江省慈溪市附海镇",
                  "Business",
+                 "Standard",
                  1,
                  100,
-                 900,
+                 600,
                  facility,
                  dStart,
                  dEnd);
+//         OrderInfo order = new OrderInfo(user.getId(),
+//                 "南京市南大",
+//                 "Theme",
+//                 "Business",
+//                 1,
+//                 100,
+//                 900,
+//                 facility,
+//                 dStart,
+//                 dEnd);
          tenant.createAgent(user.getId());
          java.util.List<BidInfo> bids =  tenant.Order(user.getName(),order);
          for(BidInfo bid : bids){

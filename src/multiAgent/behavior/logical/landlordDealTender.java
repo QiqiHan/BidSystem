@@ -2,8 +2,10 @@ package multiAgent.behavior.logical;
 
 import DO.landlord;
 import DO.room;
+import DO.tender;
 import dao.daoImpl.landlordDao;
 import dao.daoImpl.roomDao;
+import dao.daoImpl.tenderDao;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
@@ -16,13 +18,14 @@ import util.DateUtil;
 
 import java.util.Date;
 
+
 /**
  * Created by H77 on 2017/5/8.
  * 这个Behaviour主要是处理招标书，并生成相应结果。
  */
 public class landlordDealTender extends OneShotBehaviour{
 
-    private Tender tender;
+    private Tender _tender;
     private AID receive;
     private landlordAgent agent;
 
@@ -30,7 +33,7 @@ public class landlordDealTender extends OneShotBehaviour{
     public landlordDealTender(Agent agent , Tender tender, AID receive){
         super(agent);
         this.agent = (landlordAgent) agent;
-        this.tender = tender;
+        this._tender = tender;
         this.receive = receive;
     }
     public void action() {
@@ -47,7 +50,7 @@ public class landlordDealTender extends OneShotBehaviour{
         int type; //如果type是1代表要竞标，如果是0表示不竞标
         landlord landlord = agent.getOwner();  //该agent代表的房东
         String characteristic = landlord.getCharacteristic();  //该房东的经济情况
-        Order order = tender.getOrder();
+        Order order = _tender.getOrder();
         int price_min_tender = order.getMinPrice();
         int price_max_tender = order.getMaxPrice();
         String roomType = order.getRoomType();
@@ -123,6 +126,18 @@ public class landlordDealTender extends OneShotBehaviour{
 
 
         //对于竞价结果需要持久化
+        tender tender = new tender(order.getId()+"",
+                agent.getOwner().getLandlordid(),
+                order.getMaxPrice(),
+                order.getAddress(),
+                order.getStartTime(),
+                order.getEndTime(),
+                order.getRoomType(),
+                order.getRoomNum(),
+                order.getCreateTime(),
+                order.getFacilities().toString(),
+                order.getHotelType());
+        tenderDao.saveTender(tender);
 
         Bid bid = null;
         if(type == 1) {

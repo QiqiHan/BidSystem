@@ -101,6 +101,7 @@ public class BidInfo {
                 ", roomPrice='" + roomPrice + '\'' +
                 ", num=" + num +
                 ", facilitys=" + facilitys +
+                ", consults=" + consults +
                 '}';
     }
 }
