@@ -185,7 +185,7 @@ public class ValueCal {
         }else if(economy.equals("normal")){
             minReduction = maxReduction/5;
         }else if(economy.equals("rich")){
-            minReduction = 0;
+            minReduction = 1;
         }
         System.out.println("最大降价幅度："+maxReduction+" 最小降价幅度:"+minReduction);
 
@@ -216,7 +216,7 @@ public class ValueCal {
         }else if(economy.equals("normal")){
             minReduction = maxReduction/5;
         }else if(economy.equals("rich")){
-            minReduction = 0;
+            minReduction = 1;
         }
         System.out.print("最大降价幅度："+maxReduction+"  最小降价幅度:"+minReduction);
 
