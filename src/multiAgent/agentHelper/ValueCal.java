@@ -176,7 +176,10 @@ public class ValueCal {
     private void initConsult(int landlordid, String tenantName, String economy, int score, int price, jade.core.Agent agent){
         landlord lord = landlordDao.findlandlordByid(landlordid);
         int minReduction = 0;
-        int maxReduction = (((price-init_minPrice)*100)/price);
+        int maxReduction = (price>=init_minPrice)?(((price-init_minPrice)*100)/price):5;
+        if(maxReduction == 0){
+            maxReduction = 10;
+        }
         if(economy.equals("poor")){
             minReduction = maxReduction/3;
         }else if(economy.equals("normal")){
@@ -184,7 +187,7 @@ public class ValueCal {
         }else if(economy.equals("rich")){
             minReduction = 0;
         }
-        System.out.print("1st::maxReduction is:"+maxReduction+";;;; minReductio is:"+minReduction);
+//        System.out.print("1st::maxReduction is:"+maxReduction+";;;; minReductio is:"+minReduction);
 
         String level = "";
         if(score>=goodLevel){
@@ -204,7 +207,10 @@ public class ValueCal {
         java.util.List<Consult> consults = ((tenantAgent)agent).getConsult(landlordid);
         Consult oneConsult = consults.get(consults.size() - 1);
         int minReduction = 0;
-        int maxReduction = (((price-init_minPrice)*100)/price);
+        int maxReduction = (price>=init_minPrice)?(((price-init_minPrice)*100)/price):5;
+        if(maxReduction == 0){
+            maxReduction = 10;
+        }
         if(economy.equals("poor")){
             minReduction = maxReduction/3;
         }else if(economy.equals("normal")){
@@ -212,7 +218,7 @@ public class ValueCal {
         }else if(economy.equals("rich")){
             minReduction = 0;
         }
-        System.out.print("maxReduction is:"+maxReduction+";;;; minReductio is:"+minReduction);
+//        System.out.print("maxReduction is:"+maxReduction+";;;; minReductio is:"+minReduction);
 
         String level = "";
         if(score>=goodLevel){
