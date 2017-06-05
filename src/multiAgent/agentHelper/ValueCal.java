@@ -181,9 +181,9 @@ public class ValueCal {
             maxReduction = 10;
         }
         if(economy.equals("poor")){
-            minReduction = maxReduction/3;
+            minReduction = maxReduction/3+1;
         }else if(economy.equals("normal")){
-            minReduction = maxReduction/5;
+            minReduction = maxReduction/5+1;
         }else if(economy.equals("rich")){
             minReduction = 1;
         }
@@ -212,9 +212,9 @@ public class ValueCal {
             maxReduction = 10;
         }
         if(economy.equals("poor")){
-            minReduction = maxReduction/3;
+            minReduction = maxReduction/3+1;
         }else if(economy.equals("normal")){
-            minReduction = maxReduction/5;
+            minReduction = maxReduction/5+1;
         }else if(economy.equals("rich")){
             minReduction = 1;
         }
