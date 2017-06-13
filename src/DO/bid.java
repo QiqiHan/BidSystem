@@ -3,11 +3,9 @@ package DO;
 public class bid {
     private Integer bidid;
 
-    private Integer tenantid;
+    private Integer landlordid;
 
-    private String landlordname;
-
-    private Integer result; //0:accept  1:refuse  2:negotiate
+    private Integer result;
 
     private Integer price;
 
@@ -17,15 +15,23 @@ public class bid {
 
     private Integer score;
 
-    public bid(Integer bidid,Integer tenantid ,String landlordname, Integer result, Integer price, Integer roomid, String orderid,Integer score) {
+    private String facility;
+
+    private String arroundsite;
+
+    private String roomtype;
+
+    public bid(Integer bidid, Integer landlordid, Integer result, Integer price, Integer roomid, String orderid, Integer score, String facility, String arroundsite, String roomtype) {
         this.bidid = bidid;
-        this.tenantid = tenantid;
-        this.landlordname = landlordname;
+        this.landlordid = landlordid;
         this.result = result;
         this.price = price;
         this.roomid = roomid;
         this.orderid = orderid;
         this.score = score;
+        this.facility = facility;
+        this.arroundsite = arroundsite;
+        this.roomtype = roomtype;
     }
 
     public bid() {
@@ -38,6 +44,14 @@ public class bid {
 
     public void setBidid(Integer bidid) {
         this.bidid = bidid;
+    }
+
+    public Integer getLandlordid() {
+        return landlordid;
+    }
+
+    public void setLandlordid(Integer landlordid) {
+        this.landlordid = landlordid;
     }
 
     public Integer getResult() {
@@ -72,14 +86,6 @@ public class bid {
         this.orderid = orderid == null ? null : orderid.trim();
     }
 
-    public String getLandlordname() {
-        return landlordname;
-    }
-
-    public void setLandlordname(String landlordname) {
-        this.landlordname = landlordname;
-    }
-
     public Integer getScore() {
         return score;
     }
@@ -88,11 +94,27 @@ public class bid {
         this.score = score;
     }
 
-    public Integer getTenantid() {
-        return tenantid;
+    public String getFacility() {
+        return facility;
     }
 
-    public void setTenantid(Integer tenantid) {
-        this.tenantid = tenantid;
+    public void setFacility(String facility) {
+        this.facility = facility == null ? null : facility.trim();
+    }
+
+    public String getArroundsite() {
+        return arroundsite;
+    }
+
+    public void setArroundsite(String arroundsite) {
+        this.arroundsite = arroundsite == null ? null : arroundsite.trim();
+    }
+
+    public String getRoomtype() {
+        return roomtype;
+    }
+
+    public void setRoomtype(String roomtype) {
+        this.roomtype = roomtype == null ? null : roomtype.trim();
     }
 }
