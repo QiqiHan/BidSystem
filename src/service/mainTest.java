@@ -30,7 +30,8 @@ public class mainTest {
          List facility = new ArrayList();
          facility.add("wifi");
          facility.add("park");
-//         facility.add("toilet");
+//         facility.add("aircodition");
+         facility.add("toilet");
 //         OrderInfo order = new OrderInfo(user.getId(),
 //                 "浙江省慈溪市附海镇",
 //                 "Business",
@@ -43,11 +44,11 @@ public class mainTest {
 //                 dEnd);
          OrderInfo order = new OrderInfo(user.getId(),
                  "南京市南大",
-                 "Theme",
-                 "Business",
+                 "tourism",
+                 "Superior",
                  1,
-                 100,
-                 900,
+                 230,
+                 750,
                  facility,
                  dStart,
                  dEnd);

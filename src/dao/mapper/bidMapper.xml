@@ -9,7 +9,7 @@
       <arg column="price" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="roomId" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="orderId" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="score" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="score" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="facility" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="arroundsite" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="roomtype" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -19,6 +19,11 @@
     bidId, landlordId, result, price, roomId, orderId, score, facility, arroundsite, 
     roomtype
   </sql>
+  <select id="selectAllBid" resultType="DO.bid" >
+    select
+    <include refid="Base_Column_List" />
+    from bid
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -36,7 +41,7 @@
       roomtype)
     values (#{bidid,jdbcType=INTEGER}, #{landlordid,jdbcType=INTEGER}, #{result,jdbcType=INTEGER}, 
       #{price,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}, 
-      #{score,jdbcType=INTEGER}, #{facility,jdbcType=VARCHAR}, #{arroundsite,jdbcType=VARCHAR}, 
+      #{score,jdbcType=VARCHAR}, #{facility,jdbcType=VARCHAR}, #{arroundsite,jdbcType=VARCHAR},
       #{roomtype,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="DO.bid" >
@@ -93,7 +98,7 @@
         #{orderid,jdbcType=VARCHAR},
       </if>
       <if test="score != null" >
-        #{score,jdbcType=INTEGER},
+        #{score,jdbcType=VARCHAR},
       </if>
       <if test="facility != null" >
         #{facility,jdbcType=VARCHAR},
@@ -125,7 +130,7 @@
         orderId = #{orderid,jdbcType=VARCHAR},
       </if>
       <if test="score != null" >
-        score = #{score,jdbcType=INTEGER},
+        score = #{score,jdbcType=VARCHAR},
       </if>
       <if test="facility != null" >
         facility = #{facility,jdbcType=VARCHAR},
@@ -146,7 +151,7 @@
       price = #{price,jdbcType=INTEGER},
       roomId = #{roomid,jdbcType=INTEGER},
       orderId = #{orderid,jdbcType=VARCHAR},
-      score = #{score,jdbcType=INTEGER},
+      score = #{score,jdbcType=VARCHAR},
       facility = #{facility,jdbcType=VARCHAR},
       arroundsite = #{arroundsite,jdbcType=VARCHAR},
       roomtype = #{roomtype,jdbcType=VARCHAR}

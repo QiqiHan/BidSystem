@@ -13,7 +13,7 @@ public class bid {
 
     private String orderid;
 
-    private Integer score;
+    private String score;
 
     private String facility;
 
@@ -21,7 +21,7 @@ public class bid {
 
     private String roomtype;
 
-    public bid(Integer bidid, Integer landlordid, Integer result, Integer price, Integer roomid, String orderid, Integer score, String facility, String arroundsite, String roomtype) {
+    public bid(Integer bidid, Integer landlordid, Integer result, Integer price, Integer roomid, String orderid, String score, String facility, String arroundsite, String roomtype) {
         this.bidid = bidid;
         this.landlordid = landlordid;
         this.result = result;
@@ -86,11 +86,11 @@ public class bid {
         this.orderid = orderid == null ? null : orderid.trim();
     }
 
-    public Integer getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(String score) {
         this.score = score;
     }
 

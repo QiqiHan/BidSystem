@@ -1,10 +1,14 @@
 package multiAgent.agentHelper.calScore;
 
+import DO.bid;
 import jade.util.leap.List;
+import jade.util.leap.Map;
 import multiAgent.ontology.MapObject;
 import multiAgent.ontology.MapObjects;
 import multiAgent.ontology.RoomType;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 /**
@@ -12,80 +16,92 @@ import java.util.HashMap;
  */
 public class EconomicalPerson implements CalPoints {
 
-    public int calPrice(int max, int min, int average, int targetPrice) {   //max 6 points
-        if(targetPrice <= min){
-            return 6;
-        }else if(targetPrice >= max){
-            return 0;
-        }
 
-        if(targetPrice <= average){ //less than average
-            if((average-targetPrice)>=(targetPrice-min)){       //close to min price
-                return 5;
-            }else{                                              //close to average
-                return 4;
-            }
-        }else{  //more than average
-            if((targetPrice-average)>=(max-targetPrice)){       //close to max price
-                return 1;
-            }else{                                              //close to average
-                return 3;
-            }
-        }
+    bid bid;
+
+    public  EconomicalPerson(){
+    }
+    public DO.bid getBid() {
+        return bid;
     }
 
-    public int calRoom(String bidRoomtype, String orderRoomType,HashMap<RoomType,Integer> roomPoint) {  //max 3 points
-        RoomType roomType = RoomType.valueOf(bidRoomtype);
-        int getInt = roomPoint.get(roomType);
-        RoomType order = RoomType.valueOf(orderRoomType);
-        int orderInt = roomPoint.get(order);
-        if(getInt == orderInt){
-            return 2;
-        }else if(getInt > orderInt){
-            return 3;
+    public void setBid(DO.bid bid) {
+        this.bid = bid;
+    }
+
+
+//    DecimalFormat df   = new DecimalFormat("######0.00");
+
+    //max 1
+    //average 3
+    //min 6
+    //在max average之间算分策略  3-(targetPrice-average)*（3-1）/(max-average)
+    //avrage min 之间算分策略  6-（targetPrice-min)*(6-3)/(average-min)
+    public double calPrice(int max, int min, int average, int targetPrice) {   //max 6 points
+        double score = 1.0;
+        if(targetPrice < average){
+            double rate = (targetPrice-min)*100/(average -min);
+            score = 6.0 - rate * 3.0 / 100.0;
+        }else if (targetPrice > average){
+            double rate = (targetPrice-average)*100/(max - average);
+            score = 3.0 - rate*2.0/ 100.0;
         }else{
-            return 1;
+            score = 3.0;
         }
+        double result = new BigDecimal(score).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        bid.setPrice(targetPrice);
+        return result;
     }
 
-    public int calFacility(List bidFacilities, List orderFacilities) {  //max 3 points
-        int orderSize = orderFacilities.size();
-        int bidSize = bidFacilities.size();
-        int bidINorder = 0;
-        for(int i=0;i<orderSize;i++){
-            if(bidFacilities.contains(orderFacilities.get(i))){     //the facility in order is also in bid
-                bidINorder++;
-            }
-        }
-
-        if(bidINorder == orderSize){        //order中要求的facilities都有
-            if(bidSize > orderSize){        //bid中还有order没要求的
-                return 3;
-            }else if(bidSize == orderSize){     //just as order
-                return 2;
-            }else {
-                System.out.println("calFacility is wrong!");
-            }
-        }else if(bidINorder < orderSize){       //order中要求的facilities并不是都有
-            if(bidSize>bidINorder){             //有order中未要求的facility
-                return 1;
-            }else if(bidSize == bidINorder){
-                if(bidINorder>(orderSize/2)){   //satisfy the half of order
-                    return 1;
-                }else{
-                    return 0;
-                }
-            }else{
-                System.out.println("calFacility is wrong!!");
-            }
-        }else{
-            System.out.println("calFacility is wrong!!!");
-        }
-        return 0;
+//    public int calRoom(String bidRoomtype, String orderRoomType,HashMap<RoomType,Integer> roomPoint) {  //max 3 points
+//        RoomType roomType = RoomType.valueOf(bidRoomtype);
+//        int getInt = roomPoint.get(roomType);
+//        RoomType order = RoomType.valueOf(orderRoomType);
+//        int orderInt = roomPoint.get(order);
+//        bid.setRoomtype(orderRoomType);
+//        if(getInt == orderInt){
+//            return 2;
+//        }else if(getInt > orderInt){
+//            return 3;
+//        }else{
+//            return 1;
+//        }
+//    }
+    //一个facilities 用一个int表示，目前只有8种类型的facility
+    // 低8位分别按顺序对应wifi,park,cooking,breakfast,toilet,aircodition,laundry,morningcall 分别表示这种类型的facilities是否有
+    // 后8位在前8位的基础上，用来表示该种facilities是否是属于order需要的
+    // 算分策略  2：1 ,假设潜在facilities n   order需要的为m
+    // order分 : 2/m    额外分： 1/(n-m)
+    public double calFacility(List bidFacilities, List orderFacilities) {  //max 4 points
+          int num = 8;
+          int orderSize = orderFacilities.size();
+          int extraSize = num - orderSize;
+          double order_score = 2.8 / orderSize;
+          double extra_score = 1.2 / extraSize;
+          double score = 0;
+          String isOrder = "";
+          String facilitys ="";
+          for(int i = 0 ; i < bidFacilities.size() ; i++){
+               String facility = (String)bidFacilities.get(i);
+               facilitys = facilitys+facility+":";
+               if(orderFacilities.contains(facility)){
+                   score += order_score;
+                   isOrder = isOrder+"1";
+               }else{
+                   isOrder = isOrder+"0";
+                   score += extra_score;
+               }
+          }
+          String str = isOrder+"-"+facilitys;
+          bid.setFacility(str);
+        double result = new BigDecimal(score).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return result;
     }
-
-    public int calsite(List aroundSites) {  //max 3 points
-        int siteSize = aroundSites.size();
+    // 一个List aroundSites 用一个int表示 为训练做准备
+    // 距离 2000 1000 500 200 对于aroundSites划分4块区域，由一个int表示  一块区域最多可以累计2^8=256个地点
+    // 算分策略  0.05 0.1 0.18 0.25
+    // 目前最多一共统计20个地点，如果没有该地点不存在就是0分
+    public double calsite(List aroundSites) {  //max 5 points
         List bus = null;
         List stores = null;
         for(int i=0;i<aroundSites.size();i++){
@@ -95,36 +111,51 @@ public class EconomicalPerson implements CalPoints {
                 stores = ((MapObjects)aroundSites.get(i)).getObjects();
             }
         }
-
-        if(bus.size()==0&&stores.size()==0){
-            return 0;
-        }else if(bus.size()==0||stores.size()==0){
-            return 0;
-        }else{
-            int minbus = Integer.parseInt(((MapObject)bus.get(0)).getDistance());
-            int minstore = Integer.parseInt(((MapObject)stores.get(0)).getDistance());
-            for(int i=0;i<bus.size();i++){
-                int temp = Integer.parseInt(((MapObject)bus.get(i)).getDistance());
-                if(temp<minbus){
-                    minbus = temp;
-                }
+        int num1 = 0;
+        int num2 = 0;
+        int num3 = 0;
+        int num4 = 0;
+        double score = 0;
+        for( int i = 0 ; i < bus.size() ; i++) {
+            MapObject area = (MapObject) bus.get(i);
+            int distance = Integer.parseInt(area.getDistance());
+            if (distance <= 200) {
+                score += 0.25;
+                num1++;
+            } else if (distance <= 500) {
+                score += 0.18;
+                num2++;
+            } else if (distance <= 1000) {
+                score += 0.1;
+                num3++;
+            } else if (distance <= 2000) {
+                score += 0.05;
+                num4++;
             }
-
-            for(int i=0;i<stores.size();i++){
-                int temp = Integer.parseInt(((MapObject)stores.get(i)).getDistance());
-                if(temp<minstore){
-                    minstore = temp;
-                }
-            }
-
-            if(minbus<100&&minstore<100){
-                return 3;
-            }else if(minbus<100||minstore<100){
-                return 2;
-            }else {
-                return 1;
-            }
+            /*  超过2000m的 算做0分 */
         }
-
+        for( int i = 0 ; i <stores.size() ; i++){
+            MapObject area = (MapObject) stores.get(i);
+            int distance = Integer.parseInt(area.getDistance());
+            if (distance <= 200) {
+                score += 0.25;
+                num1++;
+            } else if (distance <= 500) {
+                score += 0.18;
+                num2++;
+            } else if (distance <= 1000) {
+                score += 0.1;
+                num3++;
+            } else if (distance <= 2000) {
+                score += 0.05;
+                num4++;
+            }
+            /*  超过2000m的 算做0分 */
+        }
+        String arrounsite = num4+":"+num3+":"+num2+":"+num1;
+        bid.setArroundsite(arrounsite);
+        double result = new BigDecimal(score).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return result;
     }
+
 }

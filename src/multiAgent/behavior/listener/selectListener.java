@@ -62,7 +62,6 @@ public class selectListener extends CyclicBehaviour {
                         //如果同意竞标 bid中添加周边信息
                         landlord land = agent.getLandLord(bid.getLandlordId());
                         List<String> keywords = new ArrayList<String>();
-                        keywords.add("景点");
                         keywords.add("超市");
                         keywords.add("公交");
                         Map<String,List<MapObject>> maps = MapUtil.searchAroundSite(keywords,land.getLongitude().toString(),land.getLatitude().toString());

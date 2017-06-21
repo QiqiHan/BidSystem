@@ -89,8 +89,6 @@ public class landlordListener extends CyclicBehaviour {
                             // 空房率
                             double availability = room.getRestnum() * 1.00 / room.getTotalnum();
                             //房东需要判断2个价格幅度区间，一个是对应max降价幅度 一个是对应min降价幅度
-
-
                             if (DateUtil.isHoliday(start) || DateUtil.isHoliday(end)) {
                                 //节假日不接受降价
                                 negotiation.setResult(0);
@@ -121,7 +119,6 @@ public class landlordListener extends CyclicBehaviour {
 
                                     double maxDegree = 0.92 / (availability / 0.55);
                                     maxDegree = maxDegree > 0.92 ? 0.92 : maxDegree;
-
                                     if ((current_price * 1.0 / init_price) > maxDegree) {
                                         //接收降价，降价额为最高降价幅度
                                         negotiation.setResult(1);

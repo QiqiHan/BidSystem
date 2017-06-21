@@ -2,6 +2,8 @@ package dao;
 
 import DO.bid;
 
+import java.util.List;
+
 public interface bidMapper {
     int deleteByPrimaryKey(Integer bidid);
 
@@ -14,4 +16,6 @@ public interface bidMapper {
     int updateByPrimaryKeySelective(bid record);
 
     int updateByPrimaryKey(bid record);
+
+    List<bid> selectAllBid();
 }

@@ -22,12 +22,6 @@ public class tenantDao {
         List<orderRecord> allrecord = recordMapper.getallorder(tenantId);
         return allrecord;
     }
-    public static boolean saveBid(bid result){
-        SqlSession sqlSession = DBTools.getSession();
-        bidMapper bids = sqlSession.getMapper(dao.bidMapper.class);
-        bids.insert(result);
-        return true;
-    }
     public static tenant getTenant(int tenantId){
         SqlSession sqlSession = DBTools.getSession();
         tenantMapper mapper = sqlSession.getMapper(dao.tenantMapper.class);

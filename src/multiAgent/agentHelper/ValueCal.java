@@ -5,6 +5,7 @@ import DO.landlord;
 import DO.orderRecord;
 import DO.tenant;
 import VO.Consult;
+import dao.daoImpl.bidDao;
 import dao.daoImpl.landlordDao;
 import multiAgent.agent.tenantAgent;
 import multiAgent.agentHelper.calScore.CalPoints;
@@ -27,6 +28,7 @@ import jade.util.leap.ArrayList;
 import util.CSVUtils;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 /**
@@ -42,6 +44,8 @@ public class ValueCal {
     //the result of bid
     private List reject = new ArrayList();
     private List GoodBid = new ArrayList();
+
+    private List GoodScore = new ArrayList();
 
     private static int init_maxPrice = 0;
     private static int init_minPrice = 0;
@@ -81,21 +85,41 @@ public class ValueCal {
             calPoints = new EconomicalPerson();
             for(int i=0;i<bids.size();i++){
                 Bid tempbid = ((Bid)bids.get(i));
-                int priceScore = calPoints.calPrice(init_maxPrice,init_minPrice,init_avePrice,tempbid.getPrice());
-                int roomScore = calPoints.calRoom(tempbid.getRoom().getType(),order.getRoomType(),roomPoint);
-                int facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
-                int siteScore = calPoints.calsite(tempbid.getAroundsites());
-                int sum = priceScore+roomScore+facilityScore+siteScore;
+                Room room = tempbid.getRoom();
+//                landlord l =  landlordDao.findlandlordByid(room.getLandlordId());
+                bid bid_fortrain = new bid();
+                calPoints.setBid(bid_fortrain);
+
+                bid_fortrain.setLandlordid(room.getLandlordId());
+                bid_fortrain.setRoomid(room.getRoomId());
+                bid_fortrain.setOrderid(tempbid.getId());
+
+                double priceScore = calPoints.calPrice(init_maxPrice,init_minPrice,init_avePrice,tempbid.getPrice());
+//                int roomScore = calPoints.calRoom(room.getType(),order.getRoomType(),roomPoint);
+                double facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
+                double siteScore = calPoints.calsite(tempbid.getAroundsites());
+                double sum = priceScore+facilityScore+siteScore;
+                sum = new BigDecimal(sum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                bid_fortrain.setPrice((int)(priceScore*100));
+                bid_fortrain.setArroundsite(siteScore*100+"");
+                bid_fortrain.setFacility(facilityScore*100+"");
+                bid_fortrain.setScore(sum*100+"");
+                bid_fortrain.setRoomtype("1");
                 System.out.println("竞标书 ID 是"+tempbid.getLandlordId().getName() +" 并且他的分数是:"+sum);
                 if(sum<6){
                     reject.add(tempbid);
+                    bid_fortrain.setResult(0);
                 }else if(sum>=goodLevel){
                     goodBidScore+=sum;
                     GoodBid.add(tempbid);
+                    GoodScore.add(sum);
+                    bid_fortrain.setResult(1);
                 }else{
+                    bid_fortrain.setResult(0);
                     resultBids.add(tempbid);
                 }
-
+                //持久化
+                bidDao.insert(bid_fortrain);
                 if(!InNegotiation){
                     this.initConsult(tempbid.getRoom().getLandlordId(),user.getName(),user.getEconomic(),sum,tempbid.getPrice(),agent);
                 }else{
@@ -106,26 +130,45 @@ public class ValueCal {
             calPoints = new ComfortablePerson();
             for(int i=0;i<bids.size();i++){
                 Bid tempbid = (Bid)bids.get(i);
-                int priceScore = calPoints.calPrice(init_maxPrice,init_minPrice,init_avePrice,tempbid.getPrice());
-                int roomScore = calPoints.calRoom(tempbid.getRoom().getType(),order.getRoomType(),roomPoint);
-                int facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
-                int siteScore = calPoints.calsite(tempbid.getAroundsites());
-                int sum = priceScore+roomScore+facilityScore+siteScore;
+                Room room = tempbid.getRoom();
+
+                bid bid_fortrain = new bid();
+                calPoints.setBid(bid_fortrain);
+
+                bid_fortrain.setLandlordid(room.getLandlordId());
+                bid_fortrain.setRoomid(room.getRoomId());
+                bid_fortrain.setOrderid(tempbid.getId());
+                double priceScore = calPoints.calPrice(init_maxPrice,init_minPrice,init_avePrice,tempbid.getPrice());
+                double facilityScore = calPoints.calFacility(tempbid.getFacilities(),order.getFacilities());
+                double siteScore = calPoints.calsite(tempbid.getAroundsites());
+                double sum = priceScore+facilityScore+siteScore;
+                sum = new BigDecimal(sum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                bid_fortrain.setPrice((int)(priceScore*100));
+                bid_fortrain.setArroundsite(siteScore*100+"");
+                bid_fortrain.setFacility(facilityScore*100+"");
+                bid_fortrain.setScore(sum*100+"");
+                bid_fortrain.setRoomtype("1");
                 System.out.println("竞标书 ID 是"+tempbid.getLandlordId().getName() +" 并且他的分数是:"+sum);
-                if(sum<6){
+                if(sum < 6){
                     reject.add(tempbid);
+                    bid_fortrain.setResult(0);
                 }else if(sum>=goodLevel){
                     goodBidScore+=sum;
                     GoodBid.add(tempbid);
+                    GoodScore.add(sum);
+                    bid_fortrain.setResult(1);
                 }else{
                     resultBids.add(tempbid);
+                    bid_fortrain.setResult(0);
                 }
-
+                //持久化
+                bidDao.insert(bid_fortrain);
                 if(!InNegotiation){
                     this.initConsult(tempbid.getRoom().getLandlordId(),user.getName(),user.getEconomic(),sum,tempbid.getPrice(),agent);
                 }else{
                     this.setConsult(tempbid.getRoom().getLandlordId(),user.getEconomic(),sum,tempbid.getPrice(),agent);
                 }
+
             }
         }else{
         }
@@ -163,6 +206,13 @@ public class ValueCal {
         return GoodBid;
     }
 
+    public List getGoodScore() {
+        return GoodScore;
+    }
+
+    public void setGoodScore(List goodScore) {
+        GoodScore = goodScore;
+    }
 
     //fill the hashmap
     private void fill_hashmap(){
@@ -173,7 +223,7 @@ public class ValueCal {
         roomPoint.put(RoomType.Deluxe,5);
     }
 
-    private void initConsult(int landlordid, String tenantName, String economy, int score, int price, jade.core.Agent agent){
+    private void initConsult(int landlordid, String tenantName, String economy, double score, int price, jade.core.Agent agent){
         landlord lord = landlordDao.findlandlordByid(landlordid);
         int minReduction = 0;
         int maxReduction = (price>=init_minPrice)?(((price-init_minPrice)*100)/price):5;
@@ -203,7 +253,7 @@ public class ValueCal {
         ((tenantAgent)agent).setConsult(landlordid,consults);
     }
 
-    private void setConsult(int landlordid, String economy, int score, int price, jade.core.Agent agent){
+    private void setConsult(int landlordid, String economy, double score, int price, jade.core.Agent agent){
         java.util.List<Consult> consults = ((tenantAgent)agent).getConsult(landlordid);
         Consult oneConsult = consults.get(consults.size() - 1);
         int minReduction = 0;
@@ -232,7 +282,6 @@ public class ValueCal {
         consults.add(result);
         ((tenantAgent)agent).setConsult(landlordid,consults);
     }
-
 
 
     private void saveBid(int tenantid,String name,int result){

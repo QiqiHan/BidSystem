@@ -14,11 +14,11 @@ import java.util.List;
 public class RandomForestTest {
 
     public static void main(String[] args){
-        File f = new File("/Users/sam/Documents/QQ文件/train.csv");
+        File f = new File("D:\\jade\\train.csv");
         List<String> dataSet = CSVUtils.importCsv(f);
         System.out.println(dataSet.get(0));
-
         Attribute[] attrs = initAttribute(dataSet.get(0).split(","));
+
         double[][] x = new double[dataSet.size()-1-100][7];
         int [] y = new int[dataSet.size()-1-100];
         for(int i = 1 ; i <(dataSet.size()-100) ; i++){
@@ -30,7 +30,8 @@ public class RandomForestTest {
         }
          RandomForest  forest = new RandomForest(attrs,x,y,5);
 
-        File f1 = new File("/Users/sam/Documents/QQ文件/train.csv");
+
+        File f1 = new File("D:\\jade\\train.csv");
         List<String> dataSet1 = CSVUtils.importCsv(f1);
         double[][] testx = new double[100][7];
         int [] testy = new int[100];
@@ -41,7 +42,6 @@ public class RandomForestTest {
             testx[i-(dataSet1.size()-100)] = arr;
             testy[i-(dataSet1.size()-100)] = Integer.parseInt(strs[1]);
         }
-
         int errors = 0;
         for(int i =1 ; i<testx.length ; i++){
             if(forest.predict(testx[i]) != testy[i]){
@@ -71,7 +71,6 @@ public class RandomForestTest {
         int length = strs.length;
         int extra = 0;
         if(length == 12) extra = 1;
-
         double[] arr = new double[7];
         double Pclass = Double.parseDouble(strs[2]);
         double sex = strs[5].equals("male") ? 1 : 0 ;
